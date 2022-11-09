@@ -20,7 +20,7 @@ def extract_data(dire):
     for file in os.listdir(dire):
         print(file)
         if file.endswith('.cho'):
-            with open(file, "r") as f:
+            with open(os.path.join(dire, file), "r") as f:
                 for line in f:
                     if 'species' in line:
                         print(line)
