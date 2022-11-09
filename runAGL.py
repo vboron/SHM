@@ -18,7 +18,6 @@ import pandas as pd
 
 def extract_data(dire):
     for file in os.listdir(dire):
-        print(file)
         if file.endswith('.cho'):
             with open(os.path.join(dire, file), "r") as f:
                 for line in f:
