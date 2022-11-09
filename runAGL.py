@@ -18,6 +18,7 @@ import pandas as pd
 
 def extract_data(dire):
     for file in os.listdir(dire):
+        print(file)
         if file.endswith('.pdb'):
             with open(file, "r") as f:
                 for line in f:
