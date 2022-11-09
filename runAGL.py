@@ -17,12 +17,16 @@ import pandas as pd
 
 
 def extract_data(dire):
+    cho_files = []
     for file in os.listdir(dire):
         if file.endswith('.cho'):
-            with open(os.path.join(dire, file), "r") as f:
-                for line in f:
-                    if 'species' in line:
-                        print(line)
+            cho_files.append(file)
+
+    for file in cho_files:
+        with open(os.path.join(dire, file), "r") as f:
+            for line in f:
+                if 'species' in line:
+                    print(line)
 
 # angle = (subprocess.check_output(
 #                 ['abpackingangle', '-p', pdb_code, '-q', pdb_file])).decode("utf-8")
