@@ -14,20 +14,22 @@
 import argparse
 import os
 import pandas as pd
+import subprocess
 
 
 def extract_data(dire):
-    cho_files = []
+    files = []
+    error_files = []
     for file in os.listdir(dire):
-        if file.endswith('.cho'):
-            cho_files.append(file)
+        if file.endswith('.faa'):
+            files.append(file)
 
-    for file in cho_files:
-        with open(os.path.join(dire, file), "r") as f:
-            for line in f:
-                if 'species' in line:
-                    print(line)
-
+    for file in files:
+        try:
+            result = (subprocess.check_output(['agl', '-H|-L', '-d', dire, '-v', '-a', file])).decode("utf-8")
+            print(result)
+        except subprocess.CalledProcessError:
+            error_files.append(file)
 # angle = (subprocess.check_output(
 #                 ['abpackingangle', '-p', pdb_code, '-q', pdb_file])).decode("utf-8")
 
