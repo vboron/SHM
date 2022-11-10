@@ -31,6 +31,7 @@ def extract_data(dire):
             result_data = result.split('\n')
             for data in result_data:
                 if 'Mismatches:' in data:
+                    data = data.split('Mismatches: ')
                     print(data)
             # print(result_data)
         except subprocess.CalledProcessError:
