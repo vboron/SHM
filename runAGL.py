@@ -33,7 +33,7 @@ def extract_data(dire):
             for data in result_data:
                 if 'Mismatches:' in data:
                     data = data.split('Mismatches: ')
-                    mismatch_data.append(file[3:-4].upper(), data[1])
+                    mismatch_data.append([file[3:-4].upper(), data[1]])
         except subprocess.CalledProcessError:
             error_files.append(file)
     df = pd.DataFrame(data=mismatch_data, columns=['code', 'mismatches'])
