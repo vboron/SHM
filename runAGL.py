@@ -29,7 +29,10 @@ def extract_data(dire):
             path = os.path.join(dire, file)
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
             result_data = result.split('\n')
-            print(result_data)
+            for data in result_data:
+                if 'Mismatches:' in data:
+                    print(data)
+            # print(result_data)
         except subprocess.CalledProcessError:
             error_files.append(file)
 # angle = (subprocess.check_output(
