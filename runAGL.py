@@ -32,7 +32,7 @@ def extract_data(dire):
             for data in result_data:
                 if 'Mismatches:' in data:
                     data = data.split('Mismatches: ')
-                    print(file, data[1])
+                    print(file[3:-4].upper(), data[1])
             # print(result_data)
         except subprocess.CalledProcessError:
             error_files.append(file)
