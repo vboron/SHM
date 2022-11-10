@@ -27,7 +27,7 @@ def extract_data(dire):
     for file in files:
         try:
             path = os.path.join(dire, file)
-            result = (subprocess.check_output(['agl', '-H|-L', '-a', path])).decode("utf-8")
+            result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
             result_data = result.split('Mismatches: ')
             print(result_data)
         except subprocess.CalledProcessError:
