@@ -24,6 +24,7 @@ def extract_data(dire):
         if file.endswith('.faa'):
             files.append(file)
 
+    mismatch_data = []
     for file in files:
         try:
             path = os.path.join(dire, file)
@@ -32,12 +33,11 @@ def extract_data(dire):
             for data in result_data:
                 if 'Mismatches:' in data:
                     data = data.split('Mismatches: ')
-                    print(file[3:-4].upper(), data[1])
-            # print(result_data)
+                    mismatch_data.append(file[3:-4].upper(), data[1])
         except subprocess.CalledProcessError:
             error_files.append(file)
-# angle = (subprocess.check_output(
-#                 ['abpackingangle', '-p', pdb_code, '-q', pdb_file])).decode("utf-8")
+    df = pd.DataFrame(data=mismatch_data, columns=['code', 'mismatches'])
+    print(df)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
