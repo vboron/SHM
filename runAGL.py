@@ -28,7 +28,7 @@ def extract_data(dire):
         try:
             path = os.path.join(dire, file)
             result = (subprocess.check_output(['agl', '-H|-L', '-a', path])).decode("utf-8")
-            result_data = result.split()
+            result_data = result.split(':')
             print(result_data)
         except subprocess.CalledProcessError:
             error_files.append(file)
