@@ -24,6 +24,8 @@ def extract_data(dire):
         if file.endswith('.faa'):
             files.append(file)
 
+
+# TODO: look at only the V sgement mutations for both (H and L)
     mismatch_data = []
     for file in files:
         try:
