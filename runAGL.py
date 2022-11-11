@@ -38,6 +38,7 @@ def extract_data(dire):
             print(file)
             error_files.append(file)
     df = pd.DataFrame(data=mismatch_data, columns=['code', 'mismatches'])
+    df.to_csv('agl.csv', index=False)
     print(df)
 
 if __name__ == '__main__':
