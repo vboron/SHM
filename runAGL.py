@@ -33,6 +33,7 @@ def extract_data(dire):
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
             print(result)
             result_data = result.split('\n')
+            print(result_data)
             for data in result_data:
                 if 'Mismatches:' in data:
                     data = data.split('Mismatches: ')
