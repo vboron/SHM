@@ -38,7 +38,7 @@ def extract_data(dire):
             # result_data = result.split('\n', ' ')
             print(result_data)
             for data in result_data:
-                if data.startswith('Mismatches', 'VH', 'VL', 'JH', 'JL'):
+                if data.startswith(('Mismatches', 'VH', 'VL', 'JH', 'JL')):
                     print(data)
             #     if 'Mismatches:' in data:
             #         data = data.split('Mismatches: ')
