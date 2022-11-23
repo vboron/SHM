@@ -15,6 +15,7 @@ import argparse
 import os
 import pandas as pd
 import subprocess
+import regex as re
 
 
 def extract_data(dire):
@@ -32,7 +33,8 @@ def extract_data(dire):
             path = os.path.join(dire, file)
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
             print(result)
-            result_data = result.split('\n', ' ')
+            result_data = re.split('\n| ', result)
+            # result_data = result.split('\n', ' ')
             print(result_data)
             # for data in result_data:
             #     if 'Mismatches:' in data:
