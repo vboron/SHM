@@ -32,18 +32,18 @@ def extract_data(dire):
             path = os.path.join(dire, file)
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
             print(result)
-            result_data = result.split('\n')
+            result_data = result.split('\n', ' ')
             print(result_data)
-            for data in result_data:
-                if 'Mismatches:' in data:
-                    data = data.split('Mismatches: ')
-                    mismatch_data.append([file[3:-4].upper(), data[1]])
+            # for data in result_data:
+            #     if 'Mismatches:' in data:
+            #         data = data.split('Mismatches: ')
+            #         mismatch_data.append([file[3:-4].upper(), data[1]])
         except subprocess.CalledProcessError:
             print(file)
             error_files.append(file)
-    df = pd.DataFrame(data=mismatch_data, columns=['code', 'mismatches'])
-    df.to_csv('agl.csv', index=False)
-    print(df)
+    # df = pd.DataFrame(data=mismatch_data, columns=['code', 'mismatches'])
+    # df.to_csv('agl.csv', index=False)
+    # print(df)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
