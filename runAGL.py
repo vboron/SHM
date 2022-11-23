@@ -34,7 +34,7 @@ def extract_data(dire):
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
             result = result.replace(' ', '')
             print(result)
-            result_data = re.split('\n| ', result)
+            result_data = re.split('\n|:', result)
             # result_data = result.split('\n', ' ')
             print(result_data)
             # for data in result_data:
