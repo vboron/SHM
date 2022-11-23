@@ -31,10 +31,10 @@ def extract_data(dire):
         try:
             path = os.path.join(dire, file)
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
+            print(result)
             result_data = result.split('\n')
             for data in result_data:
                 if 'Mismatches:' in data:
-                    print(data)
                     data = data.split('Mismatches: ')
                     mismatch_data.append([file[3:-4].upper(), data[1]])
         except subprocess.CalledProcessError:
