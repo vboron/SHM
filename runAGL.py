@@ -15,7 +15,7 @@ import argparse
 import os
 import pandas as pd
 import subprocess
-import regex as re
+import re
 
 
 def extract_data(dire):
