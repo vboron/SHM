@@ -61,7 +61,7 @@ def extract_data(fastadir, pdbdir):
         temp = re.split('\n', result)
         result_data = []
         for line in temp:
-            if ':' in line:
+            if ':' in line and 'hain' not in line:
                 result_data.append(line)
         code = file[3:-4].upper()
         print(result_data)
