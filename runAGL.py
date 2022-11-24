@@ -29,7 +29,7 @@ def extract_data(fastadir, pdbdir):
     files.sort()
 # TODO: look at only the V sgement mutations for both (H and L)
     mismatch_data = []
-    def runAGL(file, dire):
+    def run_AGL(file, dire):
         aglresult = ''
         try:
             path = os.path.join(dire, file)
