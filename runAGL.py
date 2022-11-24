@@ -53,7 +53,7 @@ def extract_data(fastadir, pdbdir):
 
     for file in files:
         print(file)
-        result = runAGL(file, fastadir)
+        result = run_AGL(file, fastadir)
         # print(result)
         result = result.replace(' ', '')
         result_data = re.split('\n', result)
