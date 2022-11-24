@@ -22,7 +22,7 @@ def extract_data(dire):
     files = []
     error_files = []
     col = ['code' ,'VH', 'VL', 'JH', 'JL']
-    data = []
+    dfdata = []
     for file in os.listdir(dire):
         if file.endswith('.faa'):
             files.append(file)
@@ -51,8 +51,8 @@ def extract_data(dire):
                 data_list = data.split(':')
                 mismatch = int(data_list[1])
                 mismatch_data.append(mismatch)
-        data.append(mismatch_data)
-    df = pd.DataFrame(data=data, columns=col)
+        dfdata.append(mismatch_data)
+    df = pd.DataFrame(data=dfdata, columns=col)
     print(df)
 
             #     if 'Mismatches:' in data:
