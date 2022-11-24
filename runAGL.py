@@ -45,7 +45,7 @@ def extract_data(dire):
                     fragments.append(fragment)
                 if data.startswith('Mismatches'):
                     data_list = data.split(':')
-                    mismatch = data_list[1]
+                    mismatch = int(data_list[1])
                     mismatches.append(mismatch)
             mismatch_data = zip(fragments, mismatches)
             print(tuple(mismatch_data))
