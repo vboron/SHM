@@ -26,7 +26,7 @@ def extract_data(fastadir, pdbdir):
     for file in os.listdir(fastadir):
         if file.endswith('.faa'):
             files.append(file)
-
+    files.sort()
 # TODO: look at only the V sgement mutations for both (H and L)
     mismatch_data = []
     def runAGL(file, dire):
