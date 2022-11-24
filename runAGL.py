@@ -25,37 +25,42 @@ def extract_data(dire):
         if file.endswith('.faa'):
             files.append(file)
 
-
 # TODO: look at only the V sgement mutations for both (H and L)
     mismatch_data = []
-    for file in files:
+    
+    def runAGL(file, direct):
+        aglresult = ''
         try:
-            path = os.path.join(dire, file)
+            path = os.path.join(direct, file)
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
-            print(result)
-            result = result.replace(' ', '')
-            result_data = re.split('\n', result)
-            fragments = []
-            mismatches = []
-            for data in result_data:
-                if data.startswith(('VH', 'VL', 'JH', 'JL')):
-                    data_list = data.split(':')
-                    # print(data_list)
-                    fragment = data_list[0]
-                    fragments.append(fragment)
-                if data.startswith('Mismatches'):
-                    data_list = data.split(':')
-                    mismatch = int(data_list[1])
-                    mismatches.append(mismatch)
-            mismatch_data = zip(fragments, mismatches)
-            print(tuple(mismatch_data))
+            aglresult = result
+        except subprocess.CalledProcessError:
+            print(file)
+            error_files.append(file)
+        return aglresult
+
+    for file in files:
+        result = runAGL(file, dire)
+        result = result.replace(' ', '')
+        result_data = re.split('\n', result)
+        col = ['code']
+        mismatch_data = [file[3:-4].upper()]
+        for data in result_data:
+            if data.startswith(('VH', 'VL', 'JH', 'JL')):
+                data_list = data.split(':')
+                # print(data_list)
+                fragment = data_list[0]
+                col.append(fragment)
+            if data.startswith('Mismatches'):
+                data_list = data.split(':')
+                mismatch = int(data_list[1])
+                mismatch_data.append(mismatch)
+        df = pd.DataFrame(data=mismatch_data, columns=col)
+        print(df)
 
             #     if 'Mismatches:' in data:
             #         data = data.split('Mismatches: ')
             #         mismatch_data.append([file[3:-4].upper(), data[1]])
-        except subprocess.CalledProcessError:
-            print(file)
-            error_files.append(file)
     # df = pd.DataFrame(data=mismatch_data, columns=['code', 'mismatches'])
     # df.to_csv('agl.csv', index=False)
     # print(df)
