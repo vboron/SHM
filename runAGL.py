@@ -83,7 +83,7 @@ def extract_data(fastadir, pdbdir):
             #         data = data.split('Mismatches: ')
             #         mismatch_data.append([file[3:-4].upper(), data[1]])
     # df = pd.DataFrame(data=mismatch_data, columns=['code', 'mismatches'])
-    # df.to_csv('agl.csv', index=False)
+    df.to_csv('agl.csv', index=False)
     # print(df)
 
 if __name__ == '__main__':
