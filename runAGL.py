@@ -32,6 +32,7 @@ def extract_data(dire):
         try:
             path = os.path.join(dire, file)
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
+            print(result)
             result = result.replace(' ', '')
             result_data = re.split('\n', result)
             # result_data = result.split('\n', ' ')
