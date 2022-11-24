@@ -21,13 +21,14 @@ import re
 def extract_data(dire):
     files = []
     error_files = []
+    col = ['code' ,'VH', 'VL', 'JH', 'JL']
+    data = []
     for file in os.listdir(dire):
         if file.endswith('.faa'):
             files.append(file)
 
 # TODO: look at only the V sgement mutations for both (H and L)
     mismatch_data = []
-    
     def runAGL(file, direct):
         aglresult = ''
         try:
@@ -46,18 +47,13 @@ def extract_data(dire):
         col = ['code']
         mismatch_data = [file[3:-4].upper()]
         for data in result_data:
-            if data.startswith(('VH', 'VL', 'JH', 'JL')):
-                data_list = data.split(':')
-                # print(data_list)
-                fragment = data_list[0]
-                col.append(fragment)
             if data.startswith('Mismatches'):
                 data_list = data.split(':')
                 mismatch = int(data_list[1])
                 mismatch_data.append(mismatch)
-        print(mismatch_data, col)
-        # df = pd.DataFrame(data=mismatch_data, columns=col)
-        # print(df)
+        data.append(mismatch_data)
+    df = pd.DataFrame(data=data, columns=col)
+    print(df)
 
             #     if 'Mismatches:' in data:
             #         data = data.split('Mismatches: ')
