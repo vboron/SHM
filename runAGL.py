@@ -61,23 +61,21 @@ def extract_data(fastadir, pdbdir):
         temp = re.split('\n', result)
         result_data = []
         for line in temp:
-            # use 'hain' to ignore Chain or chain issue
-            if ':' in line and 'hain' not in line:
+            if ':' in line:
                 result_data.append(line)
         code = file[3:-4].upper()
-        print(result_data)
-    #     mismatch_data = [code]
-    #     for data in result_data:
-    #         if data.startswith('Mismatches'):
-    #             data_list = data.split(':')
-    #             mismatch = int(data_list[1])
-    #             mismatch_data.append(mismatch)
-    #     pdbfilepath = os.path.join(pdbdir, file[:-3]+'cho')
-    #     angle = run_abpackingangle(code, pdbfilepath)
-    #     mismatch_data.append(angle)
-    #     dfdata.append(mismatch_data)
-    # df = pd.DataFrame(data=dfdata, columns=col)
-    # print(df)
+        mismatch_data = [code]
+        for data in result_data:
+            if data.startswith('Mismatches'):
+                data_list = data.split(':')
+                mismatch = int(data_list[1])
+                mismatch_data.append(mismatch)
+        pdbfilepath = os.path.join(pdbdir, file[:-3]+'cho')
+        angle = run_abpackingangle(code, pdbfilepath)
+        mismatch_data.append(angle)
+        dfdata.append(mismatch_data)
+    df = pd.DataFrame(data=dfdata, columns=col)
+    print(df)
 
             #     if 'Mismatches:' in data:
             #         data = data.split('Mismatches: ')
