@@ -42,6 +42,7 @@ def extract_data(dire):
 
     for file in files:
         result = runAGL(file, dire)
+        print(result)
         result = result.replace(' ', '')
         result_data = re.split('\n', result)
         mismatch_data = [file[3:-4].upper()]
