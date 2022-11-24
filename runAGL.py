@@ -35,8 +35,9 @@ def extract_data(fastadir, pdbdir):
             path = os.path.join(dire, file)
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
             aglresult = result
+            print(aglresult)
         except subprocess.CalledProcessError:
-            print(file)
+            print(f'AGL failed on {file}')
             error_files.append(file)
         return aglresult
 
@@ -48,6 +49,7 @@ def extract_data(fastadir, pdbdir):
             angle = angle.split()
             angle = angle[1]
         except subprocess.CalledProcessError:
+            print(f'abpackingangle failed on {file}')
             error_files.append(code)
         return angle
 
