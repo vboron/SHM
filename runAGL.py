@@ -18,21 +18,21 @@ import subprocess
 import re
 
 
-def extract_data(dire):
+def extract_data(fastadir, pdbdir):
     files = []
     error_files = []
     col = ['code' ,'VL', 'JL', 'VH', 'JH', 'angle']
     dfdata = []
-    for file in os.listdir(dire):
+    for file in os.listdir(fastadir):
         if file.endswith('.faa'):
             files.append(file)
 
 # TODO: look at only the V sgement mutations for both (H and L)
     mismatch_data = []
-    def runAGL(file, direct):
+    def runAGL(file, dire):
         aglresult = ''
         try:
-            path = os.path.join(direct, file)
+            path = os.path.join(dire, file)
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
             aglresult = result
         except subprocess.CalledProcessError:
@@ -52,7 +52,7 @@ def extract_data(dire):
         return angle
 
     for file in files:
-        result = runAGL(file, dire)
+        result = runAGL(file, fastadir)
         print(result)
         result = result.replace(' ', '')
         result_data = re.split('\n', result)
@@ -63,7 +63,8 @@ def extract_data(dire):
                 data_list = data.split(':')
                 mismatch = int(data_list[1])
                 mismatch_data.append(mismatch)
-        angle = run_abpackingangle(code, file)
+        pdbfilepath = os.path.join(pdbdir, file[:-3]+'.pdb')
+        angle = run_abpackingangle(code, pdbfilepath)
         mismatch_data.append(angle)
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
@@ -80,7 +81,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Program for applying a rotational correction factor recursively')
     parser.add_argument(
-        '--dir', help='Directory with files that will be used to train models', required=True)
+        '--fastadir', help='Directory of fasta files', required=True)
+    parser.add_argument(
+        '--pdbdir', help='Directory of pdb files', required=True)
     args = parser.parse_args()
 
-    extract_data(args.dir)
+    extract_data(args.fastadir, args.pdbdir)
