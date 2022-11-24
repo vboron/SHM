@@ -52,8 +52,9 @@ def extract_data(fastadir, pdbdir):
         return angle
 
     for file in files:
+        print(file)
         result = runAGL(file, fastadir)
-        print(result)
+        # print(result)
         result = result.replace(' ', '')
         result_data = re.split('\n', result)
         code = file[3:-4].upper()
