@@ -21,7 +21,7 @@ import re
 def extract_data(dire):
     files = []
     error_files = []
-    col = ['code' ,'VL', 'JL', 'VH', 'JH']
+    col = ['code' ,'VL', 'JL', 'VH', 'JH', 'angle']
     dfdata = []
     for file in os.listdir(dire):
         if file.endswith('.faa'):
@@ -40,17 +40,31 @@ def extract_data(dire):
             error_files.append(file)
         return aglresult
 
+    def run_abpackingangle(pdb_code, pdb_file):
+        angle = ''
+        try:
+            angle = (subprocess.check_output(
+                ['abpackingangle', '-p', pdb_code, '-q', pdb_file])).decode("utf-8")
+            angle = angle.split()
+            angle = angle[1]
+        except subprocess.CalledProcessError:
+            error_files.append(code)
+        return angle
+
     for file in files:
         result = runAGL(file, dire)
         print(result)
         result = result.replace(' ', '')
         result_data = re.split('\n', result)
-        mismatch_data = [file[3:-4].upper()]
+        code = file[3:-4].upper()
+        mismatch_data = [code]
         for data in result_data:
             if data.startswith('Mismatches'):
                 data_list = data.split(':')
                 mismatch = int(data_list[1])
                 mismatch_data.append(mismatch)
+        angle = run_abpackingangle(code, file)
+        mismatch_data.append(angle)
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
     print(df)
