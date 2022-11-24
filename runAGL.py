@@ -55,8 +55,9 @@ def extract_data(dire):
                 data_list = data.split(':')
                 mismatch = int(data_list[1])
                 mismatch_data.append(mismatch)
-        df = pd.DataFrame(data=mismatch_data, columns=col)
-        print(df)
+        print(mismatch_data, col)
+        # df = pd.DataFrame(data=mismatch_data, columns=col)
+        # print(df)
 
             #     if 'Mismatches:' in data:
             #         data = data.split('Mismatches: ')
