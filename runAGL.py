@@ -44,7 +44,6 @@ def extract_data(dire):
         result = runAGL(file, dire)
         result = result.replace(' ', '')
         result_data = re.split('\n', result)
-        col = ['code']
         mismatch_data = [file[3:-4].upper()]
         for data in result_data:
             if data.startswith('Mismatches'):
