@@ -33,18 +33,16 @@ def extract_data(dire):
             path = os.path.join(dire, file)
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
             result = result.replace(' ', '')
-            print(result)
             result_data = re.split('\n', result)
             # result_data = result.split('\n', ' ')
-            print(result_data)
             for data in result_data:
                 if data.startswith(('VH', 'VL', 'JH', 'JL')):
                     data_list = data.split(':')
-                    print(data_list)
+                    # print(data_list)
                     print(data_list[0])
                 if data.startswith('Mismatches'):
                     data_list = data.split(':')
-                    print(data_list)
+                    # print(data_list)
                     print(data_list[1])
 
             #     if 'Mismatches:' in data:
