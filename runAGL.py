@@ -50,7 +50,7 @@ def extract_data(fastadir, pdbdir):
             angle = angle[1]
         except subprocess.CalledProcessError:
             print(f'abpackingangle failed on {file}')
-            error_files.append(code)
+            # error_files.append(code)
         return angle
 
     for file in files:
@@ -76,6 +76,8 @@ def extract_data(fastadir, pdbdir):
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
     print(df)
+    with open(r'errorfiles.txt', 'w') as f:
+        f.write('\n'.join(error_files))
 
             #     if 'Mismatches:' in data:
             #         data = data.split('Mismatches: ')
