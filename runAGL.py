@@ -35,16 +35,20 @@ def extract_data(dire):
             print(result)
             result = result.replace(' ', '')
             result_data = re.split('\n', result)
-            # result_data = result.split('\n', ' ')
+            fragments = []
+            mismatches = []
             for data in result_data:
                 if data.startswith(('VH', 'VL', 'JH', 'JL')):
                     data_list = data.split(':')
                     # print(data_list)
-                    print(data_list[0])
+                    fragment = data_list[0]
+                    fragments.append(fragment)
                 if data.startswith('Mismatches'):
                     data_list = data.split(':')
-                    # print(data_list)
-                    print(data_list[1])
+                    mismatch = data_list[1]
+                    mismatches.append(mismatch)
+            mismatch_data = zip(fragments, mismatches)
+            print(mismatch_data)
 
             #     if 'Mismatches:' in data:
             #         data = data.split('Mismatches: ')
