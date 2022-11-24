@@ -21,7 +21,7 @@ import re
 def extract_data(dire):
     files = []
     error_files = []
-    col = ['code' ,'VH', 'VL', 'JH', 'JL']
+    col = ['code' ,'VL', 'JL', 'VH', 'JH']
     dfdata = []
     for file in os.listdir(dire):
         if file.endswith('.faa'):
