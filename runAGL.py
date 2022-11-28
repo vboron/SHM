@@ -83,7 +83,7 @@ def extract_data(fastadir, pdbdir):
     df['angle_range']=df[('angle', 'max')]-df[('angle', 'min')]
     df = df.reset_index()
     print(df)
-    print(df.get_level_values())
+    # print(df.get_level_values())s
     print(df.columns)
     df.drop(index=1, columns=['angle'], inplace=True)
     print(df)
