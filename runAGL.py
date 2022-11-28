@@ -75,19 +75,15 @@ def extract_data(fastadir, pdbdir):
         mismatch_data.append(angle)
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
-    print(df)
-    with open(r'errorfiles.txt', 'w') as f:
-        f.write('\n'.join(error_files))
 
-            #     if 'Mismatches:' in data:
-            #         data = data.split('Mismatches: ')
-            #         mismatch_data.append([file[3:-4].upper(), data[1]])
-    # df = pd.DataFrame(data=mismatch_data, columns=['code', 'mismatches'])
     df.to_csv('agl_mis.csv', index=False)
     print(df)
     df.dropna(inplace=True)
     df.to_csv('agl.csv', index=False)
     print(df)
+    aggregation_func = {'code': 'first', 'angle': max() - min()}
+    temp = df.groupby(col[:-1]).aggregate(aggregation_func)
+    print(temp)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
