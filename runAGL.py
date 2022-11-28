@@ -81,7 +81,7 @@ def extract_data(fastadir, pdbdir):
     df.dropna(inplace=True)
     df.to_csv('agl.csv', index=False)
     print(df)
-    aggregation_func = {'code': 'first', 'angle': 'range'}
+    aggregation_func = {'code': 'first', 'angle': 'max' - 'min'}
     temp = df.groupby(col[:-1]).aggregate(aggregation_func)
     print(temp)
 
