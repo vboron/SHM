@@ -82,7 +82,7 @@ def extract_data(fastadir, pdbdir):
     df = df.groupby(col[:-1]).aggregate(aggregation_func)
     print(df)
     df['angle_range']=df[('angle', 'max')]-df[('angle', 'min')]
-    df = df.reset_index()
+    # df = df.reset_index()
     print(df)
     print(df.get_level_values())
     # print(df.columns)
