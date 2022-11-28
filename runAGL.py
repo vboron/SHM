@@ -84,6 +84,8 @@ def extract_data(fastadir, pdbdir):
     print(temp)
     temp = temp.reset_index()
     print(temp)
+    temp = temp.reset_index()
+    print(temp)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
