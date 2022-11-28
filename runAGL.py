@@ -81,13 +81,9 @@ def extract_data(fastadir, pdbdir):
     aggregation_func = {'angle': ['max', 'min']}
     df = df.groupby(col[:-1]).aggregate(aggregation_func)
     print(df)
-    df = df.reset_index()
-    print(df)
     df['angle_range']=df[('angle', 'max')]-df[('angle', 'min')]
     print(df)
     df.drop(index=1, columns=['angle'], inplace=True)
-    print(df)
-    df = df.reset_index()
     print(df)
     df.to_csv('agl.csv', index=False)
 
