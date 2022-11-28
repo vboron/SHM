@@ -47,7 +47,7 @@ def extract_data(fastadir, pdbdir):
             angle = (subprocess.check_output(
                 ['abpackingangle', '-p', pdb_code, '-q', pdb_file])).decode("utf-8")
             angle = angle.split()
-            angle = angle[1]
+            angle = float(angle[1])
         except subprocess.CalledProcessError:
             print(f'abpackingangle failed on {file}')
             # error_files.append(code)
