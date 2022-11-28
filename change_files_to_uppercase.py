@@ -2,7 +2,7 @@
 import os
 import sys
 import shutil
-
+#
 cwd = os.getcwd()
 for file in os.listdir(sys.argv[1]):
     if file.endswith('.mar'):
