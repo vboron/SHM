@@ -83,7 +83,7 @@ def extract_data(fastadir, pdbdir):
     print(df)
     aggregation_func = {'code': 'first', 'angle': ['max', 'min']}
     temp = df.groupby(col[:-1]).aggregate(aggregation_func)
-    temp.temp.reset_index()
+    temp = temp.reset_index()
     print(temp)
 
 if __name__ == '__main__':
