@@ -84,7 +84,7 @@ def extract_data(fastadir, pdbdir):
     print(temp)
     temp = temp.reset_index()
     print(temp)
-    print(temp['max'])
+    print(temp.columns)
 
 
 if __name__ == '__main__':
