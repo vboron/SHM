@@ -77,12 +77,11 @@ def extract_data(fastadir, pdbdir):
     df = pd.DataFrame(data=dfdata, columns=col)
 
     df.to_csv('agl_mis.csv', index=False)
-    print(df)
     df.dropna(inplace=True)
     df.to_csv('agl.csv', index=False)
-    print(df)
     aggregation_func = {'angle': ['max', 'min']}
     temp = df.groupby(col[:-1]).aggregate(aggregation_func)
+    print(temp)
     temp = temp.reset_index()
     print(temp)
 
