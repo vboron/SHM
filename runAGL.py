@@ -63,7 +63,7 @@ def extract_data(fastadir, pdbdir):
         for line in temp:
             if ':' in line:
                 result_data.append(line)
-        code = file[3:-4].upper()
+        code = file[3:7].upper()
         mismatch_data = [code]
         for data in result_data:
             if data.startswith('Mismatches'):
@@ -83,6 +83,8 @@ def extract_data(fastadir, pdbdir):
             #         data = data.split('Mismatches: ')
             #         mismatch_data.append([file[3:-4].upper(), data[1]])
     # df = pd.DataFrame(data=mismatch_data, columns=['code', 'mismatches'])
+    df.to_csv('agl_mis.csv', index=False)
+    df.dropna(inplace=True)
     df.to_csv('agl.csv', index=False)
     # print(df)
 
