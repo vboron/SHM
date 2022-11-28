@@ -84,9 +84,10 @@ def extract_data(fastadir, pdbdir):
             #         mismatch_data.append([file[3:-4].upper(), data[1]])
     # df = pd.DataFrame(data=mismatch_data, columns=['code', 'mismatches'])
     df.to_csv('agl_mis.csv', index=False)
+    print(df)
     df.dropna(inplace=True)
     df.to_csv('agl.csv', index=False)
-    # print(df)
+    print(df)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
