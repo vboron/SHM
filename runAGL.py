@@ -84,7 +84,8 @@ def extract_data(fastadir, pdbdir):
     print(temp)
     temp = temp.reset_index()
     print(temp)
-    print(temp[('angle', 'max')]-temp[('angle', 'min')])
+    temp['angle_range']=temp[('angle', 'max')]-temp[('angle', 'min')]
+    print(temp)
 
 
 if __name__ == '__main__':
