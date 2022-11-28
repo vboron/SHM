@@ -87,6 +87,8 @@ def extract_data(fastadir, pdbdir):
     print(df)
     df.drop(index=1, columns=['angle'], inplace=True)
     print(df)
+    df = df.reset_index()
+    print(df)
     df.to_csv('agl.csv', index=False)
 
 
