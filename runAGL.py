@@ -76,18 +76,16 @@ def extract_data(fastadir, pdbdir):
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
 
-    # df.to_csv('agl_mis.csv', index=False)
+    df.to_csv('agl_mis.csv', index=False)
     df.dropna(inplace=True)
     aggregation_func = {'angle': ['max', 'min']}
     df = df.groupby(col[:-1]).aggregate(aggregation_func)
     df['angle_range']=df[('angle', 'max')]-df[('angle', 'min')]
     df = df.reset_index()
     df.drop(index=1, columns=['angle'], inplace=True)
-    print(df.columns)
     df.columns = df.columns.droplevel(level=1)
-    print(df.columns)
     print(df)
-    # df.to_csv('agl.csv', index=False)
+    df.to_csv('agl.csv', index=False)
 
 
 if __name__ == '__main__':
