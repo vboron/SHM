@@ -10,7 +10,7 @@
 #            -d Specify data directory
 #            -v Verbose
 #            -a Show alignments and number of mismatches
-# haha
+
 import argparse
 import os
 import pandas as pd
