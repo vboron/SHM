@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Using:
-# agl V1.4 (c) 2020 UCL, Prof. Andrew C.R. Martin
+# agl V1.5 (c) 2020-22 UCL, Prof. Andrew C.R. Martin
 
 # Usage: agl [-H|-L] [-s species] [-d datadir] [-v] [-a] [file.faa [out.txt]]
 #            -H Heavy chain
