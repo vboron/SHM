@@ -77,6 +77,7 @@ def extract_data(fastadir, pdbdir):
     df = pd.DataFrame(data=dfdata, columns=col)
     try:
         df = df[df['angle'].str.contains('Packing') == False]
+        df = df[df['angle'].str.contains('') == False]
     except:
         print('No missing angles.')
     df['angle'] = df['angle'].astype(float)
