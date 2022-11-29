@@ -75,12 +75,14 @@ def extract_data(fastadir, pdbdir):
         mismatch_data.append(angle)
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
+    print(df)
     try:
         df = df[df['angle'].str.contains('Packing') == False]
         df = df[df['angle'].str.contains('') == False]
     except:
         print('No missing angles.')
     df['angle'] = df['angle'].astype(float)
+    print(df)
     df.to_csv('agl_mis.csv', index=False)
     df.dropna(inplace=True)
     aggregation_func = {'angle': ['max', 'min']}
