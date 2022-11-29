@@ -47,7 +47,7 @@ def extract_data(fastadir, pdbdir):
             angle = (subprocess.check_output(
                 ['abpackingangle', '-p', pdb_code, '-q', pdb_file])).decode("utf-8")
             angle = angle.split()
-            angle = float(angle[1])
+            angle = angle[1]
         except subprocess.CalledProcessError:
             print(f'abpackingangle failed on {file}')
             # error_files.append(code)
@@ -75,7 +75,11 @@ def extract_data(fastadir, pdbdir):
         mismatch_data.append(angle)
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
-
+    try:
+        df = df[df['angle'].str.contains('Packing') == False]
+    except:
+        print('No missing angles.')
+    df['angle'] = df['angle'].astype(float)
     df.to_csv('agl_mis.csv', index=False)
     df.dropna(inplace=True)
     aggregation_func = {'angle': ['max', 'min']}
