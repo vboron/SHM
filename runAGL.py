@@ -51,6 +51,10 @@ def extract_data(fastadir, pdbdir):
         except subprocess.CalledProcessError:
             print(f'abpackingangle failed on {file}')
             # error_files.append(code)
+        try:
+            angle = float(angle)
+        except:
+            print(f'Cannot onvert {pdb_code} angle to float')
         return angle
 
     for file in files:
@@ -81,7 +85,7 @@ def extract_data(fastadir, pdbdir):
     except:
         print('No missing angles.')
     df.to_csv('agl_mis.csv', index=False)
-    df['angle'] = df['angle'].astype(float)
+    # df['angle'] = df['angle'].astype(float)
     print(df)
     
     df.dropna(inplace=True)
