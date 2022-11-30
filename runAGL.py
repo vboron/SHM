@@ -80,9 +80,10 @@ def extract_data(fastadir, pdbdir):
         df = df[df['angle'].str.contains('Packing') == False]
     except:
         print('No missing angles.')
+    df.to_csv('agl_mis.csv', index=False)
     df['angle'] = df['angle'].astype(float)
     print(df)
-    df.to_csv('agl_mis.csv', index=False)
+    
     df.dropna(inplace=True)
     aggregation_func = {'angle': ['max', 'min']}
     df = df.groupby(col[:-1]).aggregate(aggregation_func)
