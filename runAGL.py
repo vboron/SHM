@@ -80,7 +80,7 @@ def extract_data(fastadir, pdbdir):
         df = df[df['angle'].str.contains('Packing') == False]
     except:
         print('No missing angles.')
-    df['angle'] = df['angle'].strip()
+    df['angle'] = df['angle'].str.strip()
     df.to_csv('agl_mis.csv', index=False)
     df['angle'] = df['angle'].astype(float)
     print(df)
