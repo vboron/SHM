@@ -42,7 +42,7 @@ def extract_data(fastadir, pdbdir):
         return aglresult
 
     def run_abpackingangle(pdb_code, pdb_file):
-        angle = ''
+        angle = ' '
         try:
             angle = (subprocess.check_output(
                 ['abpackingangle', '-p', pdb_code, '-q', pdb_file])).decode("utf-8")
@@ -79,10 +79,11 @@ def extract_data(fastadir, pdbdir):
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
     print(df)
-    # try:
-    #     df = df[df['angle'].str.contains('Packing') == False]
-    # except:
-    #     print('No missing angles.')
+    try:
+        df = df[df['angle'].str.contains('Packing') == False]
+        df = df[df['angle'].str.contains(' ') == False]
+    except:
+        print('No missing angles.')
     # df['angle'] = df['angle'].str.strip()
     df.to_csv('agl_mis.csv', index=False)
     # df['angle'] = df['angle'].astype(float)
