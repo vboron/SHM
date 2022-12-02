@@ -73,6 +73,7 @@ def extract_data(fastadir, pdbdir):
         pdbfilepath = os.path.join(pdbdir, file[:-3]+'cho')
         angle = run_abpackingangle(code, pdbfilepath)
         if 'Packing' not in angle:
+            print(angle)
             float(angle)
             mismatch_data.append(angle)
         dfdata.append(mismatch_data)
