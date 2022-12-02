@@ -81,8 +81,12 @@ def extract_data(fastadir, pdbdir):
     except:
         print('No missing angles.')
     df['angle'] = df['angle'].str.strip()
+    for ang in df['angle']:
+        print(type(ang))
     df.to_csv('agl_mis.csv', index=False)
     df['angle'] = df['angle'].astype(float)
+    for ang in df['angle']:
+        print(type(ang))
     print(df)
     
     df.dropna(inplace=True)
