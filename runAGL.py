@@ -42,7 +42,7 @@ def extract_data(fastadir, pdbdir):
         return aglresult
 
     def run_abpackingangle(pdb_code, pdb_file):
-        angle = ' '
+        angle = 'check'
         try:
             angle = (subprocess.check_output(
                 ['abpackingangle', '-p', pdb_code, '-q', pdb_file])).decode("utf-8")
@@ -81,7 +81,7 @@ def extract_data(fastadir, pdbdir):
     print(df)
     try:
         df = df[df['angle'].str.contains('Packing') == False]
-        df = df[df['angle'].str.contains(' ') == False]
+        # df = df[df['angle'].str.contains(' ') == False]
     except:
         print('No missing angles.')
     # df['angle'] = df['angle'].str.strip()
