@@ -81,7 +81,7 @@ def extract_data(fastadir, pdbdir):
     print(df)
     try:
         df = df[df['angle'].str.contains('Packing') == False]
-        # df = df[df['angle'].str.contains(' ') == False]
+        df = df[df['angle'].str.contains('check') == False]
     except:
         print('No missing angles.')
     # df['angle'] = df['angle'].str.strip()
