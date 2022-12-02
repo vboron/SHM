@@ -35,14 +35,13 @@ def extract_data(fastadir, pdbdir):
             path = os.path.join(dire, file)
             result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
             aglresult = result
-            print(aglresult)
         except subprocess.CalledProcessError:
             print(f'AGL failed on {file}')
             error_files.append(file)
         return aglresult
 
     def run_abpackingangle(pdb_code, pdb_file):
-        angle = 'check'
+        angle = 'Packing angle not found'
         try:
             angle = (subprocess.check_output(
                 ['abpackingangle', '-p', pdb_code, '-q', pdb_file])).decode("utf-8")
@@ -56,7 +55,6 @@ def extract_data(fastadir, pdbdir):
     for file in files:
         print(file)
         result = run_AGL(file, fastadir)
-        # print(result)
         result = result.replace(' ', '')
         temp = re.split('\n', result)
         result_data = []
@@ -75,19 +73,13 @@ def extract_data(fastadir, pdbdir):
         mismatch_data.append(angle)
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
-    print(df)
     try:
         df = df[df['angle'].str.contains('Packing') == False]
-        df = df[df['angle'].str.contains('check') == False]
     except:
         print('No missing angles.')
     # df['angle'] = df['angle'].str.strip()
     df.to_csv('agl_mis.csv', index=False)
     df['angle'] = df['angle'].astype(float)
-    for ang in df['angle']:
-        print(type(ang))
-    print(df)
-    
     df.dropna(inplace=True)
     aggregation_func = {'angle': ['max', 'min']}
     df = df.groupby(col[:-1]).aggregate(aggregation_func)
