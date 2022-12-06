@@ -21,6 +21,7 @@ def parse_redund_file(red_file):
     with open(red_file, 'r') as f:
         lines = f.readlines()
         lines = [l.strip() for l in lines]
+        print()
         free = []
         complexed = []
         def filter_line(l, list_l):
@@ -46,15 +47,7 @@ def parse_redund_file(red_file):
         for line in lines:
             filter_line(line, lines)
 
-        for line in lines:
-            if line.startswith(':'):
-                print(line)
-        print(lines)
-        print(len(lines))
-        print('******************************')
-        # print(free)
-        print('******************************')
-        # print(complexed)
+
 
 
 
