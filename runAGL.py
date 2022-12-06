@@ -85,11 +85,13 @@ def extract_data(fastadir, pdbdir):
     df['angle_range']=df[('angle', 'max')]-df[('angle', 'min')]
     # df = df.reset_index()
     # df = df.rename({('angle', 'max', ''): 'max', ('angle', 'min', ''): 'min'}, axis=1, inplace=True)
+    
+    # df.drop(index=1, columns=['angle'], inplace=True)
+    df.columns = df.columns.droplevel(level=2)
+    print(df)
     col.remove('angle')
     col = col + ['angle_min', 'angle_max', 'angle_range']
     df.columns = col
-    # df.drop(index=1, columns=['angle'], inplace=True)
-    # df.columns = df.columns.droplevel(level=1)
     print(df)
     df.to_csv('agl.csv', index=False)
 
