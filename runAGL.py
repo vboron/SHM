@@ -26,7 +26,7 @@ def parse_redund_file(red_file):
         complexed = []
         def filter_line(l):
             if '#' in l:
-                pass
+                print(l)
             elif l.strip().endswith(':'):
                 free.append(l)
             elif l.strip().startswith(':'):
