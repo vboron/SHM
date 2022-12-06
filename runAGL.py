@@ -19,6 +19,7 @@ import re
 
 def parse_redund_file(red_file):
     with open(red_file, 'r') as f:
+        f.strip()
         lines = f.readlines()
         print(lines)
 
