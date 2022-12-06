@@ -17,7 +17,6 @@ import pandas as pd
 import subprocess
 import re
 
-
 def extract_data(fastadir, pdbdir):
     files = []
     error_files = []
@@ -85,7 +84,7 @@ def extract_data(fastadir, pdbdir):
     df = df.groupby(col[:-1]).aggregate(aggregation_func)
     df['angle_range']=df[('angle', 'max')]-df[('angle', 'min')]
     df = df.reset_index()
-    df.drop(index=1, columns=['angle'], inplace=True)
+    # df.drop(index=1, columns=['angle'], inplace=True)
     df.columns = df.columns.droplevel(level=1)
     print(df)
     df.to_csv('agl.csv', index=False)
