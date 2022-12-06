@@ -31,8 +31,8 @@ def parse_redund_file(red_file):
                 complexed.append(l)
                 list_l.remove(l)
             else:
-                line.replace(':', ': :')
-                split_line = line.split(' ')
+                l.replace(':', ': :')
+                split_line = l.split(' ')
                 for line in split_line:
                     filter_line(l, list_l)
                 list_l.remove(l)
