@@ -26,10 +26,10 @@ def parse_redund_file(red_file):
         def filter_line(l, list_l):
             if '#' in l:
                 list_l.remove(l)
-            elif l.split().endswith(':'):
+            elif l.strip().endswith(':'):
                 free.append(l)
                 list_l.remove(l)
-            elif l.split().startswith(':'):
+            elif l.strip().startswith(':'):
                 complexed.append(l)
                 list_l.remove(l)
             else:
