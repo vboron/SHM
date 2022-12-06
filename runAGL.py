@@ -21,7 +21,21 @@ def parse_redund_file(red_file):
     with open(red_file, 'r') as f:
         lines = f.readlines()
         lines = [l.strip() for l in lines]
+        free = []
+        complexed = []
         print(lines)
+        for line in lines:
+            if line.endswith(':'):
+                free.append(line)
+                lines.remove(line)
+            elif line.startswith(':'):
+                complexed.append(line)
+                lines.remove(line)
+        print(lines)
+        print('******************************')
+        print(free)
+        print('******************************')
+        print(complexed)
 
 
 
