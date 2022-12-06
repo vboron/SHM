@@ -46,8 +46,8 @@ def parse_redund_file(red_file):
         for line in lines:
             filter_line(line, lines)
 
-
-            print(len(lines))
+        print(lines)
+        print(len(lines))
         print('******************************')
         # print(free)
         print('******************************')
