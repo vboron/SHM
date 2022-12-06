@@ -43,6 +43,8 @@ def parse_redund_file(red_file):
             print(line)
             lines.remove(line)
         print(len(lines))
+        print(len(free))
+        print(len(complexed))
 
 
 
