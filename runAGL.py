@@ -20,8 +20,8 @@ import re
 def parse_redund_file(red_file):
     with open(red_file, 'r') as f:
         lines = f.readlines()
-        lines = [l.strip() for l in lines]
         print(len(lines))
+        lines = [l.strip() for l in lines]
         free = []
         complexed = []
         def filter_line(l):
@@ -41,7 +41,6 @@ def parse_redund_file(red_file):
         for line in lines:
             i+=1
             filter_line(line)
-            print(line)
             lines.remove(line)
         print(len(lines))
         print(len(free))
