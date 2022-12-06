@@ -21,13 +21,14 @@ def parse_redund_file(red_file):
     with open(red_file, 'r') as f:
         lines = f.readlines()
         lines = [l.strip() for l in lines]
-        print()
+        print(len(lines))
         free = []
         complexed = []
         def filter_line(l, list_l):
             if '#' in l:
                 list_l.remove(l)
             elif l.strip().endswith(':'):
+                print(l)
                 free.append(l)
                 list_l.remove(l)
             elif l.strip().startswith(':'):
