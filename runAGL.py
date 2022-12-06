@@ -41,8 +41,7 @@ def parse_redund_file(red_file):
         for line in lines:
             filter_line(line)
             line = lines.remove(line)
-            if line.endswith(':'):
-                print(line)
+        print(len(lines))
 
 
 
