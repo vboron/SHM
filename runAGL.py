@@ -31,13 +31,14 @@ def parse_redund_file(red_file):
             elif l.startswith(':'):
                 complexed.append(l)
                 list_l.remove(l)
+            else:
+                line.replace(':', ': :')
+                split_line = line.split(' ')
+                for line in split_line:
+                    filter_line(line, split_line)
+                list_l.remove(l)
         for line in lines:
             filter_line(line, lines)
-            line.replace(':', ': :')
-            split_line = line.split(' ')
-            for l in split_line:
-                filter_line(l, split_line)
-            lines.remove(line)
 
 
         print(lines)
