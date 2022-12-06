@@ -86,7 +86,7 @@ def extract_data(fastadir, pdbdir):
     # df = df.reset_index()
     # df = df.rename({('angle', 'max', ''): 'max', ('angle', 'min', ''): 'min'}, axis=1, inplace=True)
     col.remove('angle')
-    col.append('angle_min', 'angle_max', 'angle_range')
+    col = col + ['angle_min', 'angle_max', 'angle_range']
     df.columns = col
     # df.drop(index=1, columns=['angle'], inplace=True)
     # df.columns = df.columns.droplevel(level=1)
