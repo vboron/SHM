@@ -24,18 +24,24 @@ def parse_redund_file(red_file):
         free = []
         complexed = []
         def filter_line(l, list_l):
-            if l.endswith(':'):
+            if '#' in l:
+                list_l.remove(l)
+            elif l.endswith(':'):
                 free.append(l)
                 list_l.remove(l)
             elif l.startswith(':'):
                 complexed.append(l)
                 list_l.remove(l)
             else:
-                l.replace(':', ': :')
-                split_line = l.split(' ')
-                for s in split_line:
-                    filter_line(s, list_l)
-                list_l.remove(l)
+                if ':' in l:
+                    l.replace(':', ': :')
+                    split_line = l.split(' ')
+                    for s in split_line:
+                        filter_line(s, list_l)
+                    list_l.remove(l)
+                else:
+                    print(l)
+                
         for line in lines:
             filter_line(line, lines)
 
