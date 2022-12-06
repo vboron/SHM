@@ -39,7 +39,7 @@ def parse_redund_file(red_file):
                     split_line = l.split(' ')
                     print(split_line)
                     for s in split_line:
-                        filter_line(s, list_l)
+                        filter_line(s, split_line)
                     list_l.remove(l)
                 else:
                     print(l)
