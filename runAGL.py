@@ -83,7 +83,8 @@ def extract_data(fastadir, pdbdir):
     aggregation_func = {'angle': ['max', 'min']}
     df = df.groupby(col[:-1]).aggregate(aggregation_func)
     df['angle_range']=df[('angle', 'max')]-df[('angle', 'min')]
-    # df = df.reset_index()
+    df = df.reset_index()
+    df.rename({('angle', 'max'): 'max', ('angle', 'min'): 'min'}, axis=1, inplace=True)
     # df.drop(index=1, columns=['angle'], inplace=True)
     # df.columns = df.columns.droplevel(level=1)
     print(df)
