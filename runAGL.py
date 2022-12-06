@@ -18,8 +18,9 @@ import subprocess
 import re
 
 def parse_redund_file(red_file):
-    lines = red_file.readlines()
-    print(lines)
+    with open(red_file, 'r') as f:
+        lines = f.readlines()
+        print(lines)
 
 
 
