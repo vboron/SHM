@@ -48,7 +48,6 @@ def extract_data(fastadir, pdbdir):
             angle = angle[1]
         except subprocess.CalledProcessError:
             print(f'abpackingangle failed on {file}')
-            # error_files.append(code)
         return angle
 
     for file in files:
@@ -76,7 +75,6 @@ def extract_data(fastadir, pdbdir):
         df = df[df['angle'].str.contains('Packing') == False]
     except:
         print('No missing angles.')
-    # df['angle'] = df['angle'].str.strip()
     df.to_csv('agl_mis.csv', index=False)
     df['angle'] = df['angle'].astype(float)
     df.dropna(inplace=True)
@@ -84,11 +82,7 @@ def extract_data(fastadir, pdbdir):
     df = df.groupby(col[:-1]).aggregate(aggregation_func)
     df['angle_range']=df[('angle', 'max')]-df[('angle', 'min')]
     df = df.reset_index()
-    # df = df.rename({('angle', 'max', ''): 'max', ('angle', 'min', ''): 'min'}, axis=1, inplace=True)
-    
-    # df.drop(index=1, columns=['angle'], inplace=True)
     df.columns = df.columns.droplevel(level=0)
-    print(df)
     col.remove('angle')
     col = col + ['angle_min', 'angle_max', 'angle_range']
     df.columns = col
