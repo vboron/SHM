@@ -36,7 +36,7 @@ def parse_redund_file(red_file):
                     rep_l = l.replace(':', ': :')
                     split_line = rep_l.split(' ')
                     for s in split_line:
-                        filter_line(s, split_line)
+                        filter_line(s)
                 
         for line in lines:
             filter_line(line)
