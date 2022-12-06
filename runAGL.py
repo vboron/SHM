@@ -37,14 +37,16 @@ def parse_redund_file(red_file):
                     split_line = rep_l.split(' ')
                     for s in split_line:
                         filter_line(s)
-                
+        i=0
         for line in lines:
+            i+=1
             filter_line(line)
             print(line)
             lines.remove(line)
         print(len(lines))
         print(len(free))
         print(len(complexed))
+        print(f'i={i}')
 
 
 
