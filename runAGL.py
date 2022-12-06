@@ -40,7 +40,7 @@ def parse_redund_file(red_file):
                 
         for line in lines:
             filter_line(line)
-            line = lines.remove(line)
+            lines = lines.remove(line)
         print(len(lines))
 
 
