@@ -28,7 +28,7 @@ def parse_redund_file(red_file):
             if '#' in l:
                 list_l.remove(l)
             elif l.strip().endswith(':'):
-                print(l)
+                # print(l)
                 free.append(l)
                 list_l.remove(l)
             elif l.strip().startswith(':'):
@@ -47,6 +47,8 @@ def parse_redund_file(red_file):
                 
         for line in lines:
             filter_line(line, lines)
+            if line.endswith(':'):
+                print(line)
 
 
 
