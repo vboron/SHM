@@ -17,6 +17,13 @@ import pandas as pd
 import subprocess
 import re
 
+def parse_redund_file(red_file):
+    lines = red_file.readlines()
+    print(lines)
+
+
+
+
 def extract_data(fastadir, pdbdir):
     files = []
     error_files = []
@@ -92,11 +99,14 @@ def extract_data(fastadir, pdbdir):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Program for applying a rotational correction factor recursively')
+        description='Compile the mutations from germline and angle ranges in redundant pdb files')
+    parser.add_argument(
+        '--redfile', help='List of redundant antibody files', required=True)
     parser.add_argument(
         '--fastadir', help='Directory of fasta files', required=True)
     parser.add_argument(
         '--pdbdir', help='Directory of pdb files', required=True)
     args = parser.parse_args()
 
-    extract_data(args.fastadir, args.pdbdir)
+    parse_redund_file(args.redfile)
+    # extract_data(args.fastadir, args.pdbdir)
