@@ -16,53 +16,51 @@ import os
 import pandas as pd
 import subprocess
 import re
+import unittest
+
+def filter_line(l, free, complexed):
+    if '#' in l:
+        print(l)
+    elif l.endswith(':'):
+        free.append(l[:-1])
+    elif l.startswith(':'):
+        complexed.append(l[1:])
+    elif ':' in l:
+        split_line = l.split(':')
+        assert len(split_line) == 2
+        free.append(split_line[0])
+        complexed.append(split_line[1])
+
+class TestRunAGL(unittest.TestCase):
+
+    def test_filter_line(self):
+        inp = """:1zea_0PH
+                   3u36_0,3u36_3,3u36_2,3u36_1:
+                   1mrc_0:1mrf_0H"""
+        free = []
+        complexed = []
+        for l in inp.split('\n'):
+            filter_line(l, free, complexed)
+        self.assertEqual(free, ['3u36_0,3u36_3,3u36_2,3u36_1', '1mrc_0'])
+        self.assertEqual(complexed, ['1zea_0PH', '1mrf_0H'])
+
 
 def parse_redund_file(red_file):
     with open(red_file, 'r') as f:
-        r_lines = f.readlines()
-        lines = [l.strip() for l in r_lines]
+        lines = [l.strip() for l in f.readlines()]
         print(len(lines))
         free = []
         complexed = []
-        def filter_line(l):
-            if '#' in l:
-                print(l)
-            elif l.strip().endswith(':'):
-                free.append(l)
-            elif l.strip().startswith(':'):
-                complexed.append(l)
-            else:
-                if ':' in l:
-                    rep_l = l.replace(':', ': :')
-                    split_line = rep_l.split(' ')
-                    for s in split_line:
-                        filter_line(s)
-        i=0
-        print(len(lines)) # 4156
-        # for j in range(0, len(lines)):
         for line in lines:
-            i+=1
-            # filter_line(line)
-            # filter_line(lines[j])
-            # lines.remove(line)
-            # lines.remove(lines[j])
-            # print(len(lines))
-        print(len(lines)) # 2078
-        # for line in lines:
-        #     print(line)
+            filter_line(line.strip(), free, complexed)
         print(len(free))
         print(len(complexed))
-        print(f'i={i}')
-
-
-
-
 
 
 def extract_data(fastadir, pdbdir):
     files = []
     error_files = []
-    col = ['code' ,'VL', 'JL', 'VH', 'JH', 'angle']
+    col = ['code', 'VL', 'JL', 'VH', 'JH', 'angle']
     dfdata = []
     for file in os.listdir(fastadir):
         if file.endswith('.faa'):
@@ -70,11 +68,13 @@ def extract_data(fastadir, pdbdir):
     files.sort()
 # TODO: look at only the V sgement mutations for both (H and L)
     mismatch_data = []
+
     def run_AGL(file, dire):
         aglresult = ''
         try:
             path = os.path.join(dire, file)
-            result = (subprocess.check_output(['agl', '-a', path])).decode("utf-8")
+            result = (subprocess.check_output(
+                ['agl', '-a', path])).decode("utf-8")
             aglresult = result
         except subprocess.CalledProcessError:
             print(f'AGL failed on {file}')
@@ -122,7 +122,7 @@ def extract_data(fastadir, pdbdir):
     df.dropna(inplace=True)
     aggregation_func = {'angle': ['max', 'min']}
     df = df.groupby(col[:-1]).aggregate(aggregation_func)
-    df['angle_range']=df[('angle', 'max')]-df[('angle', 'min')]
+    df['angle_range'] = df[('angle', 'max')]-df[('angle', 'min')]
     df = df.reset_index()
     df.columns = df.columns.droplevel(level=0)
     col.remove('angle')
@@ -133,6 +133,7 @@ def extract_data(fastadir, pdbdir):
 
 
 if __name__ == '__main__':
+    unittest.main()
     parser = argparse.ArgumentParser(
         description='Compile the mutations from germline and angle ranges in redundant pdb files')
     parser.add_argument(
