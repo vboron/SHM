@@ -19,8 +19,8 @@ import re
 
 def parse_redund_file(red_file):
     with open(red_file, 'r') as f:
-        lines = f.readlines()
-        lines = [l.strip() for l in lines]
+        r_lines = f.readlines()
+        lines = [l.strip() for l in r_lines]
         print(len(lines))
         free = []
         complexed = []
