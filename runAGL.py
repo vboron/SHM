@@ -45,6 +45,8 @@ def parse_redund_file(red_file):
             if line in lines:
                 print(line)
         print(len(lines))
+        for line in lines:
+            print(line)
         print(len(free))
         print(len(complexed))
         print(f'i={i}')
