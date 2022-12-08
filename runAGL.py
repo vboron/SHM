@@ -17,8 +17,9 @@ import pandas as pd
 import subprocess
 import re
 
+
 def filter_line(l, free, complexed):
-    l=l.strip()
+    l = l.strip()
     if '#' in l:
         print(l)
     elif l.endswith(':'):
@@ -31,11 +32,12 @@ def filter_line(l, free, complexed):
         free.append(split_line[0])
         complexed.append(split_line[1])
 
+
 def test_filter_line():
     print('running test_filter_line...')
     inp = """:1zea_0PH
-                3u36_0,3u36_3,3u36_2,3u36_1:
-                1mrc_0:1mrf_0H"""
+             3u36_0,3u36_3,3u36_2,3u36_1:
+             1mrc_0:1mrf_0H"""
     free = []
     complexed = []
     for l in inp.split('\n'):
