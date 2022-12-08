@@ -18,6 +18,7 @@ import subprocess
 import re
 
 def filter_line(l, free, complexed):
+    l=l.strip()
     if '#' in l:
         print(l)
     elif l.endswith(':'):
