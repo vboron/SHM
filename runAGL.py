@@ -38,16 +38,16 @@ def parse_redund_file(red_file):
                     for s in split_line:
                         filter_line(s)
         i=0
-        print(len(lines))
+        print(len(lines)) # 4156
         # for j in range(0, len(lines)):
         for line in lines:
             i+=1
-            filter_line(line)
+            # filter_line(line)
             # filter_line(lines[j])
-            lines.remove(line)
+            # lines.remove(line)
             # lines.remove(lines[j])
             # print(len(lines))
-        print(len(lines))
+        print(len(lines)) # 2078
         # for line in lines:
         #     print(line)
         print(len(free))
