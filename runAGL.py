@@ -16,7 +16,6 @@ import os
 import pandas as pd
 import subprocess
 import re
-import unittest
 
 def filter_line(l, free, complexed):
     if '#' in l:
@@ -31,18 +30,16 @@ def filter_line(l, free, complexed):
         free.append(split_line[0])
         complexed.append(split_line[1])
 
-class TestRunAGL(unittest.TestCase):
-
-    def test_filter_line(self):
-        inp = """:1zea_0PH
-                   3u36_0,3u36_3,3u36_2,3u36_1:
-                   1mrc_0:1mrf_0H"""
-        free = []
-        complexed = []
-        for l in inp.split('\n'):
-            filter_line(l, free, complexed)
-        self.assertEqual(free, ['3u36_0,3u36_3,3u36_2,3u36_1', '1mrc_0'])
-        self.assertEqual(complexed, ['1zea_0PH', '1mrf_0H'])
+def test_filter_line():
+    inp = """:1zea_0PH
+                3u36_0,3u36_3,3u36_2,3u36_1:
+                1mrc_0:1mrf_0H"""
+    free = []
+    complexed = []
+    for l in inp.split('\n'):
+        filter_line(l, free, complexed)
+    assert free == ['3u36_0,3u36_3,3u36_2,3u36_1', '1mrc_0']
+    assert complexed == ['1zea_0PH', '1mrf_0H', 's']
 
 
 def parse_redund_file(red_file):
@@ -133,7 +130,7 @@ def extract_data(fastadir, pdbdir):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    test_filter_line()
     parser = argparse.ArgumentParser(
         description='Compile the mutations from germline and angle ranges in redundant pdb files')
     parser.add_argument(
