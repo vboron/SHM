@@ -31,6 +31,7 @@ def filter_line(l, free, complexed):
         complexed.append(split_line[1])
 
 def test_filter_line():
+    print('running test_filter_line...')
     inp = """:1zea_0PH
                 3u36_0,3u36_3,3u36_2,3u36_1:
                 1mrc_0:1mrf_0H"""
@@ -38,8 +39,11 @@ def test_filter_line():
     complexed = []
     for l in inp.split('\n'):
         filter_line(l, free, complexed)
+    print(f'free={free}')
+    print(f'complexed={complexed}')
     assert free == ['3u36_0,3u36_3,3u36_2,3u36_1', '1mrc_0']
-    assert complexed == ['1zea_0PH', '1mrf_0H', 's']
+    assert complexed == ['1zea_0PH', '1mrf_0H']
+    print('test done')
 
 
 def parse_redund_file(red_file):
