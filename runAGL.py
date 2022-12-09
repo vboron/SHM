@@ -59,6 +59,19 @@ def parse_redund_file(red_file):
             filter_line(line.strip(), free, complexed)
         print(len(free))
         print(len(complexed))
+    return free, complexed
+
+
+def dict_for_names(free, complexed):
+    free_dic = {}
+    complexed_dic = {}
+    def make_dic(list, dict):
+        for item in list:
+            split_item = item.split(',')
+            dict[split_item[0]] = split_item[1:]
+    make_dic(free, free_dic)
+    make_dic(complexed, complexed_dic)
+    print(free_dic)
 
 
 def extract_data(fastadir, pdbdir):
@@ -148,5 +161,6 @@ if __name__ == '__main__':
         '--pdbdir', help='Directory of pdb files', required=True)
     args = parser.parse_args()
 
-    parse_redund_file(args.redfile)
+    free_list, complex_list = parse_redund_file(args.redfile)
+    dict_for_names(free_list, complex_list)
     # extract_data(args.fastadir, args.pdbdir)
