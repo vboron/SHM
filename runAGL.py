@@ -120,7 +120,7 @@ def extract_data(fastadir, pdbdir):
         for line in temp:
             if ':' in line:
                 result_data.append(line)
-        code = file[3:7].upper()
+        code = file[3:-3].upper()
         mismatch_data = [code]
         for data in result_data:
             if data.startswith('Mismatches'):
