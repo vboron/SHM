@@ -165,4 +165,4 @@ if __name__ == '__main__':
 
     free_list, complex_list = parse_redund_file(args.redfile)
     dict_for_names(free_list, complex_list)
-    # extract_data(args.fastadir, args.pdbdir)
+    extract_data(args.fastadir, args.pdbdir)
