@@ -73,7 +73,7 @@ def dict_for_names(free, complexed):
                     dict[si] = split_item[0]
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
-    print(free_dic)
+    print(f'dictionary free:{len(free_dic)}')
 
 
 def extract_data(fastadir, pdbdir):
