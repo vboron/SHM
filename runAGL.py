@@ -73,10 +73,10 @@ def dict_for_names(free, complexed):
                     dict[si] = split_item[0]
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
-    print(f'dictionary free:{len(free_dic)}')
+    return free_dic, complexed_dic
 
-
-def extract_data(fastadir, pdbdir):
+# TODO nonred complexed/free/both 
+def extract_data(fastadir, pdbdir, free_dict, complex_dict):
     files = []
     error_files = []
     col = ['code', 'VL', 'JL', 'VH', 'JH', 'angle']
@@ -120,7 +120,7 @@ def extract_data(fastadir, pdbdir):
         for line in temp:
             if ':' in line:
                 result_data.append(line)
-        code = file[3:-3].upper()
+        code = file[3:-4].upper()
         mismatch_data = [code]
         for data in result_data:
             if data.startswith('Mismatches'):
