@@ -163,7 +163,7 @@ if __name__ == '__main__':
     #     '--fastadir', help='Directory of fasta files', required=True)
     # parser.add_argument(
     #     '--pdbdir', help='Directory of pdb files', required=True)
-    # args = parser.parse_args()
+    args = parser.parse_args()
 
     free_list, complex_list = parse_redund_file(args.redfile)
     dict_for_names(free_list, complex_list)
