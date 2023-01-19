@@ -37,14 +37,15 @@ def test_filter_line():
     print('running test_filter_line...')
     inp = """:1zea_0PH
              3u36_0,3u36_3,3u36_2,3u36_1:
-             1mrc_0:1mrf_0H"""
+             1mrc_0:1mrf_0H
+             4org_1:"""
     free = []
     complexed = []
     for l in inp.split('\n'):
         filter_line(l, free, complexed)
     print(f'free={free}')
     print(f'complexed={complexed}')
-    assert free == ['3u36_0,3u36_3,3u36_2,3u36_1', '1mrc_0']
+    assert free == ['3u36_0,3u36_3,3u36_2,3u36_1', '1mrc_0', '4org_1']
     assert complexed == ['1zea_0PH', '1mrf_0H']
     print('test done')
 
