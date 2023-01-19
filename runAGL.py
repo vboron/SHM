@@ -73,6 +73,8 @@ def dict_for_names(free, complexed):
                     dict[si] = split_item[0]
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
+    print('free_dict:\n', free_dic)
+    print('complexed_dict:\n', complexed_dic)
     return free_dic, complexed_dic
 
 # TODO nonred complexed/free/both 
@@ -165,4 +167,4 @@ if __name__ == '__main__':
 
     free_list, complex_list = parse_redund_file(args.redfile)
     dict_for_names(free_list, complex_list)
-    extract_data(args.fastadir, args.pdbdir)
+    # extract_data(args.fastadir, args.pdbdir)
