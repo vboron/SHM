@@ -53,13 +53,13 @@ def test_filter_line():
 def parse_redund_file(red_file):
     with open(red_file, 'r') as f:
         lines = [l.strip() for l in f.readlines()]
-        print(len(lines))
+        # print(len(lines))
         free = []
         complexed = []
         for line in lines:
             filter_line(line.strip(), free, complexed)
-    print(len(free))
-    print(len(complexed))
+    print(free)
+    print(complexed)
     return free, complexed
 
 
