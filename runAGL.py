@@ -58,8 +58,8 @@ def parse_redund_file(red_file):
         complexed = []
         for line in lines:
             filter_line(line.strip(), free, complexed)
-        print(len(free))
-        print(len(complexed))
+    print(len(free))
+    print(len(complexed))
     return free, complexed
 
 
