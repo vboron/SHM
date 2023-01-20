@@ -163,10 +163,10 @@ if __name__ == '__main__':
         description='Compile the mutations from germline and angle ranges in redundant pdb files')
     parser.add_argument(
         '--redfile', help='List of redundant antibody files', required=True)
-    # parser.add_argument(
-    #     '--fastadir', help='Directory of fasta files', required=True)
-    # parser.add_argument(
-    #     '--pdbdir', help='Directory of pdb files', required=True)
+    parser.add_argument(
+        '--fastadir', help='Directory of fasta files', required=True)
+    parser.add_argument(
+        '--pdbdir', help='Directory of pdb files', required=True)
     args = parser.parse_args()
 
     free_list, complex_list = parse_redund_file(args.redfile)
