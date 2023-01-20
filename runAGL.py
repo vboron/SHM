@@ -155,14 +155,14 @@ def extract_data(fastadir, pdbdir, free_dict, complex_dict):
     print(df)
     # df.to_csv('agl.csv', index=False)
 
-def run_for_free_complexed(fastadir, free_l, complexed_l):
+def run_for_free_complexed(fastadir, free_d, complexed_d):
     files = []
     for file in os.listdir(fastadir):
         if file.endswith('.faa'):
             files.append(file)
     files.sort()
-    free_files = [f for f in files if f[3:-4] in free_l]
-    complex_files = [f for f in files if f[3:-4] in complexed_l]
+    free_files = [f for f in files if f[3:-4] in free_d]
+    complex_files = [f for f in files if f[3:-4] in complexed_d]
     print('free_files:\n', free_files)
     print('complex_flies:\n', complex_files)
 
@@ -180,5 +180,5 @@ if __name__ == '__main__':
 
     free_list, complex_list = parse_redund_file(args.redfile)
     dict_free, dict_complex = dict_for_names(free_list, complex_list)
-    run_for_free_complexed(args.fastadir, free_list, complex_list)
+    run_for_free_complexed(args.fastadir, dict_free, dict_complex)
     # extract_data(args.fastadir, args.pdbdir, dict_free, dict_complex)
