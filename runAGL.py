@@ -82,7 +82,7 @@ def dict_for_names(free, complexed):
     return free_dic, complexed_dic
 
 # TODO nonred complexed/free/both 
-def extract_data(fastadir, pdbdir, free_dict, complex_dict):
+def extract_data(fastadir, pdbdir, files, dictionary):
     # files = []
     # for file in os.listdir(fastadir):
     #     if file.endswith('.faa'):
@@ -155,7 +155,7 @@ def extract_data(fastadir, pdbdir, free_dict, complex_dict):
     print(df)
     # df.to_csv('agl.csv', index=False)
 
-def run_for_free_complexed(fastadir, free_d, complexed_d):
+def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):
     files = []
     for file in os.listdir(fastadir):
         if file.endswith('.faa'):
@@ -166,6 +166,12 @@ def run_for_free_complexed(fastadir, free_d, complexed_d):
     print('free_files:\n', free_files)
     print('complex_flies:\n', complex_files)
 
+    extract_data(fastadir, pdbdir, free_files, free_d)
+
+
+# *************************************************************************
+# *** Main program                                                      ***
+# *************************************************************************
 if __name__ == '__main__':
     test_filter_line()
     parser = argparse.ArgumentParser(
@@ -180,5 +186,5 @@ if __name__ == '__main__':
 
     free_list, complex_list = parse_redund_file(args.redfile)
     dict_free, dict_complex = dict_for_names(free_list, complex_list)
-    run_for_free_complexed(args.fastadir, dict_free, dict_complex)
+    run_for_free_complexed(args.fastadir, args.pdbdir, dict_free, dict_complex)
     # extract_data(args.fastadir, args.pdbdir, dict_free, dict_complex)
