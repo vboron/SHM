@@ -125,8 +125,8 @@ def extract_data(fastadir, pdbdir, files, dictionary):
         for line in temp:
             if ':' in line:
                 result_data.append(line)
-        code = file[3:-4].upper()
-        redund_code = dictionary[file[:-4]]
+        code = file[3:-4]
+        redund_code = dictionary[code]
         mismatch_data = [redund_code]
         for data in result_data:
             if data.startswith('Mismatches'):
@@ -134,7 +134,7 @@ def extract_data(fastadir, pdbdir, files, dictionary):
                 mismatch = int(data_list[1])
                 mismatch_data.append(mismatch)
         pdbfilepath = os.path.join(pdbdir, file[:-3]+'cho')
-        angle = run_abpackingangle(code, pdbfilepath)
+        angle = run_abpackingangle(code.upper(), pdbfilepath)
         mismatch_data.append(angle)
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
