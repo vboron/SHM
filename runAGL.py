@@ -126,7 +126,8 @@ def extract_data(fastadir, pdbdir, files, dictionary):
             if ':' in line:
                 result_data.append(line)
         code = file[3:-4].upper()
-        mismatch_data = [code]
+        redund_code = dictionary[file[:-4]]
+        mismatch_data = [redund_code]
         for data in result_data:
             if data.startswith('Mismatches'):
                 data_list = data.split(':')
