@@ -161,8 +161,8 @@ def run_for_free_complexed(fastadir, free_l, complexed_l):
         if file.endswith('.faa'):
             files.append(file)
     files.sort()
-    free_files = [f for f in files if f in free_l]
-    complex_files = [f for f in files if f in complexed_l]
+    free_files = [f for f in files if f[3:-4] in free_l]
+    complex_files = [f for f in files if f[3:-4] in complexed_l]
     print('free_files:\n', free_files)
     print('complex_flies:\n', complex_files)
 
