@@ -43,8 +43,8 @@ def test_filter_line():
     complexed = []
     for l in inp.split('\n'):
         filter_line(l, free, complexed)
-    print(f'free={free}')
-    print(f'complexed={complexed}')
+    # print(f'free={free}')
+    # print(f'complexed={complexed}')
     assert free == ['3u36_0,3u36_3,3u36_2,3u36_1', '1mrc_0', '4org_1']
     assert complexed == ['1zea_0PH', '1mrf_0H']
     print('test done')
@@ -77,7 +77,7 @@ def dict_for_names(free, complexed):
                 dict[item] = item
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
-    print('free_dict:\n', free_dic)
+    # print('free_dict:\n', free_dic)
     # print('complexed_dict:\n', complexed_dic)
     return free_dic, complexed_dic
 
@@ -163,10 +163,11 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):
     files.sort()
     free_files = [f for f in files if f[3:-4] in free_d]
     complex_files = [f for f in files if f[3:-4] in complexed_d]
-    print('free_files:\n', free_files)
-    print('complex_flies:\n', complex_files)
+    # print('free_files:\n', free_files)
+    # print('complex_flies:\n', complex_files)
 
     extract_data(fastadir, pdbdir, free_files, free_d)
+    extract_data(fastadir, pdbdir, complex_files, complexed_d)
 
 
 # *************************************************************************
