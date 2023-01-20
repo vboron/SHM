@@ -77,7 +77,7 @@ def dict_for_names(free, complexed):
                 dict[item] = item
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
-    # print('free_dict:\n', free_dic)
+    print('free_dict:\n', free_dic)
     # print('complexed_dict:\n', complexed_dic)
     return free_dic, complexed_dic
 
