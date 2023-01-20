@@ -77,8 +77,8 @@ def dict_for_names(free, complexed):
                 dict[item] = item
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
-    print('free_dict:\n', free_dic)
-    print('complexed_dict:\n', complexed_dic)
+    # print('free_dict:\n', free_dic)
+    # print('complexed_dict:\n', complexed_dic)
     return free_dic, complexed_dic
 
 # TODO nonred complexed/free/both 
@@ -142,7 +142,7 @@ def extract_data(fastadir, pdbdir, free_dict, complex_dict):
         df = df[df['angle'].str.contains('Packing') == False]
     except:
         print('No missing angles.')
-    df.to_csv('agl_mis.csv', index=False)
+    # df.to_csv('agl_mis.csv', index=False)
     df['angle'] = df['angle'].astype(float)
     df.dropna(inplace=True)
     aggregation_func = {'angle': ['max', 'min']}
@@ -154,7 +154,7 @@ def extract_data(fastadir, pdbdir, free_dict, complex_dict):
     col = col + ['angle_min', 'angle_max', 'angle_range']
     df.columns = col
     print(df)
-    df.to_csv('agl.csv', index=False)
+    # df.to_csv('agl.csv', index=False)
 
 
 if __name__ == '__main__':
@@ -170,5 +170,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     free_list, complex_list = parse_redund_file(args.redfile)
-    dict_for_names(free_list, complex_list)
-    # extract_data(args.fastadir, args.pdbdir)
+    dict_free, dict_complex = dict_for_names(free_list, complex_list)
+    extract_data(args.fastadir, args.pdbdir, dict_free, dict_complex)
