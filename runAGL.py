@@ -83,11 +83,6 @@ def dict_for_names(free, complexed):
 
 # TODO nonred complexed/free/both 
 def extract_data(fastadir, pdbdir, files, dictionary):
-    # files = []
-    # for file in os.listdir(fastadir):
-    #     if file.endswith('.faa'):
-    #         files.append(file)
-    # files.sort()
     error_files = []
     col = ['code', 'VL', 'JL', 'VH', 'JH', 'angle']
     dfdata = []
@@ -154,7 +149,7 @@ def extract_data(fastadir, pdbdir, files, dictionary):
     col = col + ['angle_min', 'angle_max', 'angle_range']
     df.columns = col
     print(df)
-    # df.to_csv('agl.csv', index=False)
+    return df
 
 def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):
     files = []
@@ -167,8 +162,11 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):
     # print('free_files:\n', free_files)
     # print('complex_flies:\n', complex_files)
 
-    extract_data(fastadir, pdbdir, free_files, free_d)
-    extract_data(fastadir, pdbdir, complex_files, complexed_d)
+    free_df = extract_data(fastadir, pdbdir, free_files, free_d)
+    complexed_df = extract_data(fastadir, pdbdir, complex_files, complexed_d)
+
+    free_df.to_csv('free_mutations.csv', index=False)
+    complexed_df.to_csv('complexed_mutations.csv', index=False)
 
 
 # *************************************************************************
@@ -189,4 +187,3 @@ if __name__ == '__main__':
     free_list, complex_list = parse_redund_file(args.redfile)
     dict_free, dict_complex = dict_for_names(free_list, complex_list)
     run_for_free_complexed(args.fastadir, args.pdbdir, dict_free, dict_complex)
-    # extract_data(args.fastadir, args.pdbdir, dict_free, dict_complex)
