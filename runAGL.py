@@ -68,10 +68,13 @@ def dict_for_names(free, complexed):
     complexed_dic = {}
     def make_dic(list, dict):
         for item in list:
-            split_item = item.split(',')
-            if len(split_item) != 1:
+            if ',' in item:
+                split_item = item.split(',')
+            # if len(split_item) != 1:
                 for si in split_item:
                     dict[si] = split_item[0]
+            else:
+                dict[item] = item
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
     print('free_dict:\n', free_dic)
