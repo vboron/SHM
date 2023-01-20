@@ -78,7 +78,7 @@ def dict_for_names(free, complexed):
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
     # print('free_dict:\n', free_dic)
-    print('complexed_dict:\n', complexed_dic)
+    # print('complexed_dict:\n', complexed_dic)
     return free_dic, complexed_dic
 
 # TODO nonred complexed/free/both 
@@ -162,7 +162,9 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):
     # print('free_files:\n', free_files)
     # print('complex_flies:\n', complex_files)
 
+    print('Finding mutations for fee antibodies...')
     free_df = extract_data(fastadir, pdbdir, free_files, free_d)
+    print('Finding mutations for complexed antibodies...')
     complexed_df = extract_data(fastadir, pdbdir, complex_files, complexed_d)
 
     free_df.to_csv('free_mutations.csv', index=False)
