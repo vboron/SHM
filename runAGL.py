@@ -140,9 +140,11 @@ def extract_data(fastadir, pdbdir, files, dictionary):
     # df.to_csv('agl_mis.csv', index=False)
     df['angle'] = df['angle'].astype(float)
     df.dropna(inplace=True)
+    df.drop(columns=['JL', 'JH'])
+    col.remove('JH')
+    col.remove('JL')
     aggregation_func = {'angle': ['max', 'min']}
-    # df = df.groupby(col[:-1]).aggregate(aggregation_func)
-    df = df.groupby(['code', 'VL', 'VH']).aggregate(aggregation_func)
+    df = df.groupby(col[:-1]).aggregate(aggregation_func)
     df['angle_range'] = df[('angle', 'max')]-df[('angle', 'min')]
     df = df.reset_index()
     df.columns = df.columns.droplevel(level=0)
