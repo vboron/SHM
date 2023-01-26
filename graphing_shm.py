@@ -32,9 +32,9 @@ def actual_vs_predicted_from_df(df, directory):
     axes = plt.gca()
 
     # Sets the maximum and minimum values for the axes
-    axes.autoscale(tight=True)
-    # axes.set_xlim([-70, -20])
-    # axes.set_ylim([-70, -20])
+    # axes.autoscale(tight=True)
+    axes.set_xlim([0, 40])
+    axes.set_ylim([0, 10])
 
     # axes.axline((0, 0), (1, 1), color='k')
 
