@@ -36,19 +36,19 @@ def actual_vs_predicted_from_df(df, directory):
     # axes.set_xlim([-70, -20])
     # axes.set_ylim([-70, -20])
 
-    axes.axline((0, 0), (1, 1), color='k')
+    # axes.axline((0, 0), (1, 1), color='k')
 
     # Sets the axes labels
     plt.xlabel('VH + VL mutations from germline')
     plt.ylabel('Range of the packing angle')
 
     # Adds graph annotations
-    plt.text(s='Line: y=x', x=-66, y=-27, fontsize=8)
+    # plt.text(s='Line: y=x', x=-66, y=-27, fontsize=8)
 
-    plt.text(s='Best fit: y={:.3f}x+{:.3f}'.format(m, b),
-            x=-66, y=-29, fontsize=8, color=color_bf_line)
+    # plt.text(s='Best fit: y={:.3f}x+{:.3f}'.format(m, b),
+    #         x=-66, y=-29, fontsize=8, color=color_bf_line)
 
-    plt.tight_layout()
+    # plt.tight_layout()
 
     # add best fit data to dataframe and export the dataframe
     # add best fit lines to statistics dataframe
