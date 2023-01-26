@@ -10,7 +10,7 @@ import pandas as pd
 
 
 # *************************************************************************
-def actual_vs_predicted_from_df(df, directory):
+def mutations_vs_angrange(df, directory, name):
 
 
     # .corr() returns the correlation between two columns
@@ -33,8 +33,8 @@ def actual_vs_predicted_from_df(df, directory):
 
     # Sets the maximum and minimum values for the axes
     # axes.autoscale(tight=True)
-    axes.set_xlim([0, 40])
-    axes.set_ylim([0, 10])
+    axes.set_xlim([0, 60])
+    axes.set_ylim([0, 45])
 
     # axes.axline((0, 0), (1, 1), color='k')
 
@@ -55,7 +55,7 @@ def actual_vs_predicted_from_df(df, directory):
     bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
 
     # Exports the figure as a .jpg file
-    path_fig = os.path.join(directory, f'test.jpg')
+    path_fig = os.path.join(directory, f'{name}.jpg')
     plt.savefig(path_fig, format='jpg')
     plt.close()
 
