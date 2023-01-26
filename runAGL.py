@@ -174,7 +174,7 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):
 
     free_df.to_csv('free_mutations.csv', index=False)
     complexed_df.to_csv('complexed_mutations.csv', index=False)
-    graph(free_df, './')
+    graph.actual_vs_predicted_from_df(free_df, './')
 
 
 # *************************************************************************
