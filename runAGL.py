@@ -151,6 +151,7 @@ def extract_data(fastadir, pdbdir, files, dictionary):
     col.remove('angle')
     col = col + ['angle_min', 'angle_max', 'angle_range']
     df.columns = col
+    df['total_mut'] = df['VL'] + df['VH']
     print(df)
     return df
 
