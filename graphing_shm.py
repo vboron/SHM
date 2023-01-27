@@ -27,14 +27,14 @@ def mutations_vs_angrange(df, directory, name):
     m, b = np.polyfit(x, y, 1)
     plt.plot(x, m * x + b, color=color_bf_line, linestyle='dashed', linewidth=1)
 
-    plt.scatter(x, y, s=2, color=color_values)
+    plt.scatter(x, y, s=3, color=color_values)
 
     axes = plt.gca()
 
     # Sets the maximum and minimum values for the axes
     # axes.autoscale(tight=True)
     axes.set_xlim([0, 60])
-    axes.set_ylim([0, 45])
+    axes.set_ylim([-5, 45])
 
     # axes.axline((0, 0), (1, 1), color='k')
 
