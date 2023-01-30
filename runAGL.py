@@ -156,6 +156,13 @@ def extract_data(fastadir, pdbdir, files, dictionary):
     print(df)
     return df
 
+
+def make_graphs(df, graph_name):
+    cols = ['VL', 'VH', 'total_mut']
+    for col in cols:
+        graph.mutations_vs_angrange(df, col, './', f'agl_{graph_name}_{col}_graph')
+
+
 def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):
     files = []
     for file in os.listdir(fastadir):
@@ -174,8 +181,9 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):
 
     free_df.to_csv('free_mutations.csv', index=False)
     complexed_df.to_csv('complexed_mutations.csv', index=False)
-    graph.mutations_vs_angrange(complexed_df, './', 'complex_graph')
-    graph.mutations_vs_angrange(free_df, './', 'free_graph')
+
+    make_graphs(complexed_df, 'complex')
+    make_graphs(free_df, 'free')
 
 
 # *************************************************************************
