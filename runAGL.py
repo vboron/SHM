@@ -160,7 +160,10 @@ def extract_data(fastadir, pdbdir, files, dictionary):
 def make_graphs(df, graph_name):
     cols = ['VL', 'VH', 'total_mut']
     for col in cols:
-        graph.mutations_vs_angrange(df, col, './', f'agl_{graph_name}_{col}_graph')
+        if col == 'total_mut':
+            graph.mutations_vs_angrange(df, col, 'VH + VL', './', f'agl_{graph_name}_{col}_graph')
+        else:
+            graph.mutations_vs_angrange(df, col, col, './', f'agl_{graph_name}_{col}_graph')
 
 
 def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):

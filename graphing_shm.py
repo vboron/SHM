@@ -9,7 +9,7 @@ import pandas as pd
 
 
 # *************************************************************************
-def mutations_vs_angrange(df, mut_column, directory, name):
+def mutations_vs_angrange(df, mut_column, x_axis, directory, name):
 
     # .corr() returns the correlation between two columns
     pearson_a = df[mut_column].corr(df['angle_range'])
@@ -39,7 +39,7 @@ def mutations_vs_angrange(df, mut_column, directory, name):
     # axes.axline((0, 0), (1, 1), color='k')
 
     # Sets the axes labels
-    plt.xlabel('VH + VL mutations from germline')
+    plt.xlabel(f'{x_axis} mutations from germline')
     plt.ylabel('Range of the packing angle')
 
     # Adds graph annotations
