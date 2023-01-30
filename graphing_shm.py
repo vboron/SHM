@@ -9,17 +9,17 @@ import pandas as pd
 
 
 # *************************************************************************
-def mutations_vs_angrange(df, directory, name):
+def mutations_vs_angrange(df, mut_column, directory, name):
 
     # .corr() returns the correlation between two columns
-    pearson_a = df['total_mut'].corr(df['angle_range'])
+    pearson_a = df[mut_column].corr(df['angle_range'])
 
     plt.figure()
 
     color_values = 'burlywood'
     color_bf_line = 'rebeccapurple'
 
-    x = df['total_mut']
+    x = df[mut_column]
     y = df['angle_range']
 
     m, b = np.polyfit(x, y, 1)
