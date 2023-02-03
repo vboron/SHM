@@ -9,7 +9,7 @@ def compare_dirs(dir1, dir2, new_dir_name):
     dir2_files = os.listdir(dir2)
     new_files = []
     for file in dir2_files:
-        if file not in dir1_files:
+        if file[:-4] in dir1_files:
             new_files.append(file)
     new_dir = new_dir_name
     os.mkdir(new_dir)
