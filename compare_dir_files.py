@@ -11,17 +11,18 @@ def compare_dirs(dir1, dir2, new_dir_name):
     for file in dir2_files:
         if file[:-4] in dir1_files:
             new_files.append(file)
-    new_dir = new_dir_name
-    os.mkdir(new_dir)
     print(len(new_files))
-    i=0
-    for file in new_files:
-        i+=1
-        print(i)
-        print(file)
-        src = os.path.join(dir2, file)
-        dst = os.path.join(new_dir, file)
-        shutil.copy2(src, dst)
+    new_dir = new_dir_name
+    # os.mkdir(new_dir)
+    # print(len(new_files))
+    # i=0
+    # for file in new_files:
+    #     i+=1
+    #     print(i)
+    #     print(file)
+    #     src = os.path.join(dir2, file)
+    #     dst = os.path.join(new_dir, file)
+    #     shutil.copy2(src, dst)
 
 
 parser = argparse.ArgumentParser(description='Program for compiling angles')
