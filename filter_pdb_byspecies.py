@@ -25,8 +25,8 @@ def find_lines(dire):
                         line_s = line.split(':')
                         info = line_s[1].replace(';', '')
                         rel_lines.append(info.strip())
-        pairs = pairwise(rel_lines)
-        print(pairs)
+        for x, y in pairwise(rel_lines):
+            print(x, y)
 
 
 # *************************************************************************
