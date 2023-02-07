@@ -47,7 +47,7 @@ def find_lines(dire):
 
 
 def make_df(data):
-    df = pd.DataFrame(data=data, col=['code', 'h_species', 'l_species'])
+    df = pd.DataFrame(data=data, columns=['code', 'h_species', 'l_species'])
     print(df)
 
 
