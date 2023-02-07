@@ -15,7 +15,7 @@ def pairwise(iterable):
 def find_lines(dire):
     files = os.listdir(dire)
     line_terms = ['MOL_ID:', 'CHAIN:', 'ORGANISM_SCIENTIFIC:']
-    
+    species_info = []
     for file in files:
         l_chain = []
         h_chain = []
@@ -36,13 +36,19 @@ def find_lines(dire):
                 data[x] = [y]
         for value in data.values():
             if 'L' in value[0]:
-                l_chain.append('L')
+                # l_chain.append('L')
                 l_chain.append(value[1])
             if 'H' in value[0]:
-                h_chain.append('H')
+                # h_chain.append('H')
                 h_chain.append(value[1])
         summary = summary + h_chain + l_chain
-        print(summary)
+        species_info.append(summary)
+    return species_info
+
+
+def make_df(data):
+    df = pd.DataFrame(data=data, col=['code', 'h_species', 'l_species'])
+    print(df)
 
 
 # *************************************************************************
