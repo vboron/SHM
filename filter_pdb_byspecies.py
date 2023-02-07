@@ -12,7 +12,7 @@ def find_lines(dire):
 
     for file in files:
         rel_lines = []
-        with open(file, 'r') as f:
+        with open(os.path.join(dire, file), 'r') as f:
             for line in f:
                 for term in line_terms:
                     if term in line:
