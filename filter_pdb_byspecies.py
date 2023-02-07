@@ -17,7 +17,7 @@ def find_lines(dire):
                 for term in line_terms:
                     if term in line:
                         line_s = line.split(':')
-                        info = line_s[1]
+                        info = line_s[1].replace(';', '')
                         rel_lines.append(info.strip())
         print(rel_lines)
 
