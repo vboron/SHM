@@ -33,13 +33,14 @@ def find_lines(dire):
             else:
                 data[x] = [y]
         for value in data.values():
-            for chain, species in value:
-                if 'L' in chain:
-                    summary.append('L')
-                    summary.append(species)
-                if 'H' in chain:
-                    summary.append('H')
-                    summary.append(species)
+            print(value)
+            # for chain, species in value:
+            #     if 'L' in chain:
+            #         summary.append('L')
+            #         summary.append(species)
+            #     if 'H' in chain:
+            #         summary.append('H')
+            #         summary.append(species)
         print(summary)
 
 
