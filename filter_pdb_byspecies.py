@@ -61,4 +61,5 @@ if __name__ == '__main__':
         '--dir', help='.', required=True)
     args = parser.parse_args()
 
-    find_lines(args.dir)
+    chain_spec = find_lines(args.dir)
+    make_df(chain_spec)
