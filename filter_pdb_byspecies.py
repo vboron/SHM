@@ -29,9 +29,9 @@ def find_lines(dire):
         for x, y in pairwise(rel_lines):
             # print(type(data[x]))
             if x not in data:
-                data[x] = y
+                data[f'{x}'] = y
             else:
-                data[x].append(y)
+                data[f'{x}'].append(y)
         print(data)
 
 
