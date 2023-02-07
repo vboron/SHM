@@ -17,6 +17,8 @@ def find_lines(dire):
     line_terms = ['MOL_ID:', 'CHAIN:', 'ORGANISM_SCIENTIFIC:']
     
     for file in files:
+        l_chain = []
+        h_chain = []
         summary = [file[:-4]]
         data = {}
         rel_lines = []
@@ -34,11 +36,12 @@ def find_lines(dire):
                 data[x] = [y]
         for value in data.values():
             if 'L' in value[0]:
-                summary.append('L')
-                summary.append(value[1])
+                l_chain.append('L')
+                l_chain.append(value[1])
             if 'H' in value[0]:
-                summary.append('H')
-                summary.append(value[1])
+                h_chain.append('H')
+                h_chain.append(value[1])
+        summary = summary + h_chain + l_chain
         print(summary)
 
 
