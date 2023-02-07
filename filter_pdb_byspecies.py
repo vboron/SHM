@@ -35,6 +35,7 @@ def find_lines(dire):
             else:
                 data[x] = [y]
         for value in data.values():
+            print(file, value)
             if 'L' in value[0]:
                 # l_chain.append('L')
                 l_chain.append(value[1])
