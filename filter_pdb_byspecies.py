@@ -6,6 +6,12 @@ import os
 import pandas as pd
 
 
+def pairwise(iterable):
+    "s -> (s0, s1), (s2, s3), (s4, s5), ..."
+    a = iter(iterable)
+    return zip(a, a)
+
+
 def find_lines(dire):
     files = os.listdir(dire)
     line_terms = ['MOL_ID:', 'CHAIN:', 'ORGANISM_SCIENTIFIC:']
@@ -19,7 +25,8 @@ def find_lines(dire):
                         line_s = line.split(':')
                         info = line_s[1].replace(';', '')
                         rel_lines.append(info.strip())
-        print(rel_lines)
+        pairs = pairwise(rel_lines)
+        print(pairs)
 
 
 # *************************************************************************
