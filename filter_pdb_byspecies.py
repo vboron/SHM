@@ -16,7 +16,7 @@ def find_lines(dire):
             for line in f:
                 for term in line_terms:
                     if term in line:
-                        rel_lines.append(line)
+                        rel_lines.append(line.strip())
         print(rel_lines)
 
 
