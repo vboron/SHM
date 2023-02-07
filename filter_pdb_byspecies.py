@@ -27,11 +27,11 @@ def find_lines(dire):
                         info = line_s[1].replace(';', '')
                         rel_lines.append(info.strip())
         for x, y in pairwise(rel_lines):
-            print(type(data))
-            if x in data:
-                data[x].append(y)
-            else:
+            print(type(data[x]))
+            if x not in data:
                 data[x] = y
+            else:
+                data[x].append(y)
         print(data)
 
 
