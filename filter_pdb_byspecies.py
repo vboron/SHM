@@ -15,8 +15,9 @@ def pairwise(iterable):
 def find_lines(dire):
     files = os.listdir(dire)
     line_terms = ['MOL_ID:', 'CHAIN:', 'ORGANISM_SCIENTIFIC:']
-
+    
     for file in files:
+        data = {}
         rel_lines = []
         with open(os.path.join(dire, file), 'r') as f:
             for line in f:
@@ -26,7 +27,11 @@ def find_lines(dire):
                         info = line_s[1].replace(';', '')
                         rel_lines.append(info.strip())
         for x, y in pairwise(rel_lines):
-            print(x, y)
+            if x in data:
+                data[x].append(y)
+            else:
+                data[x] = y
+        print(data)
 
 
 # *************************************************************************
