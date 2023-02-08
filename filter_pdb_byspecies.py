@@ -14,7 +14,7 @@ def pairwise(iterable):
 
 def find_lines(dire):
     files = os.listdir(dire)
-    line_terms = ['MOL_ID:', 'CHAIN:', 'ORGANISM_SCIENTIFIC:']
+    line_terms = ['MOL_ID:', 'CHAIN:', 'ORGANISM_SCIENTIFIC:', 'SYNTHETIC:']
     species_info = []
     for file in files:
         l_chain = []
