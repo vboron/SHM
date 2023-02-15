@@ -92,7 +92,7 @@ def map_chain_org(dire, files):
             l_chain.append(None)
         summary = summary + h_chain + l_chain
         lh_chain_species.append(summary)
-        return lh_chain_species
+    return lh_chain_species
  
 
 def make_df(data):
