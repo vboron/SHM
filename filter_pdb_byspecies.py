@@ -43,7 +43,10 @@ def map_molid_chain(dire, files):
                 if line.startswith('SOURCE'):
                     for term in ['MOL_ID:', 'ORGANISM_SCIENTIFIC:']:
                         if term in line:
-                            print(line)
+                            # print(line)
+                            if prev == term:
+                                print('missing line...')
+                            prev = term
         # for value in chain_data.values():
         #     print(file, value)
         #     if 'L' in value[0]:
