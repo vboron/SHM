@@ -75,7 +75,7 @@ def combine_dicts(dict1, dict2):
 def map_chain_org(dire, files):
     lh_chain_species = []
     for file in files:
-        print(file)
+        # print(file)
         chain_dict = map_molid_chain(dire, file)
         org_dict = map_molid_org(dire, file)
         final_dict = combine_dicts(chain_dict, org_dict)
@@ -83,7 +83,7 @@ def map_chain_org(dire, files):
         l_chain = []
         h_chain = []
         for value in final_dict.values():
-            print(value)
+            # print(value)
             # print(summary + value)
             if 'L' in value[0]:
                 l_chain.append(value[1])
