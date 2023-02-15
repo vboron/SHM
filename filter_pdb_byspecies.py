@@ -81,6 +81,7 @@ def map_chain_org(dire, files):
         l_chain = []
         h_chain = []
         for value in final_dict.values():
+            print(value)
             # print(summary + value)
             if 'L' in value[0]:
                 l_chain.append(value[1])
