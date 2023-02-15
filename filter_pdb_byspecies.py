@@ -35,8 +35,7 @@ def map_molid_chain(dire, files):
                         rel_lines.append(info.strip())
         # print(rel_lines)
         for x, y in pairwise(rel_lines):
-            if 'H' in y or 'L' in y:
-                chain_data[x] = y
+            chain_data[x] = y
         prev = ''
         org_list = []
         with open(os.path.join(dire, file), 'r') as f:
