@@ -29,8 +29,8 @@ def map_molid_chain(dire, file):
             for line in f:
                 if line.startswith('COMPND'):
                     split_line = line.split()
-                    if 'MOL_ID:' in line or 'CHAIN:' in line:
-                        print(split_line)
+                    if 'MOL_ID:' in line or 'CHAIN:' in line[2]:
+                        # print(split_line)
                         line_s = line.split(':')
                         info = line_s[1].replace(';', '')
                         rel_lines.append(info.strip())
@@ -75,30 +75,26 @@ def combine_dicts(dict1, dict2):
 def map_chain_org(dire, files):
     lh_chain_species = []
     for file in files:
-        print(file)
         chain_dict = map_molid_chain(dire, file)
-        print(chain_dict)
         org_dict = map_molid_org(dire, file)
-        print(org_dict)
         final_dict = combine_dicts(chain_dict, org_dict)
-        # print(final_dict.values())
-    #     summary = [file[:-4]]
-    #     l_chain = []
-    #     h_chain = []
-    #     for value in final_dict.values():
-    #         print(value)
-    #         # print(summary + value)
-    #         if 'L' in value[0]:
-    #             l_chain.append(value[1])
-    #         if 'H' in value[0]:
-    #             h_chain.append(value[1])
-    #     if len(h_chain) == 0:
-    #         h_chain.append(None)
-    #     if len(l_chain) == 0:
-    #         l_chain.append(None)
-    #     summary = summary + h_chain + l_chain
-    #     lh_chain_species.append(summary)
-    # return lh_chain_species
+        summary = [file[:-4]]
+        l_chain = []
+        h_chain = []
+        for value in final_dict.values():
+            print(value)
+            # print(summary + value)
+            if 'L' in value[0]:
+                l_chain.append(value[1])
+            if 'H' in value[0]:
+                h_chain.append(value[1])
+        if len(h_chain) == 0:
+            h_chain.append(None)
+        if len(l_chain) == 0:
+            l_chain.append(None)
+        summary = summary + h_chain + l_chain
+        lh_chain_species.append(summary)
+    return lh_chain_species
  
 
 def make_df(data):
