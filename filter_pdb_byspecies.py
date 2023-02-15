@@ -11,40 +11,56 @@ def pairwise(iterable):
     a = iter(iterable)
     return zip(a, a)
 
-
-def find_lines(dire):
+def make_list_of_files(dire):
     files = os.listdir(dire)
-    line_terms = ['MOL_ID:', 'CHAIN:', 'ORGANISM_SCIENTIFIC:', 'SYNTHETIC:']
-    species_info = []
+    return files
+
+def map_molid_chain(dire, files):
     for file in files:
-        l_chain = []
-        h_chain = []
-        summary = [file[:-4]]
-        data = {}
         rel_lines = []
         with open(os.path.join(dire, file), 'r') as f:
             for line in f:
-                for term in line_terms:
-                    if term in line:
+                if line.startswith('COMPND'):
+                    if 'MOL_ID:' in line or 'CHAIN:' in line:
                         line_s = line.split(':')
                         info = line_s[1].replace(';', '')
                         rel_lines.append(info.strip())
-        for x, y in pairwise(rel_lines):
-            if x in data:
-               data[x].append(y) 
-            else:
-                data[x] = [y]
-        for value in data.values():
-            print(file, value)
-            if 'L' in value[0]:
-                # l_chain.append('L')
-                l_chain.append(value[1])
-            if 'H' in value[0]:
-                # h_chain.append('H')
-                h_chain.append(value[1])
-        summary = summary + h_chain + l_chain
-        species_info.append(summary)
-    return species_info
+        print(rel_lines)
+    # line_terms = ['MOL_ID:', 'CHAIN:', 'ORGANISM_SCIENTIFIC:']
+    # species_info = []
+    # for file in files:
+    #     chains = []
+    #     orgs = []
+    #     l_chain = []
+    #     h_chain = []
+    #     summary = [file[:-4]]
+    #     data = {}
+    #     rel_lines = []
+    #     with open(os.path.join(dire, file), 'r') as f:
+    #         for line in f:
+    #             if 'MOL_ID:' in line:
+    #                 if 
+    #             # for term in line_terms:
+    #             #     if term in line:
+    #             #         line_s = line.split(':')
+    #             #         info = line_s[1].replace(';', '')
+    #             #         rel_lines.append(info.strip())
+    #     for x, y in pairwise(rel_lines):
+    #         if x in data:
+    #            data[x].append(y) 
+    #         else:
+    #             data[x] = [y]
+    #     for value in data.values():
+    #         print(file, value)
+    #         if 'L' in value[0]:
+    #             # l_chain.append('L')
+    #             l_chain.append(value[1])
+    #         if 'H' in value[0]:
+    #             # h_chain.append('H')
+    #             h_chain.append(value[1])
+    #     summary = summary + h_chain + l_chain
+    #     species_info.append(summary)
+    # return species_info
 
 
 def make_df(data):
@@ -62,5 +78,6 @@ if __name__ == '__main__':
         '--dir', help='.', required=True)
     args = parser.parse_args()
 
-    chain_spec = find_lines(args.dir)
-    make_df(chain_spec)
+    file_list = make_list_of_files(args.dir)
+    chain_spec = map_molid_chain(args.dir, file_list)
+    # make_df(chain_spec)
