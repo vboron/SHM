@@ -75,10 +75,10 @@ def map_chain_org(dire, files):
         chain_dict = map_molid_chain(dire, file)
         org_dict = map_molid_org(dire, file)
         final_dict = combine_dicts(chain_dict, org_dict)
-        print(final_dict.values())
+        # print(final_dict.values())
         summary = [file[:-4]]
         for value in final_dict.values():
-            print(file, value)
+            print(summary + value)
         #     if 'L' in value[0]:
         #         # l_chain.append('L')
         #         l_chain.append(value[1])
