@@ -52,6 +52,8 @@ def map_molid_chain(dire, files):
                             info = line_s[1].replace(';', '').strip()
                             org_list.append(info)
                             prev = term
+            if prev == 'MOL_ID:':
+                org_list.append(None)
         print(org_list)
         # for value in chain_data.values():
         #     print(file, value)
