@@ -71,6 +71,7 @@ def combine_dicts(dict1, dict2):
 
 
 def map_chain_org(dire, files):
+    lh_chain_species = []
     for file in files:
         chain_dict = map_molid_chain(dire, file)
         org_dict = map_molid_org(dire, file)
@@ -82,15 +83,13 @@ def map_chain_org(dire, files):
         for value in final_dict.values():
             # print(summary + value)
             if 'L' in value[0]:
-                # l_chain.append('L')
                 l_chain.append(value[1])
             if 'H' in value[0]:
-                # h_chain.append('H')
                 h_chain.append(value[1])
         summary = summary + h_chain + l_chain
-        print(summary)
+        lh_chain_species.append(summary)
+        return lh_chain_species
  
-
 
 def make_df(data):
     df = pd.DataFrame(data=data, columns=['code', 'h_species', 'l_species'])
@@ -109,4 +108,4 @@ if __name__ == '__main__':
 
     file_list = make_list_of_files(args.dir)
     chain_spec = map_chain_org(args.dir, file_list)
-    # make_df(chain_spec)
+    make_df(chain_spec)
