@@ -74,10 +74,10 @@ def combine_dicts(dict1, dict2):
 def map_chain_org(dire, files):
     for file in files:
         print(type(file))
-        chain_dict = map_molid_chain(dire, file)
-        org_dict = map_molid_org(dire, file)
-        final_dict = combine_dicts(chain_dict, org_dict)
-        print(final_dict.values())
+        # chain_dict = map_molid_chain(dire, file)
+        # org_dict = map_molid_org(dire, file)
+        # final_dict = combine_dicts(chain_dict, org_dict)
+        # print(final_dict.values())
 
     
     
