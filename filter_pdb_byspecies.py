@@ -12,19 +12,19 @@ def pairwise(iterable):
     a = iter(iterable)
     return zip(a, a)
 
+
 def combine_dict(d1, d2):
     return {k: tuple(d[k] for d in (d1, d2) if k in d) for k in set(d1.keys()) | set(d2.keys())}
+
 
 def make_list_of_files(dire):
     files = os.listdir(dire)
     return files
 
-def map_molid_chain(dire, files):
-    for file in files:
+
+def map_molid_chain(dire, file):
         rel_lines = []
         summary = [file[:-4]]
-        l_chain = []
-        h_chain = []
         chain_data = {}
         with open(os.path.join(dire, file), 'r') as f:
             for line in f:
@@ -33,9 +33,12 @@ def map_molid_chain(dire, files):
                         line_s = line.split(':')
                         info = line_s[1].replace(';', '')
                         rel_lines.append(info.strip())
-        # print(rel_lines)
         for x, y in pairwise(rel_lines):
             chain_data[x] = y
+        return chain_data
+
+
+def map_molid_org(dire, file):
         prev = ''
         org_list = []
         with open(os.path.join(dire, file), 'r') as f:
@@ -57,12 +60,28 @@ def map_molid_chain(dire, files):
         org_data = {}
         for x, y in pairwise(org_list):
             org_data[x] = y
-        # print(org_data)
-        dd = defaultdict(list)
-        for d in (chain_data, org_data): # you can list as many input dicts as you want here
-            for key, value in d.items():
-                dd[key].append(value)
-        print(dd)
+        return org_data
+
+
+def combine_dicts(dict1, dict2):
+    dd = defaultdict(list)
+    for d in (dict1, dict2): # you can list as many input dicts as you want here
+        for key, value in d.items():
+            dd[key].append(value)
+    return dd
+
+
+def map_chain_org(dire, files):
+    for file in files:
+        chain_dict = map_molid_chain(dire, file)
+        org_dict = map_molid_org(dire, file)
+        final_dict = combine_dicts(chain_dict, org_dict)
+        print(final_dict.values())
+
+    
+    
+
+        
         # for value in chain_data.values():
         #     print(file, value)
         #     if 'L' in value[0]:
