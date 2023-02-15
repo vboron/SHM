@@ -86,6 +86,10 @@ def map_chain_org(dire, files):
                 l_chain.append(value[1])
             if 'H' in value[0]:
                 h_chain.append(value[1])
+        if len(h_chain) == 0:
+            h_chain.append(None)
+        if len(l_chain) == 0:
+            l_chain.append(None)
         summary = summary + h_chain + l_chain
         lh_chain_species.append(summary)
         return lh_chain_species
