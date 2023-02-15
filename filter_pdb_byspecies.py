@@ -29,7 +29,7 @@ def map_molid_chain(dire, file):
             for line in f:
                 if line.startswith('COMPND'):
                     split_line = line.split()
-                    if 'MOL_ID:' in line or 'CHAIN:' in line[2]:
+                    if 'MOL_ID:' in line or 'CHAIN:' in split_line[2]:
                         # print(split_line)
                         line_s = line.split(':')
                         info = line_s[1].replace(';', '')
