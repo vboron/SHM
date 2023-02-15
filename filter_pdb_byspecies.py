@@ -48,9 +48,9 @@ def map_molid_chain(dire, files):
                             if prev == term:
                                 print('missing line...')
                                 org_list.append(None)
-                                org_list.append(line)
+                                org_list.append(line.strip())
                             else:
-                                org_list.append(line)
+                                org_list.append(line.strip())
                             prev = term
         print(org_list)
         # for value in chain_data.values():
