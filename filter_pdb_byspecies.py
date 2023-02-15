@@ -98,8 +98,8 @@ def map_chain_org(dire, files):
 
 def make_df(data):
     df = pd.DataFrame(data=data, columns=['code', 'h_species', 'l_species'])
-    df = df[df['h_species column'].isin(['HOMO SAPIENS', 'MUS MUSCULUS'])]
-    df = df[df['l_species column'].isin(['HOMO SAPIENS', 'MUS MUSCULUS'])]
+    df = df[df['h_species'].isin(['HOMO SAPIENS', 'MUS MUSCULUS'])]
+    df = df[df['l_species'].isin(['HOMO SAPIENS', 'MUS MUSCULUS'])]
     print(df)
 
 
