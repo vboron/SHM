@@ -38,6 +38,7 @@ def map_molid_chain(dire, files):
                     chain_data[x] = [y]
         # print(chain_data)
         prev = ''
+        org_list = []
         with open(os.path.join(dire, file), 'r') as f:
             for line in f:
                 if line.startswith('SOURCE'):
@@ -46,7 +47,11 @@ def map_molid_chain(dire, files):
                             # print(line)
                             if prev == term:
                                 print('missing line...')
+                                org_list.append(None)
+                            else:
+                                org_list.append(line)
                             prev = term
+        print(org_list)
         # for value in chain_data.values():
         #     print(file, value)
         #     if 'L' in value[0]:
