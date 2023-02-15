@@ -36,7 +36,14 @@ def map_molid_chain(dire, files):
                     chain_data[x].append(y) 
                 else:
                     chain_data[x] = [y]
-        print(chain_data)
+        # print(chain_data)
+        prev = ''
+        with open(os.path.join(dire, file), 'r') as f:
+            for line in f:
+                if line.startswith('SOURCE'):
+                    for term in ['MOL_ID:', 'ORGANISM_SCIENTIFIC:']:
+                        if term in line:
+                            print(line)
         # for value in chain_data.values():
         #     print(file, value)
         #     if 'L' in value[0]:
