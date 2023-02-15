@@ -4,12 +4,16 @@
 import argparse
 import os
 import pandas as pd
+from collections import defaultdict
 
 
 def pairwise(iterable):
     "s -> (s0, s1), (s2, s3), (s4, s5), ..."
     a = iter(iterable)
     return zip(a, a)
+
+def combine_dict(d1, d2):
+    return {k: tuple(d[k] for d in (d1, d2) if k in d) for k in set(d1.keys()) | set(d2.keys())}
 
 def make_list_of_files(dire):
     files = os.listdir(dire)
@@ -45,7 +49,7 @@ def map_molid_chain(dire, files):
                         if term in line:
                             # print(line)
                             if prev == term:
-                                print('missing line...')
+                                # print('missing line...')
                                 org_list.append(None)
                             line_s = line.split(':')
                             info = line_s[1].replace(';', '').strip()
@@ -60,7 +64,12 @@ def map_molid_chain(dire, files):
                 org_data[x].append(y) 
             else:
                 org_data[x] = [y]
-        print(org_data)
+        # print(org_data)
+        dd = defaultdict(list)
+        for d in (chain_data, org_data): # you can list as many input dicts as you want here
+            for key, value in d.items():
+                dd[key].append(value)
+        print(dd)
         # for value in chain_data.values():
         #     print(file, value)
         #     if 'L' in value[0]:
