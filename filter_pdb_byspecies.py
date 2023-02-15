@@ -31,10 +31,12 @@ def map_molid_chain(dire, files):
                         rel_lines.append(info.strip())
         # print(rel_lines)
         for x, y in pairwise(rel_lines):
-            if 'H' in y or 'L' in y:
-                if x in chain_data:
+            
+            if x in chain_data:
+                if 'H' in y or 'L' in y:
                     chain_data[x].append(y) 
-                else:
+            else:
+                if 'H' in y or 'L' in y:
                     chain_data[x] = [y]
         print(chain_data)
         # for value in chain_data.values():
