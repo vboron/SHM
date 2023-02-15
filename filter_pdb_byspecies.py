@@ -35,16 +35,17 @@ def map_molid_chain(dire, files):
                chain_data[x].append(y) 
             else:
                 chain_data[x] = [y]
-        for value in chain_data.values():
-            print(file, value)
-            if 'L' in value[0]:
-                # l_chain.append('L')
-                l_chain.append(value[1])
-            if 'H' in value[0]:
-                # h_chain.append('H')
-                h_chain.append(value[1])
-        summary = summary + h_chain + l_chain
-        print(summary)
+        print(chain_data)
+        # for value in chain_data.values():
+        #     print(file, value)
+        #     if 'L' in value[0]:
+        #         # l_chain.append('L')
+        #         l_chain.append(value[1])
+        #     if 'H' in value[0]:
+        #         # h_chain.append('H')
+        #         h_chain.append(value[1])
+        # summary = summary + h_chain + l_chain
+        # print(summary)
     # line_terms = ['MOL_ID:', 'CHAIN:', 'ORGANISM_SCIENTIFIC:']
     # species_info = []
     # for file in files:
