@@ -36,10 +36,7 @@ def map_molid_chain(dire, files):
         # print(rel_lines)
         for x, y in pairwise(rel_lines):
             if 'H' in y or 'L' in y:
-                if x in chain_data:
-                    chain_data[x].append(y) 
-                else:
-                    chain_data[x] = [y]
+                chain_data[x] = y
         prev = ''
         org_list = []
         with open(os.path.join(dire, file), 'r') as f:
@@ -60,10 +57,7 @@ def map_molid_chain(dire, files):
         # print(org_list)
         org_data = {}
         for x, y in pairwise(org_list):
-            if x in org_data:
-                org_data[x].append(y) 
-            else:
-                org_data[x] = [y]
+            org_data[x] = y
         # print(org_data)
         dd = defaultdict(list)
         for d in (chain_data, org_data): # you can list as many input dicts as you want here
