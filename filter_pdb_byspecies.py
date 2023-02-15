@@ -77,16 +77,18 @@ def map_chain_org(dire, files):
         final_dict = combine_dicts(chain_dict, org_dict)
         # print(final_dict.values())
         summary = [file[:-4]]
+        l_chain = []
+        h_chain = []
         for value in final_dict.values():
-            print(summary + value)
-        #     if 'L' in value[0]:
-        #         # l_chain.append('L')
-        #         l_chain.append(value[1])
-        #     if 'H' in value[0]:
-        #         # h_chain.append('H')
-        #         h_chain.append(value[1])
-        # summary = summary + h_chain + l_chain
-        # print(summary)
+            # print(summary + value)
+            if 'L' in value[0]:
+                # l_chain.append('L')
+                l_chain.append(value[1])
+            if 'H' in value[0]:
+                # h_chain.append('H')
+                h_chain.append(value[1])
+        summary = summary + h_chain + l_chain
+        print(summary)
  
 
 
