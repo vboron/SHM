@@ -75,9 +75,11 @@ def map_chain_org(dire, files):
     for file in files:
         print(file)
         chain_dict = map_molid_chain(dire, file)
+        print(chain_dict)
         org_dict = map_molid_org(dire, file)
+        print(org_dict)
         final_dict = combine_dicts(chain_dict, org_dict)
-        print(final_dict.values())
+        # print(final_dict.values())
     #     summary = [file[:-4]]
     #     l_chain = []
     #     h_chain = []
