@@ -18,6 +18,9 @@ def make_list_of_files(dire):
 def map_molid_chain(dire, files):
     for file in files:
         rel_lines = []
+        l_chain = []
+        h_chain = []
+        chain_data = {}
         with open(os.path.join(dire, file), 'r') as f:
             for line in f:
                 if line.startswith('COMPND'):
@@ -25,7 +28,22 @@ def map_molid_chain(dire, files):
                         line_s = line.split(':')
                         info = line_s[1].replace(';', '')
                         rel_lines.append(info.strip())
-        print(rel_lines)
+        # print(rel_lines)
+        for x, y in pairwise(rel_lines):
+            if x in chain_data:
+               chain_data[x].append(y) 
+            else:
+                chain_data[x] = [y]
+        for value in chain_data.values():
+            print(file, value)
+            if 'L' in value[0]:
+                # l_chain.append('L')
+                l_chain.append(value[1])
+            if 'H' in value[0]:
+                # h_chain.append('H')
+                h_chain.append(value[1])
+        summary = summary + h_chain + l_chain
+        print(summary)
     # line_terms = ['MOL_ID:', 'CHAIN:', 'ORGANISM_SCIENTIFIC:']
     # species_info = []
     # for file in files:
