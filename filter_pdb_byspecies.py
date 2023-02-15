@@ -24,7 +24,6 @@ def make_list_of_files(dire):
 
 def map_molid_chain(dire, file):
         rel_lines = []
-        summary = [file[:-4]]
         chain_data = {}
         with open(os.path.join(dire, file), 'r') as f:
             for line in f:
@@ -77,13 +76,9 @@ def map_chain_org(dire, files):
         org_dict = map_molid_org(dire, file)
         final_dict = combine_dicts(chain_dict, org_dict)
         print(final_dict.values())
-
-    
-    
-
-        
-        # for value in chain_data.values():
-        #     print(file, value)
+        summary = [file[:-4]]
+        for value in final_dict.values():
+            print(file, value)
         #     if 'L' in value[0]:
         #         # l_chain.append('L')
         #         l_chain.append(value[1])
