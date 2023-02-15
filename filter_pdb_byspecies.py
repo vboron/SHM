@@ -18,6 +18,7 @@ def make_list_of_files(dire):
 def map_molid_chain(dire, files):
     for file in files:
         rel_lines = []
+        summary = [file[:-4]]
         l_chain = []
         h_chain = []
         chain_data = {}
