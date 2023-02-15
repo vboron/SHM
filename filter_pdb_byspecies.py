@@ -38,7 +38,7 @@ def map_molid_chain(dire, files):
                     chain_data[x] = [y]
         # print(chain_data)
         prev = ''
-        org_list = []
+        org_list = [file]
         with open(os.path.join(dire, file), 'r') as f:
             for line in f:
                 if line.startswith('SOURCE'):
