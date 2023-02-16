@@ -166,7 +166,7 @@ def make_graphs(df, graph_name):
             graph.mutations_vs_angrange(df, col, col, './', f'agl_{graph_name}_{col}_graph')
 
 
-def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):
+def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
     files = []
     for file in os.listdir(fastadir):
         if file.endswith('.faa'):
@@ -179,14 +179,21 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d):
 
     print('Finding mutations for fee antibodies...')
     free_df = extract_data(fastadir, pdbdir, free_files, free_d)
+    free_df = free_df.sort_values(by='total_mut', ascending=False)
+    top_x = len(free_df.index)*proportion
+    free_df_topx = free_df.head(top_x)
+
     print('Finding mutations for complexed antibodies...')
     complexed_df = extract_data(fastadir, pdbdir, complex_files, complexed_d)
+    complexed_df = complexed_df.sort_values(by='total_mut', ascending=False)
+    top_x = len(complexed_df.index)*proportion
+    complexed_df_topx = free_df.head(top_x)
 
     free_df.to_csv('free_mutations.csv', index=False)
     complexed_df.to_csv('complexed_mutations.csv', index=False)
 
-    make_graphs(complexed_df, 'complex')
-    make_graphs(free_df, 'free')
+    make_graphs(complexed_df_topx, 'complex')
+    make_graphs(free_df_topx, 'free')
 
 
 # *************************************************************************
@@ -202,6 +209,8 @@ if __name__ == '__main__':
         '--fastadir', help='Directory of fasta files', required=True)
     parser.add_argument(
         '--pdbdir', help='Directory of pdb files', required=True)
+    parser.add_argument(
+        '--top_x', help='Fraction of samples, sorted by total number of mutations, which will be graphed', required=True)
     args = parser.parse_args()
 
     free_list, complex_list = parse_redund_file(args.redfile)
