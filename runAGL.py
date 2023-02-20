@@ -174,30 +174,28 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
     files.sort()
     free_files = [f for f in files if f[3:-4] in free_d]
     complex_files = [f for f in files if f[3:-4] in complexed_d]
-    # print('free_files:\n', free_files)
-    # print('complex_flies:\n', complex_files)
+
+    def find_mut(files_l, dic):
+        df = extract_data(fastadir, pdbdir, files_l, dic)
+        df = df.sort_values(by='total_mut', ascending=False)
+        top_x = len(df.index) * float(proportion)
+        print(top_x)
+        if top_x < 1:
+            top_x = 1
+        df_topx = df.head(top_x)
+        return df, df_topx
 
     print('Finding mutations for fee antibodies...')
-    free_df = extract_data(fastadir, pdbdir, free_files, free_d)
-    free_df = free_df.sort_values(by='total_mut', ascending=False)
-    top_x = len(free_df.index) * float(proportion)
-    print(top_x)
-    if top_x < 1:
-        top_x = 1
-    free_df_topx = free_df.head(top_x)
-    print(free_df_topx)
+    free_df, free_df_topx = find_mut(fastadir, pdbdir, free_files, free_d)
 
-    # print('Finding mutations for complexed antibodies...')
-    # complexed_df = extract_data(fastadir, pdbdir, complex_files, complexed_d)
-    # complexed_df = complexed_df.sort_values(by='total_mut', ascending=False)
-    # top_x = len(complexed_df.index)*proportion
-    # complexed_df_topx = free_df.head(top_x)
+    print('Finding mutations for complexed antibodies...')
+    complexed_df, complexed_df_topx = find_mut(fastadir, pdbdir, complex_files, complexed_d)
 
-    # free_df.to_csv('free_mutations.csv', index=False)
-    # complexed_df.to_csv('complexed_mutations.csv', index=False)
+    free_df.to_csv('free_mutations.csv', index=False)
+    complexed_df.to_csv('complexed_mutations.csv', index=False)
 
-    # make_graphs(complexed_df_topx, 'complex')
-    # make_graphs(free_df_topx, 'free')
+    make_graphs(complexed_df_topx, 'complex')
+    make_graphs(free_df_topx, 'free')
 
 
 # *************************************************************************
