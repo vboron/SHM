@@ -180,8 +180,8 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
     print('Finding mutations for fee antibodies...')
     free_df = extract_data(fastadir, pdbdir, free_files, free_d)
     free_df = free_df.sort_values(by='total_mut', ascending=False)
-    top_x = len(free_df.index)*proportion
-    print(len(free_df.index))
+    top_x = len(free_df.index) * float(proportion)
+    print(top_x)
     # free_df_topx = free_df.head(top_x)
 
     # print('Finding mutations for complexed antibodies...')
