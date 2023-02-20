@@ -182,7 +182,7 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
         print(top_x)
         if top_x < 1:
             top_x = 1
-        df_topx = df.head(top_x)
+        df_topx = df.head(int(top_x))
         print(df_topx)
         return df, df_topx
 
