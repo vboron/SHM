@@ -157,6 +157,11 @@ def extract_data(fastadir, pdbdir, files, dictionary):
     return df
 
 
+def find_maxrange_per_mutation_count(df):
+    max_df = df.groupby(by = ['total_mut']).max
+    print(max_df)
+
+
 def make_graphs(df, graph_name):
     cols = ['VL', 'VH', 'total_mut']
     for col in cols:
@@ -192,11 +197,13 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
     print('Finding mutations for complexed antibodies...')
     complexed_df, complexed_df_topx = find_mut(complex_files, complexed_d)
 
-    free_df.to_csv('free_mutations.csv', index=False)
-    complexed_df.to_csv('complexed_mutations.csv', index=False)
+    find_maxrange_per_mutation_count(free_df)
 
-    make_graphs(complexed_df_topx, 'complex')
-    make_graphs(free_df_topx, 'free')
+    # free_df.to_csv('free_mutations.csv', index=False)
+    # complexed_df.to_csv('complexed_mutations.csv', index=False)
+
+    # make_graphs(complexed_df_topx, 'complex')
+    # make_graphs(free_df_topx, 'free')
 
 
 # *************************************************************************
