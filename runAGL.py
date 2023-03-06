@@ -195,7 +195,7 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
         return df, df_topx
 
     print('Finding mutations for fee antibodies...')
-    free_df, free_df_topx = find_mut(free_files, free_d)
+    # free_df, free_df_topx = find_mut(free_files, free_d)
 
     print('Finding mutations for complexed antibodies...')
     complexed_df, complexed_df_topx = find_mut(complex_files, complexed_d)
