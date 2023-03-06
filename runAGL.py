@@ -158,7 +158,7 @@ def extract_data(fastadir, pdbdir, files, dictionary):
 
 
 def find_maxrange_per_mutation_count(df):
-    max_df = df.groupby(by = ['total_mut']).max
+    max_df = df.groupby(by = ['total_mut'])['angle_range'].max
     print(max_df)
 
 
