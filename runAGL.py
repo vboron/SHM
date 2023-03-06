@@ -153,7 +153,7 @@ def extract_data(fastadir, pdbdir, files, dictionary):
     col = col + ['angle_min', 'angle_max', 'angle_range']
     df.columns = col
     df['total_mut'] = df['VL'] + df['VH']
-    print(df)
+    # print(df)
     return df
 
 
@@ -184,11 +184,11 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
         df = extract_data(fastadir, pdbdir, files_l, dic)
         df = df.sort_values(by='angle_range', ascending=False)
         top_x = len(df.index) * float(proportion)
-        print(top_x)
+        # print(top_x)
         if top_x < 1:
             top_x = 1
         df_topx = df.head(int(top_x))
-        print(df_topx)
+        # print(df_topx)
         return df, df_topx
 
     print('Finding mutations for fee antibodies...')
@@ -197,7 +197,7 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
     print('Finding mutations for complexed antibodies...')
     complexed_df, complexed_df_topx = find_mut(complex_files, complexed_d)
 
-    find_maxrange_per_mutation_count(free_df)
+    find_maxrange_per_mutation_count(complexed_df)
 
     # free_df.to_csv('free_mutations.csv', index=False)
     # complexed_df.to_csv('complexed_mutations.csv', index=False)
