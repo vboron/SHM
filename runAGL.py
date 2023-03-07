@@ -161,8 +161,9 @@ def find_maxrange_per_mutation_count(df, mut_col):
     max_df = df.groupby(mut_col).angle_range.agg(['max'])
     max_df.reset_index(inplace = True)
     max_df.columns = [mut_col, 'max_angle_range']
-    print(max_df)
-    print(max_df.columns)
+    # print(max_df)
+    # print(max_df.columns)
+    return max_df
 
 
 def make_graphs(df, graph_name):
