@@ -27,8 +27,6 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
     #          linestyle='dashed', linewidth=1)
     # bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
 
-    plt.scatter(x, y, s=3, color=color_values)
-
     axes = plt.gca()
 
     # Sets the maximum and minimum values for the axes
@@ -52,6 +50,7 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
     y_max = max_val_df['max_angle_range']
     x_max = max_val_df[mut_column]
 
+    plt.scatter(x, y, s=3, color=color_values)
     plt.scatter(x_max, y_max, s=3, color=color_bf_line)
     # Exports the figure as a .jpg file
     path_fig = os.path.join(directory, f'{name}.jpg')
