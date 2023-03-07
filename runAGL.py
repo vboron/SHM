@@ -206,7 +206,7 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
     # free_df.to_csv('free_mutations.csv', index=False)
     # complexed_df.to_csv('complexed_mutations.csv', index=False)
 
-    # make_graphs(complexed_df_topx, 'complex')
+    make_graphs(complexed_df_topx, 'complex')
     # make_graphs(free_df_topx, 'free')
 
 
