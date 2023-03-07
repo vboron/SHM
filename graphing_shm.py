@@ -9,8 +9,8 @@ import pandas as pd
 
 
 # *************************************************************************
-def mutations_vs_angrange(df, mut_column, x_axis, directory, name):
-
+def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
+    ## Plot all data
     # .corr() returns the correlation between two columns
     pearson_a = df[mut_column].corr(df['angle_range'])
 
@@ -22,10 +22,10 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name):
     x = df[mut_column]
     y = df['angle_range']
 
-    m, b = np.polyfit(x, y, 1)
-    plt.plot(x, m * x + b, color=color_bf_line,
-             linestyle='dashed', linewidth=1)
-    bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
+    # m, b = np.polyfit(x, y, 1)
+    # plt.plot(x, m * x + b, color=color_bf_line,
+    #          linestyle='dashed', linewidth=1)
+    # bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
 
     plt.scatter(x, y, s=3, color=color_values)
 
@@ -44,14 +44,21 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name):
 
     # Adds graph annotations
     plt.text(s=f'Correlation: {pearson_a}', x=5, y=40, fontsize=8)
-    plt.text(s=f'Best fit: {bf_line}',
-             x=5, y=38, fontsize=8, color=color_bf_line)
+    # plt.text(s=f'Best fit: {bf_line}',
+    #          x=5, y=38, fontsize=8, color=color_bf_line)
 
     # plt.tight_layout()
 
+
+    ## Plot highest values
+    y_max = max_val_df['max_angle_range']
+    x_max = max_val_df[mut_column]
+
+    plt.scatter(x_max, y_max, s=3, color=color_bf_line)
     # Exports the figure as a .jpg file
     path_fig = os.path.join(directory, f'{name}.jpg')
     plt.savefig(path_fig, format='jpg')
     plt.close()
 
-    return m, b
+    # return m, b
+    return
