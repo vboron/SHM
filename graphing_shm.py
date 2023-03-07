@@ -49,7 +49,7 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
 
     # plt.tight_layout()
 
-
+    print(max_val_df)
     ## Plot highest values
     y_max = max_val_df['max_angle_range']
     x_max = max_val_df[mut_column]
