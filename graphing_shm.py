@@ -48,14 +48,11 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
     #          x=5, y=38, fontsize=8, color=color_bf_line)
 
     # plt.tight_layout()
-    print(max_val_df)
-    print(max_val_df['max_angle_range'])
-    print(max_val_df.columns)
     ## Plot highest values
     y_max = max_val_df['max_angle_range']
     x_max = max_val_df[mut_column]
 
-    plt.scatter(x_max, y_max, s=3, color=color_bf_line)
+    plt.scatter(x_max, y, s=3, color=color_bf_line)
     # Exports the figure as a .jpg file
     path_fig = os.path.join(directory, f'{name}.jpg')
     plt.savefig(path_fig, format='jpg')
