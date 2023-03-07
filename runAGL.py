@@ -165,7 +165,7 @@ def find_maxrange_per_mutation_count(df, mut_col):
     print(max_df.columns)
 
 
-def make_graphs(df, graph_name, max_df):
+def make_graphs(df, graph_name):
     cols = ['VL', 'VH', 'total_mut']
     for col in cols:
         max_df = find_maxrange_per_mutation_count(df)
