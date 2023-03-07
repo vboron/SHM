@@ -168,7 +168,7 @@ def find_maxrange_per_mutation_count(df, mut_col):
 def make_graphs(df, graph_name):
     cols = ['VL', 'VH', 'total_mut']
     for col in cols:
-        max_df = find_maxrange_per_mutation_count(df)
+        max_df = find_maxrange_per_mutation_count(df, col)
         if col == 'total_mut':
             graph.mutations_vs_angrange(df, col, 'VH + VL', './', f'agl_{graph_name}_{col}_graph', max_df)
         else:
