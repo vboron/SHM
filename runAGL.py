@@ -44,8 +44,6 @@ def test_filter_line():
     complexed = []
     for l in inp.split('\n'):
         filter_line(l, free, complexed)
-    # print(f'free={free}')
-    # print(f'complexed={complexed}')
     assert free == ['3u36_0,3u36_3,3u36_2,3u36_1', '1mrc_0', '4org_1']
     assert complexed == ['1zea_0PH', '1mrf_0H']
     print('test done')
@@ -54,19 +52,17 @@ def test_filter_line():
 def parse_redund_file(red_file):
     with open(red_file, 'r') as f:
         lines = [l.strip() for l in f.readlines()]
-        # print(len(lines))
         free = []
         complexed = []
         for line in lines:
             filter_line(line.strip(), free, complexed)
-    # print(free)
-    # print(complexed)
     return free, complexed
 
 
 def dict_for_names(free, complexed):
     free_dic = {}
     complexed_dic = {}
+
     def make_dic(list, dict):
         for item in list:
             if ',' in item:
@@ -78,11 +74,10 @@ def dict_for_names(free, complexed):
                 dict[item] = item
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
-    # print('free_dict:\n', free_dic)
-    # print('complexed_dict:\n', complexed_dic)
     return free_dic, complexed_dic
 
-# TODO nonred complexed/free/both 
+
+# TODO nonred complexed/free/both
 def extract_data(fastadir, pdbdir, files, dictionary):
     error_files = []
     col = ['code', 'VL', 'JL', 'VH', 'JH', 'angle']
@@ -153,16 +148,13 @@ def extract_data(fastadir, pdbdir, files, dictionary):
     col = col + ['angle_min', 'angle_max', 'angle_range']
     df.columns = col
     df['total_mut'] = df['VL'] + df['VH']
-    # print(df)
     return df
 
 
 def find_maxrange_per_mutation_count(df, mut_col):
     max_df = df.groupby(mut_col).angle_range.agg(['max'])
-    max_df.reset_index(inplace = True)
+    max_df.reset_index(inplace=True)
     max_df.columns = [mut_col, 'max_angle_range']
-    # print(max_df)
-    # print(max_df.columns)
     return max_df
 
 
@@ -171,9 +163,11 @@ def make_graphs(df, graph_name):
     for col in cols:
         max_df = find_maxrange_per_mutation_count(df, col)
         if col == 'total_mut':
-            graph.mutations_vs_angrange(df, col, 'VH + VL', './', f'agl_{graph_name}_{col}_graph', max_df)
+            graph.mutations_vs_angrange(
+                df, col, 'VH + VL', './', f'agl_{graph_name}_{col}_graph', max_df)
         else:
-            graph.mutations_vs_angrange(df, col, col, './', f'agl_{graph_name}_{col}_graph', max_df)
+            graph.mutations_vs_angrange(
+                df, col, col, './', f'agl_{graph_name}_{col}_graph', max_df)
 
 
 def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
@@ -189,26 +183,22 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
         df = extract_data(fastadir, pdbdir, files_l, dic)
         df = df.sort_values(by='angle_range', ascending=False)
         top_x = len(df.index) * float(proportion)
-        # print(top_x)
         if top_x < 1:
             top_x = 1
         df_topx = df.head(int(top_x))
-        # print(df_topx)
         return df, df_topx
 
     print('Finding mutations for fee antibodies...')
-    # free_df, free_df_topx = find_mut(free_files, free_d)
+    free_df, free_df_topx = find_mut(free_files, free_d)
 
     print('Finding mutations for complexed antibodies...')
     complexed_df, complexed_df_topx = find_mut(complex_files, complexed_d)
 
-    
-
-    # free_df.to_csv('free_mutations.csv', index=False)
-    # complexed_df.to_csv('complexed_mutations.csv', index=False)
+    free_df.to_csv('free_mutations.csv', index=False)
+    complexed_df.to_csv('complexed_mutations.csv', index=False)
 
     make_graphs(complexed_df_topx, 'complex')
-    # make_graphs(free_df_topx, 'free')
+    make_graphs(free_df_topx, 'free')
 
 
 # *************************************************************************
@@ -230,4 +220,5 @@ if __name__ == '__main__':
 
     free_list, complex_list = parse_redund_file(args.redfile)
     dict_free, dict_complex = dict_for_names(free_list, complex_list)
-    run_for_free_complexed(args.fastadir, args.pdbdir, dict_free, dict_complex, args.top_x)
+    run_for_free_complexed(args.fastadir, args.pdbdir,
+                           dict_free, dict_complex, args.top_x)
