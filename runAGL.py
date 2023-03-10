@@ -54,15 +54,18 @@ def parse_redund_file(red_file):
         lines = [l.strip() for l in f.readlines()]
         free = []
         complexed = []
+        all_redund = []
         for line in lines:
             filter_line(line.strip(), free, complexed)
-    return free, complexed
+            temp_line = line.replace(':', ',')
+            all_redund.append(temp_line)
+    return free, complexed, all_redund
 
 
-def dict_for_names(free, complexed):
+def dict_for_names(free, complexed, all_red):
     free_dic = {}
     complexed_dic = {}
-
+    full_red_dic = {}
     def make_dic(list, dict):
         for item in list:
             if ',' in item:
@@ -74,7 +77,9 @@ def dict_for_names(free, complexed):
                 dict[item] = item
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
-    return free_dic, complexed_dic
+    make_dic(all_red, full_red_dic)
+    print(full_red_dic)
+    return free_dic, complexed_dic, full_red_dic
 
 
 # TODO nonred complexed/free/both
@@ -219,6 +224,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     free_list, complex_list = parse_redund_file(args.redfile)
-    dict_free, dict_complex = dict_for_names(free_list, complex_list)
-    run_for_free_complexed(args.fastadir, args.pdbdir,
-                           dict_free, dict_complex, args.top_x)
+    # dict_free, dict_complex = dict_for_names(free_list, complex_list)
+    # run_for_free_complexed(args.fastadir, args.pdbdir,
+    #                        dict_free, dict_complex, args.top_x)
