@@ -223,7 +223,7 @@ if __name__ == '__main__':
         '--top_x', help='Fraction of samples, sorted by total number of mutations, which will be graphed', required=True)
     args = parser.parse_args()
 
-    free_list, complex_list = parse_redund_file(args.redfile)
+    free_list, complex_list, all_list = parse_redund_file(args.redfile)
     # dict_free, dict_complex = dict_for_names(free_list, complex_list)
     # run_for_free_complexed(args.fastadir, args.pdbdir,
     #                        dict_free, dict_complex, args.top_x)
