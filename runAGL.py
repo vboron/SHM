@@ -59,6 +59,7 @@ def parse_redund_file(red_file):
             filter_line(line.strip(), free, complexed)
             temp_line = line.replace(':', ',')
             all_redund.append(temp_line)
+    print(all_redund)
     return free, complexed, all_redund
 
 
