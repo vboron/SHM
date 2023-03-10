@@ -78,11 +78,9 @@ def dict_for_names(free, complexed, all_red):
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
     make_dic(all_red, full_red_dic)
-    print(full_red_dic)
     return free_dic, complexed_dic, full_red_dic
 
 
-# TODO nonred complexed/free/both
 def extract_data(fastadir, pdbdir, files, dictionary):
     error_files = []
     col = ['code', 'VL', 'JL', 'VH', 'JH', 'angle']
@@ -175,14 +173,12 @@ def make_graphs(df, graph_name):
                 df, col, col, './', f'agl_{graph_name}_{col}_graph', max_df)
 
 
-def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
+def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, both_d, proportion):
     files = []
     for file in os.listdir(fastadir):
         if file.endswith('.faa'):
             files.append(file)
     files.sort()
-    free_files = [f for f in files if f[3:-4] in free_d]
-    complex_files = [f for f in files if f[3:-4] in complexed_d]
 
     def find_mut(files_l, dic):
         df = extract_data(fastadir, pdbdir, files_l, dic)
@@ -192,18 +188,35 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, proportion):
             top_x = 1
         df_topx = df.head(int(top_x))
         return df, df_topx
+    
+    def graph_topx(_files_, dictionary, group):
+        files_list = [f for f in _files_ if f[3:-4] in dictionary]
+        print(f'Finding mutations for {group} antibodies...')
+        df, topx_df = find_mut(files_list, dictionary)
+        df.to_csv(f'{group}_mutations.csv', index=False)
+        make_graphs(topx_df, group)
 
-    print('Finding mutations for fee antibodies...')
-    free_df, free_df_topx = find_mut(free_files, free_d)
+    # free_files = [f for f in files if f[3:-4] in free_d]
+    # complex_files = [f for f in files if f[3:-4] in complexed_d]
 
-    print('Finding mutations for complexed antibodies...')
-    complexed_df, complexed_df_topx = find_mut(complex_files, complexed_d)
+    # print('Finding mutations for fee antibodies...')
+    # free_df, free_df_topx = find_mut(free_files, free_d)
 
-    free_df.to_csv('free_mutations.csv', index=False)
-    complexed_df.to_csv('complexed_mutations.csv', index=False)
+    # print('Finding mutations for complexed antibodies...')
+    # complexed_df, complexed_df_topx = find_mut(complex_files, complexed_d)
 
-    make_graphs(complexed_df_topx, 'complex')
-    make_graphs(free_df_topx, 'free')
+    # print('Finding mutations for complexed antibodies...')
+    # both_d, both_df_topx = find_mut()
+
+    graph_topx(files, free_d, 'free')
+    graph_topx(files, complexed_d, 'complexed')
+    graph_topx(files, both_d, 'complex_free')
+    # free_df.to_csv('free_mutations.csv', index=False)
+    # complexed_df.to_csv('complexed_mutations.csv', index=False)
+
+
+    # make_graphs(complexed_df_topx, 'complex')
+    # make_graphs(free_df_topx, 'free')
 
 
 # *************************************************************************
@@ -225,5 +238,5 @@ if __name__ == '__main__':
 
     free_list, complex_list, all_list = parse_redund_file(args.redfile)
     dict_free, dict_complex, dict_all= dict_for_names(free_list, complex_list, all_list)
-    # run_for_free_complexed(args.fastadir, args.pdbdir,
-    #                        dict_free, dict_complex, args.top_x)
+    run_for_free_complexed(args.fastadir, args.pdbdir,
+                           dict_free, dict_complex, dict_all, args.top_x)
