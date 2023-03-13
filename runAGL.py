@@ -70,7 +70,8 @@ def dict_for_names(free, complexed, all_red):
         for item in list:
             if ',' in item:
                 split_item = item.split(',')
-                split_item.remove('')
+                if '' in split_item:
+                    split_item.remove('')
                 for si in split_item:
                     dict[si] = split_item[0]
             else:
