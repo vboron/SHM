@@ -182,7 +182,7 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, both_d, propor
 
     def find_mut(files_l, dic):
         df = extract_data(fastadir, pdbdir, files_l, dic)
-        df.drop(df[df['angle_range'] != 0].index, inplace = True)
+        df = df.drop(df[df['angle_range'] != 0].index)
         df = df.sort_values(by='angle_range', ascending=False)
         top_x = len(df.index) * float(proportion)
         if top_x < 1:
