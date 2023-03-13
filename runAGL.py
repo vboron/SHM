@@ -59,7 +59,6 @@ def parse_redund_file(red_file):
             filter_line(line.strip(), free, complexed)
             temp_line = line.replace(':', ',')
             all_redund.append(temp_line)
-    print(all_redund)
     return free, complexed, all_redund
 
 
@@ -78,6 +77,7 @@ def dict_for_names(free, complexed, all_red):
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
     make_dic(all_red, full_red_dic)
+    print(full_red_dic)
     return free_dic, complexed_dic, full_red_dic
 
 
