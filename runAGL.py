@@ -79,7 +79,6 @@ def dict_for_names(free, complexed, all_red):
     make_dic(free, free_dic)
     make_dic(complexed, complexed_dic)
     make_dic(all_red, full_red_dic)
-    print(full_red_dic)
     return free_dic, complexed_dic, full_red_dic
 
 
