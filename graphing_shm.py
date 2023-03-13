@@ -27,7 +27,7 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
     # Sets the maximum and minimum values for the axes
     # axes.autoscale(tight=True)
     axes.set_xlim([0, 50])
-    axes.set_ylim([-5, 20])
+    axes.set_ylim([-0.5, 20])
 
     # axes.axline((0, 0), (1, 1), color='k')
 
