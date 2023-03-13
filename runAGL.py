@@ -218,6 +218,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     free_list, complex_list, all_list = parse_redund_file(args.redfile)
-    # dict_free, dict_complex, dict_all= dict_for_names(free_list, complex_list, all_list)
+    dict_free, dict_complex, dict_all= dict_for_names(free_list, complex_list, all_list)
     # run_for_free_complexed(args.fastadir, args.pdbdir,
     #                        dict_free, dict_complex, dict_all, args.top_x)
