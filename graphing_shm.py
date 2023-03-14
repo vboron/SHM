@@ -16,11 +16,14 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
 
     plt.figure()
 
-    color_values = 'burlywood'
-    color_bf_line = 'rebeccapurple'
+    color_all = 'burlywood'
+    color_top = 'rebeccapurple'
 
-    x = df[mut_column]
-    y = df['angle_range']
+    x_all = df[mut_column]
+    y_all = df['angle_range']
+
+    y_max = max_val_df['max_angle_range']
+    x_max = max_val_df[mut_column]
 
     axes = plt.gca()
 
@@ -40,18 +43,26 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
 
     # plt.tight_layout()
     # Plot highest values
-    y_max = max_val_df['max_angle_range']
-    x_max = max_val_df[mut_column]
-
-    plt.scatter(x, y, s=3, color=color_values)
-    plt.scatter(x_max, y_max, s=3, color=color_bf_line)
-
-    m, b = np.polyfit(x_max, y_max, 1)
-    plt.plot(x, m * x + b, color=color_bf_line,
+    def plotting(x, y, color):
+        plt.scatter(x, y, s=3, color=color)
+        m, b = np.polyfit(x, y, 1)
+        plt.plot(x, m * x + b, color=color,
              linestyle='dashed', linewidth=1)
-    bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
-    plt.text(s=f'Best fit: {bf_line}',
-             x=10, y=15, fontsize=8, color=color_bf_line)
+        bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
+        plt.text(s=f'Best fit: {bf_line}',
+             x=10, y=15, fontsize=8, color=color)
+    
+    plotting(x_all, y_all, color_all)
+    plotting(x_max, y_max, color_top)
+    # plt.scatter(x, y, s=3, color=color_values)
+    # plt.scatter(x_max, y_max, s=3, color=color_bf_line)
+
+    # m, b = np.polyfit(x_max, y_max, 1)
+    # plt.plot(x, m * x + b, color=color_bf_line,
+    #          linestyle='dashed', linewidth=1)
+    # bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
+    # plt.text(s=f'Best fit: {bf_line}',
+    #          x=10, y=15, fontsize=8, color=color_bf_line)
 
     # Exports the figure as a .jpg file
     path_fig = os.path.join(directory, f'{name}.jpg')
