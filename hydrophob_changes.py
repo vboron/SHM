@@ -14,15 +14,22 @@ def run_abnum(file, dire):
         result = (subprocess.check_output(
             ['abnum', '-f', path])).decode("utf-8")
         abnumresult = result
-        print(abnumresult)
+        # print(abnumresult)
     except subprocess.CalledProcessError:
         print(f'abnum failed on {file}')
         # error_files.append(file)
+    return abnumresult
+
 
 def extract_data(fastadir):
     files = os.listdir(fastadir)
     for file in files:
-        run_abnum(file, fastadir)
+        num_res = run_abnum(file, fastadir)
+        num_res.replace('-', '')
+        num_res_l = num_res.split('\n')
+        del num_res_l[0]
+        print(num_res_l)
+
 
 
 
