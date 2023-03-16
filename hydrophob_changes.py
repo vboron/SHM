@@ -36,9 +36,7 @@ def extract_data(fastadir):
             item_l = item.split('\n')
             del item_l[0]
             num_res_l_clean.append(item_l)
-        print(num_res_l_clean)
-
-
+        print(f'{file}: {len(num_res_l_clean)}')
 
 
 if __name__ == '__main__':
