@@ -51,7 +51,7 @@ def extract_data(fastadir):
 
         agl_out = run_AGL(file, fastadir)
         agl_list = agl_out.split('Chain type:')
-        print(agl_list)
+        print(f'{file}: {len(agl_list)}')
 
 
 if __name__ == '__main__':
