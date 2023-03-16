@@ -32,6 +32,10 @@ def extract_data(fastadir):
         # del num_res_l[0]
         num_res_l = [i for i in num_res_l if i != '']
         print(num_res_l)
+        for item in num_res_l:
+            item_l = item.split('\n')
+            del item_l[0]
+        print(num_res_l)
 
 
 
