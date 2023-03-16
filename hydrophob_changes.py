@@ -21,6 +21,19 @@ def run_abnum(file, dire):
     return abnumresult
 
 
+def run_AGL(file, dire):
+    aglresult = ''
+    try:
+        path = os.path.join(dire, file)
+        result = (subprocess.check_output(
+            ['agl', '-a', path])).decode("utf-8")
+        aglresult = result
+    except subprocess.CalledProcessError:
+        print(f'AGL failed on {file}')
+        # error_files.append(file)
+    return aglresult
+
+
 def extract_data(fastadir):
     files = os.listdir(fastadir)
     for file in files:
@@ -37,6 +50,10 @@ def extract_data(fastadir):
             del item_l[0]
             num_res_l_clean.append(item_l)
         print(f'{file}: {len(num_res_l_clean)}')
+
+        agl_out = run_AGL(file, fastadir)
+        agl_list = agl_out.split('Chain type:')
+        print(agl_list)
 
 
 if __name__ == '__main__':
