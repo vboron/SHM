@@ -26,7 +26,7 @@ def extract_data(fastadir):
     for file in files:
         num_res = run_abnum(file, fastadir)
         num_res = num_res.replace('-', '')
-        num_res.strip()
+        num_res = num_res.strip()
         num_res_l = num_res.split('\n')
         del num_res_l[0]
         # num_res_l = [i for i in num_res_l if i != '']
