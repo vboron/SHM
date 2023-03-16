@@ -31,11 +31,12 @@ def extract_data(fastadir):
         # num_res_l = num_res.split('\n')
         # del num_res_l[0]
         num_res_l = [i for i in num_res_l if i != '']
-        print(num_res_l)
+        num_res_l_clean = []
         for item in num_res_l:
             item_l = item.split('\n')
             del item_l[0]
-        print(num_res_l)
+            num_res_l_clean.append(item_l)
+        print(num_res_l_clean)
 
 
 
