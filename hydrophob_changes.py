@@ -30,7 +30,7 @@ def extract_data(fastadir):
         num_res_l = num_res.split('#')
         # num_res_l = num_res.split('\n')
         # del num_res_l[0]
-        # num_res_l = [i for i in num_res_l if i != '']
+        num_res_l = [i for i in num_res_l if i != '']
         print(num_res_l)
 
 
