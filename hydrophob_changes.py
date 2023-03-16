@@ -6,33 +6,20 @@ import re
 import graphing_shm as graph
 
 
+def run_abnum(file, dire):
+    abnumresult = ''
+    try:
+        path = os.path.join(dire, file)
+        result = (subprocess.check_output(
+            ['abnum', '-f', path])).decode("utf-8")
+        abnumresult = result
+        print(abnumresult)
+    except subprocess.CalledProcessError:
+        print(f'abnum failed on {file}')
+        # error_files.append(file)
+
 def extract_data(fastadir):
     files = os.listdir(fastadir)
-    # def run_AGL(file, dire):
-    #     aglresult = ''
-    #     try:
-    #         path = os.path.join(dire, file)
-    #         result = (subprocess.check_output(
-    #             ['agl', '-a', path])).decode("utf-8")
-    #         aglresult = result
-    #     except subprocess.CalledProcessError:
-    #         print(f'AGL failed on {file}')
-    #         # error_files.append(file)
-    #     return aglresult
-
-    def run_abnum(file, dire):
-        abnumresult = ''
-        try:
-            path = os.path.join(dire, file)
-            result = (subprocess.check_output(
-                ['abnum', '-f', path])).decode("utf-8")
-            abnumresult = result
-            print(abnumresult)
-        except subprocess.CalledProcessError:
-            print(f'abnum failed on {file}')
-            # error_files.append(file)
-        return abnumresult
-
     for file in files:
         run_abnum(file, fastadir)
 
