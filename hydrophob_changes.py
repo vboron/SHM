@@ -25,7 +25,7 @@ def extract_data(fastadir):
         try:
             path = os.path.join(dire, file)
             result = (subprocess.check_output(
-                ['agl', '-a', path])).decode("utf-8")
+                ['abnum', '-f', path])).decode("utf-8")
             abnumresult = result
             print(abnumresult)
         except subprocess.CalledProcessError:
