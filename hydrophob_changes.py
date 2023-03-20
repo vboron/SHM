@@ -53,7 +53,8 @@ def extract_data(fastadir):
         agl_out.replace('Homo sapiens', 'h_or_m')
         agl_out.replace('Mus musculus', 'h_or_m')
         agl_list = agl_out.split('h_or_m')
-        print(f'{file}: {len(agl_list)}')
+        print(agl_list)
+        # print(f'{file}: {len(agl_list)}')
 
 
 if __name__ == '__main__':
