@@ -50,7 +50,9 @@ def extract_data(fastadir):
         # print(f'{file}: {len(num_res_l_clean)}')
 
         agl_out = run_AGL(file, fastadir)
-        agl_list = agl_out.split('Chain type:')
+        agl_out.replace('Homo sapiens', 'h_or_m')
+        agl_out.replace('Mus musculus', 'h_or_m')
+        agl_list = agl_out.split('h_or_m')
         print(f'{file}: {len(agl_list)}')
 
 
