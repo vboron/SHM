@@ -51,9 +51,9 @@ def extract_data(fastadir):
 
         agl_out = run_AGL(file, fastadir)
         if 'Homo sapiens' in agl_out:
-            agl_out = agl_out.replace('Homo sapiens', 'h_or_m')
+            agl_out = agl_out.replace('Homo sapiens\n', 'h_or_m')
         if 'Mus musculus' in agl_out:
-            agl_out = agl_out.replace('Mus musculus', 'h_or_m')
+            agl_out = agl_out.replace('Mus musculus\n', 'h_or_m')
     
         agl_list = agl_out.split('h_or_m')
         print(agl_list)
