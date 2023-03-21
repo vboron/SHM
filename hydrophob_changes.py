@@ -80,40 +80,43 @@ def extract_data(fastadir):
             del item_l[0]
             num_res_l_clean.append(item_l)
         # print(f'{file}: {len(num_res_l_clean)}')
+        final_num_list = []
+        for num_chain in num_res_l_clean:
+            final_num_list = final_num_list + num_chain
 
-        agl_out = run_AGL(file, fastadir)
-        if 'Homo sapiens' in agl_out:
-            agl_out = agl_out.replace('Homo sapiens\n', 'splitter')
-        if 'Mus musculus' in agl_out:
-            agl_out = agl_out.replace('Mus musculus\n', 'splitter')
-        agl_out = agl_out.replace('Mismatches:', 'splitter')
-        agl_list = agl_out.split('splitter')
 
-        agl_list = agl_list[1::2]
-        agl_list_stripped = []
-        for i in agl_list:
-            i = i.strip()
-            i_clean = []
-            i_split = i.split('\n')
-            i_split = i_split[0::2]
-            for ii in i_split:
-                ii = ii.strip()
-                i_clean.append(ii)
-            agl_list_stripped.append(i_clean)
-        file_seq = ''
-        germline_seq = ''
-        for seq in agl_list_stripped:
-            file_seq = file_seq + seq[0]
-            germline_seq = germline_seq + seq[1]
+        # agl_out = run_AGL(file, fastadir)
+        # if 'Homo sapiens' in agl_out:
+        #     agl_out = agl_out.replace('Homo sapiens\n', 'splitter')
+        # if 'Mus musculus' in agl_out:
+        #     agl_out = agl_out.replace('Mus musculus\n', 'splitter')
+        # agl_out = agl_out.replace('Mismatches:', 'splitter')
+        # agl_list = agl_out.split('splitter')
+
+        # agl_list = agl_list[1::2]
+        # agl_list_stripped = []
+        # for i in agl_list:
+        #     i = i.strip()
+        #     i_clean = []
+        #     i_split = i.split('\n')
+        #     i_split = i_split[0::2]
+        #     for ii in i_split:
+        #         ii = ii.strip()
+        #         i_clean.append(ii)
+        #     agl_list_stripped.append(i_clean)
+        # input_seq = ''
+        # germline_seq = ''
+        # for seq in agl_list_stripped:
+        #     input_seq = input_seq + seq[0]
+        #     germline_seq = germline_seq + seq[1]
         print(file)
-        # for i in num_res_l_clean:
-        #     print(len(i))
-        # print(len(num_res_l_clean[0]) + len(num_res_l_clean[1]))
-        file_res_list = list(file_seq)
-        germline_res_list = list(file_seq)
-        file_germ_zip = zip(file_res_list, germline_res_list)
-        for file_, germ in file_germ_zip:
-            print(file_, germ)
+        print(final_num_list)
+
+        # input_res_list = list(input_seq)
+        # germline_res_list = list(input_seq)
+        # input_germ_zip = zip(input_res_list, germline_res_list)
+        # for inp, germ in input_germ_zip:
+        #     print(inp, germ)
 
 
 
