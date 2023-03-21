@@ -100,9 +100,14 @@ def extract_data(fastadir):
                 ii = ii.strip()
                 i_clean.append(ii)
             agl_list_stripped.append(i_clean)
+        file_seq = ''
+        germline_seq = ''
+        for seq in agl_list_stripped:
+            file_seq = file_seq + seq[0]
+            germline_seq = germline_seq + seq[1]
         print(file)
         print(num_res_l_clean)
-        print(agl_list_stripped)
+        print(file_seq)
 
 
 
