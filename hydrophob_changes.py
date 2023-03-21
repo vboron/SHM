@@ -69,16 +69,16 @@ def run_AGL(file, dire):
 def extract_data(fastadir):
     files = os.listdir(fastadir)
     for file in files:
-        # num_res = run_abnum(file, fastadir)
-        # num_res = num_res.replace('------------------------------------------\n', '')
-        # num_res = num_res.strip()
-        # num_res_l = num_res.split('#')
-        # num_res_l = [i for i in num_res_l if i != '']
-        # num_res_l_clean = []
-        # for item in num_res_l:
-        #     item_l = item.split('\n')
-        #     del item_l[0]
-        #     num_res_l_clean.append(item_l)
+        num_res = run_abnum(file, fastadir)
+        num_res = num_res.replace('------------------------------------------\n', '')
+        num_res = num_res.strip()
+        num_res_l = num_res.split('#')
+        num_res_l = [i for i in num_res_l if i != '']
+        num_res_l_clean = []
+        for item in num_res_l:
+            item_l = item.split('\n')
+            del item_l[0]
+            num_res_l_clean.append(item_l)
         # print(f'{file}: {len(num_res_l_clean)}')
 
         agl_out = run_AGL(file, fastadir)
@@ -101,6 +101,7 @@ def extract_data(fastadir):
                 i_clean.append(ii)
             agl_list_stripped.append(i_clean)
         print(file)
+        print(num_res_l_clean)
         print(agl_list_stripped)
 
 
