@@ -80,9 +80,13 @@ def extract_data(fastadir):
             del item_l[0]
             num_res_l_clean.append(item_l)
         # print(f'{file}: {len(num_res_l_clean)}')
-        final_num_list = []
+        all_chain_single_list = []
         for num_chain in num_res_l_clean:
-            final_num_list = final_num_list + num_chain
+            all_chain_single_list = all_chain_single_list + num_chain
+        final_num_res = []
+        for res in all_chain_single_list:
+            res_split = res.split(' ')
+            final_num_res.append(res_split)
 
 
         # agl_out = run_AGL(file, fastadir)
@@ -110,7 +114,7 @@ def extract_data(fastadir):
         #     input_seq = input_seq + seq[0]
         #     germline_seq = germline_seq + seq[1]
         print(file)
-        print(final_num_list)
+        print(final_num_res)
 
         # input_res_list = list(input_seq)
         # germline_res_list = list(input_seq)
