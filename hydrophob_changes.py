@@ -88,9 +88,9 @@ def extract_data(fastadir):
             agl_out = agl_out.replace('Mus musculus\n', 'splitter')
         agl_out = agl_out.replace('Mismatches:', 'splitter')
         agl_list = agl_out.split('splitter')
-        
+
         # del agl_list[0]
-        print(agl_list)
+        print(agl_list[1::2])
         # agl_list_split = []
         # for i in agl_list:
         #     i = i.strip()
