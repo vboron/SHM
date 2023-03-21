@@ -112,7 +112,8 @@ def extract_data(fastadir):
         file_res_list = list(file_seq)
         germline_res_list = list(file_seq)
         file_germ_zip = zip(file_res_list, germline_res_list)
-        print(file_germ_zip)
+        for file_, germ in file_germ_zip:
+            print(file_, germ)
 
 
 
