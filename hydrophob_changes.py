@@ -89,15 +89,15 @@ def extract_data(fastadir):
     
         agl_list = agl_out.split('h_or_m')
         # del agl_list[0]
-        # print(agl_list)
-        agl_list_split = []
-        for i in agl_list:
-            i = i.strip()
-            i = i.split('Mismatches:')
-            # i = i.strip()
-            agl_list_split.append(i)
-        print(file)
-        print(agl_list_split)
+        print(agl_list)
+        # agl_list_split = []
+        # for i in agl_list:
+        #     i = i.strip()
+        #     i = i.split('Mismatches:')
+        #     # i = i.strip()
+        #     agl_list_split.append(i)
+        # print(file)
+        # print(agl_list_split)
         # print(f'{file}: {len(agl_list)}')
 
 
