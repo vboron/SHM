@@ -56,8 +56,13 @@ def extract_data(fastadir):
             agl_out = agl_out.replace('Mus musculus\n', 'h_or_m')
     
         agl_list = agl_out.split('h_or_m')
-        del agl_list[0]
-        print(agl_list)
+        # del agl_list[0]
+        # print(agl_list)
+        agl_list_split = []
+        for i in agl_list:
+            i = i.split('\n')
+            agl_list_split.append(i)
+        print(agl_list_split)
         # print(f'{file}: {len(agl_list)}')
 
 
