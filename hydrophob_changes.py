@@ -60,6 +60,7 @@ def extract_data(fastadir):
         # print(agl_list)
         agl_list_split = []
         for i in agl_list:
+            i = i.strip()
             i = i.split('\n')
             agl_list_split.append(i)
         print(agl_list_split)
