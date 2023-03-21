@@ -89,8 +89,12 @@ def extract_data(fastadir):
         agl_out = agl_out.replace('Mismatches:', 'splitter')
         agl_list = agl_out.split('splitter')
 
-        # del agl_list[0]
-        print(agl_list[1::2])
+        agl_list = agl_list[1::2]
+        agl_list_stripped = []
+        for i in agl_list:
+            i = i.strip()
+            agl_list_stripped.append(i)
+        print(agl_list_stripped)
         # agl_list_split = []
         # for i in agl_list:
         #     i = i.strip()
