@@ -1,4 +1,36 @@
 #!/usr/bin/env python3
+
+# AGL output example (agl -a fasta_subset/pdb2ny7_0PH.faa):
+#
+# >ChainL
+# # Chain type: Light
+# VL      :  78.12% : IGKV3-20*01  : F0 : Homo sapiens
+#     EIVLTQSPGTLSLSPGERATFSCRSSHSIRSRRVAWYQHKPGQAPRLVIHGVSNRASGISDRFSGSGSGTDFTLTITRVEPEDFALYYCQVYGASS
+#     |||||||||||||||||||| ||| | |  |   |||| |||||||| | | | || || |||||||||||||||| | |||||| |||| || |
+#     EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLEPEDFAVYYCQQYGSSP
+#     Mismatches: 21
+
+# JL      :  91.67% : IGKJ2*01     : F2 : Homo sapiens
+#     YTFGQGTKLERK
+#     |||||||||| |
+#     YTFGQGTKLEIK
+#     Mismatches: 1
+
+# >ChainH
+# # Chain type: Heavy
+# VH      :  79.59% : IGHV1-3*01   : F0 : Homo sapiens
+#     QVQLVQSGAEVKKPGASVKVSCQASGYRFSNFVIHWVRQAPGQRFEWMGWINPYNGNKEFSAKFQDRVTFTADTSANTAYMELRSLRSADTAVYYCAR
+#     |||||||||||||||||||||| |||| |     |||||||||| |||||||  |||   | ||| ||| | |||| |||||| |||| |||||||||
+#     QVQLVQSGAEVKKPGASVKVSCKASGYTFTSYAMHWVRQAPGQRLEWMGWINAGNGNTKYSQKFQGRVTITRDTSASTAYMELSSLRSEDTAVYYCAR
+#     Mismatches: 20
+
+# JH      :  75.00% : IGHJ6*03     : F2 : Homo sapiens
+#     PQDNYYMDVWGKGTTVIVSS
+#         |||||||||||| |||
+#     YYYYYYMDVWGKGTTVTVSS
+#     Mismatches: 5
+
+
 import argparse
 import os
 import pandas as pd
@@ -61,7 +93,7 @@ def extract_data(fastadir):
         agl_list_split = []
         for i in agl_list:
             i = i.strip()
-            i = i.split('\n')
+            i = i.split('Mismatches:')
             # i = i.strip()
             agl_list_split.append(i)
         print(file)
