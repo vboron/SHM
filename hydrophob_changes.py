@@ -107,7 +107,7 @@ def extract_data(fastadir):
             germline_seq = germline_seq + seq[1]
         agl_seqs = [file_seq, germline_seq]
         print(file)
-        print(len(num_res_l_clean))
+        print(len(num_res_l_clean[0]) + len(num_res_l_clean[1]))
         print(len(agl_seqs[0]))
 
 
