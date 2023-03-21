@@ -100,16 +100,9 @@ def extract_data(fastadir):
                 ii = ii.strip()
                 i_clean.append(ii)
             agl_list_stripped.append(i_clean)
+        print(file)
         print(agl_list_stripped)
-        # agl_list_split = []
-        # for i in agl_list:
-        #     i = i.strip()
-        #     i = i.split('Mismatches:')
-        #     # i = i.strip()
-        #     agl_list_split.append(i)
-        # print(file)
-        # print(agl_list_split)
-        # print(f'{file}: {len(agl_list)}')
+
 
 
 if __name__ == '__main__':
