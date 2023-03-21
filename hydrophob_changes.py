@@ -95,7 +95,7 @@ def extract_data(fastadir):
             i = i.strip()
             i_clean = []
             i_split = i.split('\n')
-            print(i_split)
+            i_split = i_split[0::2]
             for ii in i_split:
                 ii = ii.strip()
                 i_clean.append(ii)
