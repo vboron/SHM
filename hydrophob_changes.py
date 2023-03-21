@@ -93,7 +93,13 @@ def extract_data(fastadir):
         agl_list_stripped = []
         for i in agl_list:
             i = i.strip()
-            agl_list_stripped.append(i)
+            i_clean = []
+            i_split = i.split('\n')
+            print(i_split)
+            for ii in i_split:
+                ii = ii.strip()
+                i_clean.append(ii)
+            agl_list_stripped.append(i_clean)
         print(agl_list_stripped)
         # agl_list_split = []
         # for i in agl_list:
