@@ -125,8 +125,8 @@ def extract_data(fastadir):
         agl_output = run_AGL(file, fastadir)
         in_germ_res_pairs = parse_agl_data(agl_output)
         print(file)
-        print(numbered_res_list)
-        print(in_germ_res_pairs)
+        # print(numbered_res_list)
+        # print(in_germ_res_pairs)
 
         for res_pos in numbered_res_list:
             for res_id in in_germ_res_pairs:
