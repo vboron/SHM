@@ -134,8 +134,7 @@ def extract_data(fastadir):
         print(file)
         print(len(numbered_res_list))
         print(len(in_germ_res_pairs))
-
-
+        cal_hydrophob_change(in_germ_res_pairs)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
