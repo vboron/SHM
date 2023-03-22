@@ -139,7 +139,8 @@ def extract_data(fastadir):
         # print(len(numbered_res_list))
         # print(in_germ_res_pairs)
         delta_hydrophobicity = cal_hydrophob_change(in_germ_res_pairs)
-        print(f'{file}: {delta_hydrophobicity}')
+        name = file[3:-4]
+        print(f'{name}: {delta_hydrophobicity}')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
