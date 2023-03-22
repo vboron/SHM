@@ -121,8 +121,10 @@ def parse_agl_data(agl_out):
 
 def cal_hydrophob_change(imput_germ_pairs):
     df = pd.DataFrame(data=imput_germ_pairs, columns=['input', 'germline'])
-    print(df)
     df = df[df['input'] != df['germline']]
+    
+    df['input_hydrophob'] = df['input'].map(lambda x: utils_shm.hydrophobicity(x))
+    df['germ_hydrophob'] = df['germline'].map(lambda x: utils_shm.hydrophobicity(x))
     print(df)
 
 def extract_data(fastadir):
