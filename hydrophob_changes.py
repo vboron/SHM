@@ -131,6 +131,7 @@ def cal_hydrophob_change(imput_germ_pairs):
 
 def extract_data(fastadir):
     files = os.listdir(fastadir)
+    hydrophob_data = []
     for file in files:
         # numbered_res_list = parse_abnum_data(file, fastadir)
         agl_output = run_AGL(file, fastadir)
@@ -138,9 +139,13 @@ def extract_data(fastadir):
         # print(file)
         # print(len(numbered_res_list))
         # print(in_germ_res_pairs)
-        delta_hydrophobicity = cal_hydrophob_change(in_germ_res_pairs)
+        delta_hydrophobicity = f'{cal_hydrophob_change(in_germ_res_pairs):.2f}'
         name = file[3:-4]
-        print(f'{name}: {delta_hydrophobicity:.2f}')
+        data = [name, delta_hydrophobicity]
+        hydrophob_data.append(data)
+    df = pd.DataFrame(data=hydrophob_data, columns=['code', 'delta_hydrophobicity'])
+    print(df)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
