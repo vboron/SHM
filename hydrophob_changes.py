@@ -128,12 +128,12 @@ def cal_hydrophob_change(imput_germ_pairs):
 def extract_data(fastadir):
     files = os.listdir(fastadir)
     for file in files:
-        numbered_res_list = parse_abnum_data(file, fastadir)
+        # numbered_res_list = parse_abnum_data(file, fastadir)
         agl_output = run_AGL(file, fastadir)
         in_germ_res_pairs = parse_agl_data(agl_output)
         print(file)
         # print(len(numbered_res_list))
-        print(len(in_germ_res_pairs))
+        print(in_germ_res_pairs)
         cal_hydrophob_change(in_germ_res_pairs)
 
 if __name__ == '__main__':
