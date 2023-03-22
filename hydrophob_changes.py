@@ -37,6 +37,7 @@ import pandas as pd
 import subprocess
 import re
 import graphing_shm as graph
+import utils_shm
 
 
 def run_abnum(file, dire):
@@ -118,6 +119,12 @@ def parse_agl_data(agl_out):
     return input_germ_list
 
 
+def cal_hydrophob_change(imput_germ_pairs):
+    df = pd.DataFrame(data=imput_germ_pairs, columns=['input', 'germline'])
+    print(df)
+    df = df[df['input'] != df['germline']]
+    print(df)
+
 def extract_data(fastadir):
     files = os.listdir(fastadir)
     for file in files:
@@ -128,11 +135,7 @@ def extract_data(fastadir):
         print(len(numbered_res_list))
         print(len(in_germ_res_pairs))
 
-        for res_pos in numbered_res_list:
-            for res_id in in_germ_res_pairs:
-                if res_pos[1] == res_id[0]:
-                    print(res_pos[0], res_id[0])
-                    
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
