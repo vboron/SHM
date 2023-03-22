@@ -111,6 +111,7 @@ def parse_agl_data(agl_out):
     input_seq = ''
     germline_seq = ''
     for seq in agl_list_stripped:
+        print(seq)
         input_seq = input_seq + seq[0]
         germline_seq = germline_seq + seq[1]
     input_res_list = list(input_seq)
