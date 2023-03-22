@@ -132,7 +132,7 @@ def extract_data(fastadir):
         agl_output = run_AGL(file, fastadir)
         in_germ_res_pairs = parse_agl_data(agl_output)
         print(file)
-        print(len(numbered_res_list))
+        # print(len(numbered_res_list))
         print(len(in_germ_res_pairs))
         cal_hydrophob_change(in_germ_res_pairs)
 
