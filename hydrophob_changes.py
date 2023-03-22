@@ -125,7 +125,7 @@ def cal_hydrophob_change(imput_germ_pairs):
     
     df['input_hydrophob'] = df['input'].map(lambda x: utils_shm.hydrophobicity(x))
     df['germ_hydrophob'] = df['germline'].map(lambda x: utils_shm.hydrophobicity(x))
-    print(df)
+    print(df['germ_hydrophob'].sum())
 
 def extract_data(fastadir):
     files = os.listdir(fastadir)
