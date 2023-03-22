@@ -125,7 +125,9 @@ def cal_hydrophob_change(imput_germ_pairs):
     
     df['input_hydrophob'] = df['input'].map(lambda x: utils_shm.hydrophobicity(x))
     df['germ_hydrophob'] = df['germline'].map(lambda x: utils_shm.hydrophobicity(x))
-    print(df['germ_hydrophob'].sum())
+    change_in_hydrophobicity = df['germ_hydrophob'].sum() - df['input_hydrophob'].sum()
+    return change_in_hydrophobicity
+
 
 def extract_data(fastadir):
     files = os.listdir(fastadir)
@@ -133,10 +135,11 @@ def extract_data(fastadir):
         # numbered_res_list = parse_abnum_data(file, fastadir)
         agl_output = run_AGL(file, fastadir)
         in_germ_res_pairs = parse_agl_data(agl_output)
-        print(file)
+        # print(file)
         # print(len(numbered_res_list))
-        print(in_germ_res_pairs)
-        cal_hydrophob_change(in_germ_res_pairs)
+        # print(in_germ_res_pairs)
+        delta_hydrophobicity = cal_hydrophob_change(in_germ_res_pairs)
+        print(f'{file}: {delta_hydrophobicity}')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
