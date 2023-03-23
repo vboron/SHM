@@ -175,6 +175,7 @@ def extract_mut_data(fastadir):
                 mismatch_data.append(mismatch)
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
+    print(df)
     df.dropna(inplace=True)
     df.drop(columns=['JL', 'JH'])
     df.columns = ['code', 'VL', 'VH']
