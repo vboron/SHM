@@ -177,9 +177,7 @@ def extract_mut_data(fastadir):
     df = pd.DataFrame(data=dfdata, columns=col)
     df.dropna(inplace=True)
     df.drop(columns=['JL', 'JH'])
-    col.remove('JH')
-    col.remove('JL')
-    df.columns = col
+    df.columns = ['code', 'VL', 'VH']
     df['total_mut'] = df['VL'] + df['VH']
     print(df)
     return df
