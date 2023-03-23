@@ -63,7 +63,7 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
     return
 
 
-def hydrophobicity_vs_mutations(x_values, y_values, directory, name):
+def hydrophobicity_vs_mutations(x_values, y_values, name):
     # Plot all data
     # .corr() returns the correlation between two columns
     pearson_a = x_values.corr(y_values)
@@ -102,7 +102,7 @@ def hydrophobicity_vs_mutations(x_values, y_values, directory, name):
     plotting(x_values, y_values)
 
     # Exports the figure as a .jpg file
-    path_fig = os.path.join(directory, f'{name}.jpg')
+    path_fig = os.path.join(f'{name}.jpg')
     plt.savefig(path_fig, format='jpg')
     plt.close()
 

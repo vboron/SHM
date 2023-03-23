@@ -183,8 +183,7 @@ def combine_mut_hydrophob(hydrophob_df, mut_df):
     final_df = pd.merge(mut_df, hydrophob_df, on='code')
     print(final_df)
     graph.hydrophobicity_vs_mutations(
-        x_values=final_df['total_mut'], y_values=final_df['delta_hydrophobicity'],
-        directory='./', name='hydrophobicity')
+        x_values=final_df['total_mut'], y_values=final_df['delta_hydrophobicity'], name='hydrophobicity')
 
 
 if __name__ == '__main__':
