@@ -66,6 +66,8 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
 def hydrophobicity_vs_mutations(x_values, y_values, name):
     # Plot all data
     # .corr() returns the correlation between two columns
+    print(type(x_values))
+    print(type(y_values))
     pearson_a = x_values.corr(y_values)
 
     plt.figure()
