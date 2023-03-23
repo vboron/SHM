@@ -175,7 +175,7 @@ def extract_mut_data(fastadir):
     return df
 
 def combine_mut_hydrophob(hydrophob_df, mut_df):
-    final_df = pd.merge([mut_df, hydrophob_df], on='code')
+    final_df = pd.merge(mut_df, hydrophob_df, on='code')
     print(final_df)
 
 
