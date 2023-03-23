@@ -123,10 +123,13 @@ def parse_agl_data(agl_out):
 def cal_hydrophob_change(imput_germ_pairs):
     df = pd.DataFrame(data=imput_germ_pairs, columns=['input', 'germline'])
     df = df[df['input'] != df['germline']]
-    
-    df['input_hydrophob'] = df['input'].map(lambda x: utils_shm.hydrophobicity(x))
-    df['germ_hydrophob'] = df['germline'].map(lambda x: utils_shm.hydrophobicity(x))
-    change_in_hydrophobicity = df['germ_hydrophob'].sum() - df['input_hydrophob'].sum()
+
+    df['input_hydrophob'] = df['input'].map(
+        lambda x: utils_shm.hydrophobicity(x))
+    df['germ_hydrophob'] = df['germline'].map(
+        lambda x: utils_shm.hydrophobicity(x))
+    change_in_hydrophobicity = df['germ_hydrophob'].sum(
+    ) - df['input_hydrophob'].sum()
     return change_in_hydrophobicity
 
 
@@ -140,9 +143,10 @@ def extract_hydrophob_data(fastadir):
         name = file[3:-4]
         data = [name, delta_hydrophobicity]
         hydrophob_data.append(data)
-    df = pd.DataFrame(data=hydrophob_data, columns=['code', 'delta_hydrophobicity'])
+    df = pd.DataFrame(data=hydrophob_data, columns=[
+                      'code', 'delta_hydrophobicity'])
     return df
-    
+
 
 def extract_mut_data(fastadir):
     files = os.listdir(fastadir)
@@ -174,9 +178,13 @@ def extract_mut_data(fastadir):
     df['total_mut'] = df['VL'] + df['VH']
     return df
 
+
 def combine_mut_hydrophob(hydrophob_df, mut_df):
     final_df = pd.merge(mut_df, hydrophob_df, on='code')
     print(final_df)
+    graph.hydrophobicity_vs_mutations(
+        x_value=final_df['total_mut'], y_values=final_df['delta_hydrophobicity'],
+        directory='./', name='hydrophobicity')
 
 
 if __name__ == '__main__':
