@@ -175,9 +175,9 @@ def extract_mut_data(fastadir):
                 mismatch_data.append(mismatch)
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
-    df.astype({'VH': 'int32'})
     print(df)
     df.dropna(inplace=True)
+    df.astype({'VH': 'int32'})
     df.drop(columns=['JL', 'JH'], inplace=True)
     df['total_mut'] = df['VL'] + df['VH']
     print(df.dtypes)
