@@ -170,12 +170,12 @@ def extract_mut_data(fastadir):
     df = pd.DataFrame(data=dfdata, columns=col)
     df.dropna(inplace=True)
     df.drop(columns=['JL', 'JH'], inplace=True)
-    df = df.astype({'VH': 'int32', 'VL': 'int32'})
+    df = df.astype({'VH': 'int64', 'VL': 'int64'})
     df['total_mut'] = df['VL'] + df['VH']
     return df
 
 def combine_mut_hydrophob(hydrophob_df, mut_df):
-    final_df = hydrophob_df.join(mut_df, on='code')
+    final_df = pd.merge([mut_df, hydrophob_df], on='code')
     print(final_df)
 
 
