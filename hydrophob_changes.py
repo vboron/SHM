@@ -141,7 +141,7 @@ def extract_hydrophob_data(fastadir):
         data = [name, delta_hydrophobicity]
         hydrophob_data.append(data)
     df = pd.DataFrame(data=hydrophob_data, columns=['code', 'delta_hydrophobicity'])
-    print(df)
+    return df
     
 
 def extract_mut_data(fastadir):
