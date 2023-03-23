@@ -145,7 +145,7 @@ def extract_hydrophob_data(fastadir):
         hydrophob_data.append(data)
     df = pd.DataFrame(data=hydrophob_data, columns=[
                       'code', 'delta_hydrophobicity'])
-    df = df.astype({'delta_hydrophobicity': 'int64'})
+    df = df.astype({'delta_hydrophobicity': 'float64'})
     return df
 
 
