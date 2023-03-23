@@ -161,45 +161,55 @@ def find_maxrange_per_mutation_count(df, mut_col):
     return max_df
 
 
-def make_graphs(df, graph_name):
-    cols = ['VL', 'VH', 'total_mut']
-    for col in cols:
-        max_df = find_maxrange_per_mutation_count(df, col)
-        if col == 'total_mut':
-            graph.mutations_vs_angrange(
-                df, col, 'VH + VL', './', f'agl_{graph_name}_{col}_graph', max_df)
-        else:
-            graph.mutations_vs_angrange(
-                df, col, col, './', f'agl_{graph_name}_{col}_graph', max_df)
-
-
-def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, both_d, proportion):
+def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, both_d):
     files = []
     for file in os.listdir(fastadir):
         if file.endswith('.faa'):
             files.append(file)
     files.sort()
 
-    def find_mut(files_l, dic):
-        df = extract_data(fastadir, pdbdir, files_l, dic)
+    def find_mut(dictionary, group):
+        files_list = [f for f in files if f[3:-4] in dictionary]
+        print(f'Finding mutations for {group} antibodies...')
+        df = extract_data(fastadir, pdbdir, files_list, dictionary)
         df = df.drop(df[df['angle_range'] == 0].index)
         df = df.sort_values(by='angle_range', ascending=False)
+        df.to_csv(f'{group}_mutations.csv', index=False)
+        return df
+    
+    free_df = find_mut(free_d, 'free')
+    complex_df = find_mut(complexed_d, 'complex')
+    free_complex_df = find_mut(both_d, 'complex_free')
+    return free_df, complex_df, free_complex_df
+
+
+def shm_graphing(free_df, complexed_df, f_c_df, proportion):
+    def find_topx(df):
         top_x = len(df.index) * float(proportion)
         if top_x < 1:
             top_x = 1
         df_topx = df.head(int(top_x))
-        return df, df_topx
+        return df_topx
     
-    def graph_topx(dictionary, group):
-        files_list = [f for f in files if f[3:-4] in dictionary]
-        print(f'Finding mutations for {group} antibodies...')
-        df, topx_df = find_mut(files_list, dictionary)
-        df.to_csv(f'{group}_mutations.csv', index=False)
+    def make_graphs(df, graph_name):
+        cols = ['VL', 'VH', 'total_mut']
+        for col in cols:
+            max_df = find_maxrange_per_mutation_count(df, col)
+            if col == 'total_mut':
+                graph.mutations_vs_angrange(
+                    df, col, 'VH + VL', './', f'agl_{graph_name}_{col}_graph', max_df)
+            else:
+                graph.mutations_vs_angrange(
+                    df, col, col, './', f'agl_{graph_name}_{col}_graph', max_df)
+                
+    def graph_topx(group_df, group):
+        topx_df = find_topx(group_df)
         make_graphs(topx_df, group)
 
-    graph_topx(free_d, 'free')
-    graph_topx(complexed_d, 'complex')
-    graph_topx(both_d, 'complex_free')
+    print('Graphing...')
+    graph_topx(free_df, 'free')
+    graph_topx(complexed_df, 'complex')
+    graph_topx(f_c_df, 'complex_free')
 
 
 # *************************************************************************
@@ -221,5 +231,6 @@ if __name__ == '__main__':
 
     free_list, complex_list, all_list = parse_redund_file(args.redfile)
     dict_free, dict_complex, dict_all= dict_for_names(free_list, complex_list, all_list)
-    run_for_free_complexed(args.fastadir, args.pdbdir,
-                           dict_free, dict_complex, dict_all, args.top_x)
+    f_df, c_df, fc_df = run_for_free_complexed(args.fastadir, args.pdbdir,
+                           dict_free, dict_complex, dict_all)
+    shm_graphing(f_df, c_df, fc_df, args.top_x)
