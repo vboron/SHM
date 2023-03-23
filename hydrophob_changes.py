@@ -171,8 +171,8 @@ def extract_mut_data(fastadir):
         for data in result_data:
             if data.startswith('Mismatches'):
                 data_list = data.split(':')
-                mismatch = int(data_list[1])
-                mismatch_data.append(mismatch)
+                mismatch = data_list[1]
+                mismatch_data.append(int(mismatch))
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
     print(df)
