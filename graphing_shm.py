@@ -90,14 +90,14 @@ def hydrophobicity_vs_mutations(x_values, y_values, name):
     plt.text(s=f'Correlation: {pearson_a}', x=10, y=9, fontsize=8)
 
     # Plot highest values
-    def plotting(x, y, color):
+    def plotting(x, y):
         plt.scatter(x, y, s=3, color=color_data)
         m, b = np.polyfit(x, y, 1)
         plt.plot(x, m * x + b, color=color_bf,
              linestyle='dashed', linewidth=1)
         bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
         plt.text(s=f'Best fit: {bf_line}',
-             x=10, y=15, fontsize=8, color=color)
+             x=10, y=15, fontsize=8, color=color_bf)
     
     plotting(x_values, y_values)
 
