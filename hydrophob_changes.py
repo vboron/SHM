@@ -142,13 +142,6 @@ def extract_hydrophob_data(fastadir):
         hydrophob_data.append(data)
     df = pd.DataFrame(data=hydrophob_data, columns=['code', 'delta_hydrophobicity'])
     print(df)
-
-
-def combine_mut_hydrophob(redundancy_list):
-    free_list, complex_list, all_list = runAGL.parse_redund_file(redundancy_list)
-    dict_free, dict_complex, dict_all= runAGL.dict_for_names(free_list, complex_list, all_list)
-    _x_, _y_, fc_df = runAGL.run_for_free_complexed(args.fastadir, args.pdbdir,
-                           dict_free, dict_complex, dict_all)
     
 
 def extract_mut_data(fastadir):
@@ -175,13 +168,15 @@ def extract_mut_data(fastadir):
                 mismatch_data.append(mismatch)
         dfdata.append(mismatch_data)
     df = pd.DataFrame(data=dfdata, columns=col)
-    print(df)
     df.dropna(inplace=True)
     df.drop(columns=['JL', 'JH'], inplace=True)
     df = df.astype({'VH': 'int32', 'VL': 'int32'})
     df['total_mut'] = df['VL'] + df['VH']
-    print(df)
     return df
+
+def combine_mut_hydrophob(hydrophob_df, mut_df):
+    final_df = hydrophob_df.join(mut_df, on='code')
+    print(final_df)
 
 
 if __name__ == '__main__':
@@ -191,5 +186,6 @@ if __name__ == '__main__':
         '--fastadir', help='Directory of fasta files', required=True)
     args = parser.parse_args()
 
-    # extract_hydrophob_data(args.fastadir)
-    extract_mut_data(args.fastadir)
+    df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
+    df_mutations = extract_mut_data(args.fastadir)
+    combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
