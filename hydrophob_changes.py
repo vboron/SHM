@@ -38,6 +38,7 @@ import subprocess
 import re
 import graphing_shm as graph
 import utils_shm
+import runAGL
 
 
 def run_abnum(file, dire):
@@ -129,22 +130,59 @@ def cal_hydrophob_change(imput_germ_pairs):
     return change_in_hydrophobicity
 
 
-def extract_data(fastadir):
+def extract_hydrophob_data(fastadir):
     files = os.listdir(fastadir)
     hydrophob_data = []
     for file in files:
-        # numbered_res_list = parse_abnum_data(file, fastadir)
         agl_output = run_AGL(file, fastadir)
         in_germ_res_pairs = parse_agl_data(agl_output)
-        # print(file)
-        # print(len(numbered_res_list))
-        # print(in_germ_res_pairs)
         delta_hydrophobicity = f'{cal_hydrophob_change(in_germ_res_pairs):.2f}'
         name = file[3:-4]
         data = [name, delta_hydrophobicity]
         hydrophob_data.append(data)
     df = pd.DataFrame(data=hydrophob_data, columns=['code', 'delta_hydrophobicity'])
     print(df)
+
+
+def combine_mut_hydrophob(redundancy_list):
+    free_list, complex_list, all_list = runAGL.parse_redund_file(redundancy_list)
+    dict_free, dict_complex, dict_all= runAGL.dict_for_names(free_list, complex_list, all_list)
+    _x_, _y_, fc_df = runAGL.run_for_free_complexed(args.fastadir, args.pdbdir,
+                           dict_free, dict_complex, dict_all)
+    
+
+def extract_mut_data(fastadir):
+    files = os.listdir(fastadir)
+    col = ['code', 'VL', 'JL', 'VH', 'JH']
+    dfdata = []
+    mismatch_data = []
+
+    for file in files:
+        print(file)
+        result = run_AGL(file, fastadir)
+        result = result.replace(' ', '')
+        temp = re.split('\n', result)
+        result_data = []
+        for line in temp:
+            if ':' in line:
+                result_data.append(line)
+        code = file[3:-4]
+        mismatch_data = [code]
+        for data in result_data:
+            if data.startswith('Mismatches'):
+                data_list = data.split(':')
+                mismatch = int(data_list[1])
+                mismatch_data.append(mismatch)
+        dfdata.append(mismatch_data)
+    df = pd.DataFrame(data=dfdata, columns=col)
+    df.dropna(inplace=True)
+    df.drop(columns=['JL', 'JH'])
+    col.remove('JH')
+    col.remove('JL')
+    df.columns = col
+    df['total_mut'] = df['VL'] + df['VH']
+    print(df)
+    return df
 
 
 if __name__ == '__main__':
@@ -154,4 +192,5 @@ if __name__ == '__main__':
         '--fastadir', help='Directory of fasta files', required=True)
     args = parser.parse_args()
 
-    extract_data(args.fastadir)
+    # extract_hydrophob_data(args.fastadir)
+    extract_mut_data(args.fastadir)
