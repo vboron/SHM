@@ -88,7 +88,7 @@ def parse_abnum_data(in_file, dire):
     for res in all_chain_single_list:
         res_split = res.split(' ')
         final_num_res.append(res_split)
-    print(final_num_res)
+    print('label len', len(final_num_res))
     return final_num_res
 
 
@@ -140,6 +140,7 @@ def extract_hydrophob_data(fastadir):
     for file in files:
         agl_output = run_AGL(file, fastadir)
         in_germ_res_pairs = parse_agl_data(agl_output)
+        print('pairs len', len(in_germ_res_pairs))
         delta_hydrophobicity = f'{cal_hydrophob_change(in_germ_res_pairs):.2f}'
         name = file[3:-4]
         data = [name, delta_hydrophobicity]
@@ -199,4 +200,4 @@ if __name__ == '__main__':
 
     df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
     df_mutations = extract_mut_data(args.fastadir)
-    combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
+    # combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
