@@ -172,6 +172,7 @@ def extract_mut_data(fastadir):
                 mismatch = data_list[1]
                 mismatch_data.append(mismatch)
         dfdata.append(mismatch_data)
+        parse_abnum_data(file, fastadir)
     df = pd.DataFrame(data=dfdata, columns=col)
     df.dropna(inplace=True)
     df.drop(columns=['JL', 'JH'], inplace=True)
