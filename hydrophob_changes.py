@@ -138,6 +138,7 @@ def extract_hydrophob_data(fastadir):
     files = os.listdir(fastadir)
     hydrophob_data = []
     for file in files:
+        print(file)
         agl_output = run_AGL(file, fastadir)
         in_germ_res_pairs = parse_agl_data(agl_output)
         print('pairs len', len(in_germ_res_pairs))
