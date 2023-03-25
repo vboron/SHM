@@ -192,6 +192,14 @@ def combine_mut_hydrophob(hydrophob_df, mut_df):
     graph.hydrophobicity_vs_mutations(
         x_values=final_df['total_mut'], y_values=final_df['delta_hydrophobicity'], name='hydrophobicity')
 
+def run_test1():
+    # sample input
+    # l1 = [[label1, P1], ...]
+    # l2 = [[P1, M1], [-, M2], ...]
+    # computed_output = func(l1, l2)
+    # expected_output = [[label1, P1, M1], ...]
+    # assert computed_output == expected_output
+    assert True
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -199,6 +207,8 @@ if __name__ == '__main__':
     parser.add_argument(
         '--fastadir', help='Directory of fasta files', required=True)
     args = parser.parse_args()
+
+    run_test1()
 
     df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
     df_mutations = extract_mut_data(args.fastadir)
