@@ -158,6 +158,7 @@ def extract_mut_data(fastadir):
     mismatch_data = []
 
     for file in files:
+        print(file)
         result = run_AGL(file, fastadir)
         result = result.replace(' ', '')
         temp = re.split('\n', result)
