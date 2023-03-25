@@ -88,6 +88,7 @@ def parse_abnum_data(in_file, dire):
     for res in all_chain_single_list:
         res_split = res.split(' ')
         final_num_res.append(res_split)
+    print(final_num_res)
     return final_num_res
 
 
