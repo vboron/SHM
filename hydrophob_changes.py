@@ -73,8 +73,7 @@ def parse_abnum_data(in_file, dire):
     split_res_num = num_res.split('\n')
     num_res_list = [i for i in split_res_num if i.startswith('L') or i.startswith('H')]
     num_res_list = [i.split(' ') for i in num_res_list]
-    print(num_res_list)
-    return
+    return num_res_list
 
 
 def parse_agl_data(agl_out):
@@ -87,13 +86,9 @@ def parse_agl_data(agl_out):
     agl_list = agl_list[1::2]
     agl_list_stripped = []
     for i in agl_list:
-        i = i.strip()
-        i_clean = []
-        i_split = i.split('\n')
+        i_split = i.strip().split('\n')
         i_split = i_split[0::2]
-        for ii in i_split:
-            ii = ii.strip()
-            i_clean.append(ii)
+        i_clean = [ii.strip() for ii in i_split]
         agl_list_stripped.append(i_clean)
     input_seq = ''
     germline_seq = ''
