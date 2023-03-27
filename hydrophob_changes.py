@@ -70,7 +70,8 @@ def run_AGL(file, dire):
 
 def parse_abnum_data(in_file, dire):
     num_res = run_abnum(in_file, dire)
-    print(type(num_res))
+    split_res_num = num_res.split('\n')
+    print(split_res_num)
     # num_res = num_res.replace(
     #     '------------------------------------------\n', '')
     # num_res = num_res.strip()
