@@ -86,6 +86,7 @@ def parse_abnum_data(in_file, dire):
         all_chain_single_list = all_chain_single_list + num_chain
     final_num_res = []
     for res in all_chain_single_list:
+        res = res.strip()
         res_split = res.split(' ')
         final_num_res.append(res_split)
     # print('label len', final_num_res)
