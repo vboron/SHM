@@ -108,8 +108,7 @@ def cal_hydrophob_change(imput_germ_pairs):
         lambda x: utils_shm.hydrophobicity(x))
     df['germ_hydrophob'] = df['germline'].map(
         lambda x: utils_shm.hydrophobicity(x))
-    change_in_hydrophobicity = df['germ_hydrophob'].sum(
-    ) - df['input_hydrophob'].sum()
+    change_in_hydrophobicity = df['germ_hydrophob'].sum() - df['input_hydrophob'].sum()
     return change_in_hydrophobicity
 
 
@@ -149,7 +148,8 @@ def extract_mut_data(fastadir):
         #         mismatch = data_list[1]
         #         mismatch_data.append(mismatch)
         # dfdata.append(mismatch_data)
-        parse_abnum_data(file, fastadir)
+        print(f'len abnum: {len(parse_abnum_data(file, fastadir))}')
+        print(f'len agl: {len(parse_agl_data(run_AGL(file, fastadir)))}')
         # print([list(a) for a in zip(parse_abnum_data(file, fastadir), parse_agl_data(run_AGL(file, fastadir)))])
     # df = pd.DataFrame(data=dfdata, columns=col)
     # df.dropna(inplace=True)
