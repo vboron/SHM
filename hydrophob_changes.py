@@ -72,25 +72,8 @@ def parse_abnum_data(in_file, dire):
     num_res = run_abnum(in_file, dire)
     split_res_num = num_res.split('\n')
     num_res_list = [i for i in split_res_num if i.startswith('L') or i.startswith('H')]
+    num_res_list = [i.split(' ') for i in num_res_list]
     print(num_res_list)
-    # num_res = num_res.replace(
-    #     '------------------------------------------\n', '')
-    # num_res = num_res.strip()
-    # num_res_l = num_res.split('#')
-    # num_res_l = [i for i in num_res_l if i != '']
-    # num_res_l_clean = []
-    # for item in num_res_l:
-    #     item_l = item.split('\n')
-    #     del item_l[0]
-    #     num_res_l_clean.append(item_l)
-    # all_chain_single_list = []
-    # for num_chain in num_res_l_clean:
-    #     all_chain_single_list = all_chain_single_list + num_chain
-    # final_num_res = []
-    # for res in all_chain_single_list:
-    #     res = res.strip()
-    #     res_split = res.split(' ')
-    #     final_num_res.append(res_split)
     return
 
 
