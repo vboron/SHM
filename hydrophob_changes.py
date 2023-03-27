@@ -70,33 +70,26 @@ def run_AGL(file, dire):
 
 def parse_abnum_data(in_file, dire):
     num_res = run_abnum(in_file, dire)
-    num_res = num_res.replace(
-        '------------------------------------------\n', '')
-    num_res = num_res.strip()
-    num_res_l = num_res.split('#')
-    num_res_l = [i for i in num_res_l if i != '']
-    num_res_l_clean = []
-    for item in num_res_l:
-        item_l = item.split('\n')
-        del item_l[0]
-        num_res_l_clean.append(item_l)
-    # print(f'{file}: {len(num_res_l_clean)}')
-    all_chain_single_list = []
-    for num_chain in num_res_l_clean:
-        all_chain_single_list = all_chain_single_list + num_chain
-    final_num_res = []
-    for res in all_chain_single_list:
-        res = res.strip()
-        res_split = res.split(' ')
-        final_num_res.append(res_split)
-    # print('label len', final_num_res)
-    if '['']' in final_num_res:
-        print('It is here')
-    for e in final_num_res:
-        if e == '['']':
-            print(e)
-    # final_num_res.remove('['']')
-    return final_num_res
+    print(type(num_res))
+    # num_res = num_res.replace(
+    #     '------------------------------------------\n', '')
+    # num_res = num_res.strip()
+    # num_res_l = num_res.split('#')
+    # num_res_l = [i for i in num_res_l if i != '']
+    # num_res_l_clean = []
+    # for item in num_res_l:
+    #     item_l = item.split('\n')
+    #     del item_l[0]
+    #     num_res_l_clean.append(item_l)
+    # all_chain_single_list = []
+    # for num_chain in num_res_l_clean:
+    #     all_chain_single_list = all_chain_single_list + num_chain
+    # final_num_res = []
+    # for res in all_chain_single_list:
+    #     res = res.strip()
+    #     res_split = res.split(' ')
+    #     final_num_res.append(res_split)
+    return
 
 
 def parse_agl_data(agl_out):
@@ -167,23 +160,24 @@ def extract_mut_data(fastadir):
 
     for file in files:
         print(file)
-        result = run_AGL(file, fastadir)
-        result = result.replace(' ', '')
-        temp = re.split('\n', result)
-        result_data = []
-        for line in temp:
-            if ':' in line:
-                result_data.append(line)
-        code = file[3:-4]
-        mismatch_data = [code]
-        for data in result_data:
-            if data.startswith('Mismatches'):
-                data_list = data.split(':')
-                mismatch = data_list[1]
-                mismatch_data.append(mismatch)
-        dfdata.append(mismatch_data)
-        print(parse_abnum_data(file, fastadir))
-        print(parse_agl_data(run_AGL(file, fastadir)))
+        # result = run_AGL(file, fastadir)
+        # result = result.replace(' ', '')
+        # temp = re.split('\n', result)
+        # result_data = []
+        # for line in temp:
+        #     if ':' in line:
+        #         result_data.append(line)
+        # code = file[3:-4]
+        # mismatch_data = [code]
+        # for data in result_data:
+        #     if data.startswith('Mismatches'):
+        #         data_list = data.split(':')
+        #         mismatch = data_list[1]
+        #         mismatch_data.append(mismatch)
+        # dfdata.append(mismatch_data)
+        # print(parse_abnum_data(file, fastadir))
+        # print(parse_agl_data(run_AGL(file, fastadir)))
+        parse_abnum_data(in_file, dire)
         # print([list(a) for a in zip(parse_abnum_data(file, fastadir), parse_agl_data(run_AGL(file, fastadir)))])
     # df = pd.DataFrame(data=dfdata, columns=col)
     # df.dropna(inplace=True)
@@ -217,7 +211,8 @@ if __name__ == '__main__':
 
     run_test1()
 
-    df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
+
+    # df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
     df_mutations = extract_mut_data(args.fastadir)
     # combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
 
