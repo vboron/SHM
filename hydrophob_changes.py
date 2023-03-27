@@ -90,8 +90,11 @@ def parse_abnum_data(in_file, dire):
         res_split = res.split(' ')
         final_num_res.append(res_split)
     # print('label len', final_num_res)
+    if '['']' in final_num_res:
+        print('It is here')
     for e in final_num_res:
-        print(e)
+        if e == '['']':
+            print(e)
     # final_num_res.remove('['']')
     return final_num_res
 
