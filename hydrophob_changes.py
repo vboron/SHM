@@ -71,7 +71,8 @@ def run_AGL(file, dire):
 def parse_abnum_data(in_file, dire):
     num_res = run_abnum(in_file, dire)
     split_res_num = num_res.split('\n')
-    print(split_res_num)
+    num_res_list = [i for i in split_res_num if i.startswith('L') or i.startswith('H')]
+    print(num_res_list)
     # num_res = num_res.replace(
     #     '------------------------------------------\n', '')
     # num_res = num_res.strip()
