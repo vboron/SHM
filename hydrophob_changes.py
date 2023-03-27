@@ -104,7 +104,6 @@ def parse_agl_data(agl_out):
 def cal_hydrophob_change(imput_germ_pairs):
     df = pd.DataFrame(data=imput_germ_pairs, columns=['input', 'germline'])
     df = df[df['input'] != df['germline']]
-
     df['input_hydrophob'] = df['input'].map(
         lambda x: utils_shm.hydrophobicity(x))
     df['germ_hydrophob'] = df['germline'].map(
@@ -118,10 +117,8 @@ def extract_hydrophob_data(fastadir):
     files = os.listdir(fastadir)
     hydrophob_data = []
     for file in files:
-        # print(file)
         agl_output = run_AGL(file, fastadir)
         in_germ_res_pairs = parse_agl_data(agl_output)
-        # print('pairs len', in_germ_res_pairs)
         delta_hydrophobicity = f'{cal_hydrophob_change(in_germ_res_pairs):.2f}'
         name = file[3:-4]
         data = [name, delta_hydrophobicity]
@@ -143,10 +140,7 @@ def extract_mut_data(fastadir):
         # result = run_AGL(file, fastadir)
         # result = result.replace(' ', '')
         # temp = re.split('\n', result)
-        # result_data = []
-        # for line in temp:
-        #     if ':' in line:
-        #         result_data.append(line)
+        # result_data = [l for l in temp if ':' in l]
         # code = file[3:-4]
         # mismatch_data = [code]
         # for data in result_data:
@@ -155,8 +149,6 @@ def extract_mut_data(fastadir):
         #         mismatch = data_list[1]
         #         mismatch_data.append(mismatch)
         # dfdata.append(mismatch_data)
-        # print(parse_abnum_data(file, fastadir))
-        # print(parse_agl_data(run_AGL(file, fastadir)))
         parse_abnum_data(file, fastadir)
         # print([list(a) for a in zip(parse_abnum_data(file, fastadir), parse_agl_data(run_AGL(file, fastadir)))])
     # df = pd.DataFrame(data=dfdata, columns=col)
