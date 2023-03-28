@@ -102,7 +102,7 @@ def parse_agl_data(agl_out):
 
     agl_lines = agl_out.split('<')
     # agl_lines = [line.strip() for line in agl_lines]
-    print(sgl_lines)
+    print(agl_lines)
     return
 
 
@@ -154,7 +154,7 @@ def extract_mut_data(fastadir):
         #         mismatch_data.append(mismatch)
         # dfdata.append(mismatch_data)
         print(f'len abnum: {len(parse_abnum_data(file, fastadir))}')
-        print(f'len agl: {len(parse_agl_data(run_AGL(file, fastadir)))}')
+        # print(f'len agl: {len(parse_agl_data(run_AGL(file, fastadir)))}')
         # print([list(a) for a in zip(parse_abnum_data(file, fastadir), parse_agl_data(run_AGL(file, fastadir)))])
     # df = pd.DataFrame(data=dfdata, columns=col)
     # df.dropna(inplace=True)
