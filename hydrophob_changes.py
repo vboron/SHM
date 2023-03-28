@@ -64,8 +64,7 @@ def run_AGL(file, dire):
     return aglresult
 
 
-def parse_abnum_data(in_file, dire):
-    num_res = run_abnum(in_file, dire)
+def parse_abnum_data(num_res):
     split_res_num = num_res.split('\n')
 
     def make_LH_list(chain):
@@ -81,6 +80,11 @@ def parse_abnum_data(in_file, dire):
     if any('H' in line for line in split_res_num):
         num_res_h = make_LH_list('H')
     return num_res_l, num_res_h
+
+
+def extract_abnum_data(in_file, dire):
+    numbered_residues = run_abnum(in_file, dire)
+    return parse_abnum_data(numbered_residues)
 
 
 def parse_agl_data(agl_out):
@@ -162,10 +166,10 @@ def extract_mut_data(fastadir):
         #         mismatch = data_list[1]
         #         mismatch_data.append(mismatch)
         # dfdata.append(mismatch_data)
-        print(f'abnum: {parse_abnum_data(file, fastadir)}')
+        print(f'abnum: {extract_abnum_data(file, fastadir)}')
         parse_agl_data(run_AGL(file, fastadir))
         # print(f'len agl: {len(parse_agl_data(run_AGL(file, fastadir)))}')
-        # print([list(a) for a in zip(parse_abnum_data(file, fastadir), parse_agl_data(run_AGL(file, fastadir)))])
+        # print([list(a) for a in zip(extract_abnum_data(file, fastadir), parse_agl_data(run_AGL(file, fastadir)))])
     # df = pd.DataFrame(data=dfdata, columns=col)
     # df.dropna(inplace=True)
     # df.drop(columns=['JL', 'JH'], inplace=True)
@@ -243,7 +247,7 @@ JL      :  91.67% : IGKJ2*01     : F2 : Homo sapiens
     utils_shm.check_equal(chainh, expected_chainh)
 
 
-def run_test_parse_abnum_data_bothchains(directory):
+def run_test_parse_abnum_data_bothchains():
     test_input = """
     # Numbered sequence  1
     L1 E
@@ -260,7 +264,7 @@ def run_test_parse_abnum_data_bothchains(directory):
     ------------------------------------------
 
     """
-    resnuml, resnumh = parse_abnum_data(test_input, directory)
+    resnuml, resnumh = parse_abnum_data(test_input)
     expected_resnuml = [['L1', 'E'], ['L2', 'I'], ['L3', 'V'], ['L4', 'L'], ['L5', 'T']]
     expected_resnumh = [['H1', 'Q'], ['H2', 'V'], ['H3', 'Q'], ['H4', 'L']]
 
@@ -278,7 +282,7 @@ if __name__ == '__main__':
 
     run_test_parse_agl_data_bothchains()
     run_test_parse_agl_data_singlechainL()
-    run_test_parse_abnum_data_bothchains(args.fastadir)
+    run_test_parse_abnum_data_bothchains()
 
     # df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
     df_mutations = extract_mut_data(args.fastadir)
