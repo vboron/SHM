@@ -261,11 +261,11 @@ def run_test_parse_abnum_data_bothchains():
 
     """
     resnuml, resnumh = parse_abnum_data(test_input)
-    expected_chainl = [['E', 'E'], ['I', 'I'], ['V', 'V'], ['L', 'G'], ['T', 'T'], ['Q', 'Q'], ['Y', 'Y'], ['T', 'T'], ['F', 'F']]
-    expected_chainh = []
+    expected_resnuml = [['L1', 'E'], ['L2', 'I'], ['L3', 'V'], ['L4', 'L'], ['L5', 'T']]
+    expected_resnumh = [['H1', 'Q'], ['H2', 'V'], ['H3', 'Q'], ['H4', 'L']]
 
-    # utils_shm.check_equal(chainl, expected_chainl)
-    # utils_shm.check_equal(chainh, expected_chainh)
+    utils_shm.check_equal(resnuml, expected_resnuml)
+    utils_shm.check_equal(resnumh, expected_resnumh)
 
 
 # *************************************************************************
@@ -278,7 +278,8 @@ if __name__ == '__main__':
 
     run_test_parse_agl_data_bothchains()
     run_test_parse_agl_data_singlechainL()
-
+    run_test_parse_abnum_data_bothchains()
+    
     # df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
     df_mutations = extract_mut_data(args.fastadir)
     # combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
