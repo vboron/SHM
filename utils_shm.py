@@ -5,9 +5,9 @@ import sys
 def check_equal(computed, expected):
     test_name = sys._getframe().f_back.f_code.co_name
     if computed == expected:
-        print(f'Check within {test_name} PASSED')
+        print(f'[TEST] Check within {test_name} PASSED')
     else:
-        print(f'Check within {test_name} FAILED; computed={computed}, expected={expected}')
+        print(f'[TEST] Check within {test_name} FAILED; computed={computed}, expected={expected}')
     assert computed == expected
 
 def one_letter_code(pdb, res):
