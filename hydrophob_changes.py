@@ -100,8 +100,9 @@ def parse_agl_data(agl_out):
     # input_germ_list = [list(a) for a in zip(input_res_list, germline_res_list)]
 
 
-    agl_lines = agl_out.split('>')
+    agl_lines = agl_out.split('Chain type:')
     del agl_lines[0]
+    print(agl_lines)
     chainl = []
     chainh = []
     def process_chain(chain_list, element):
@@ -113,7 +114,7 @@ def parse_agl_data(agl_out):
         element = element.split('splitter')
         # element = element[1::2]
         print(element)
-    process_chain(chainl, agl_lines[0])
+    # process_chain(chainl, agl_lines[0])
     # agl_lines = [line.strip() for line in agl_lines]
     # print(agl_lines)
     return
