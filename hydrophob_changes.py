@@ -77,19 +77,6 @@ def parse_abnum_data(in_file, dire):
 
 
 def parse_agl_data(agl_out):
-    # if 'Homo sapiens' in agl_out:
-    #     agl_out = agl_out.replace('Homo sapiens\n', 'splitter')
-    # if 'Mus musculus' in agl_out:
-    #     agl_out = agl_out.replace('Mus musculus\n', 'splitter')
-    # agl_out = agl_out.replace('Mismatches:', 'splitter')
-    # agl_list = agl_out.split('splitter')
-    # agl_list = agl_list[1::2]
-    # agl_list_stripped = []
-    # for i in agl_list:
-    #     i_split = i.strip().split('\n')
-    #     i_split = i_split[0::2]
-    #     i_clean = [ii.strip() for ii in i_split]
-    #     agl_list_stripped.append(i_clean)
     # input_seq = ''
     # germline_seq = ''
     # for seq in agl_list_stripped:
@@ -113,12 +100,12 @@ def parse_agl_data(agl_out):
         chain_data = chain_data[0].split('splitter')
         chain_data = chain_data[1::2]
         chain_data = [i.strip().split('\n') for i in chain_data]
-        germline = []
-        input_seq = []
+        germline = ''
+        input_seq = ''
         for element in chain_data:
             germline = germline + element[0]
             input_seq = input_seq + element[2]
-        print(germline)
+        print(list(germline))
         # print(element)
         return chain_data
     
