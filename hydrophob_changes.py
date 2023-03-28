@@ -38,7 +38,6 @@ import subprocess
 import re
 import graphing_shm as graph
 import utils_shm
-import runAGL
 
 
 def run_abnum(file, dire):
@@ -48,10 +47,8 @@ def run_abnum(file, dire):
         result = (subprocess.check_output(
             ['abnum', '-f', path])).decode("utf-8")
         abnumresult = result
-        # print(abnumresult)
     except subprocess.CalledProcessError:
         print(f'abnum failed on {file}')
-        # error_files.append(file)
     return abnumresult
 
 
@@ -64,7 +61,6 @@ def run_AGL(file, dire):
         aglresult = result
     except subprocess.CalledProcessError:
         print(f'AGL failed on {file}')
-        # error_files.append(file)
     return aglresult
 
 
