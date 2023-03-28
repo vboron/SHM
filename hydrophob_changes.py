@@ -243,7 +243,7 @@ JL      :  91.67% : IGKJ2*01     : F2 : Homo sapiens
     utils_shm.check_equal(chainh, expected_chainh)
 
 
-def run_test_parse_abnum_data_bothchains():
+def run_test_parse_abnum_data_bothchains(directory):
     test_input = """
     # Numbered sequence  1
     L1 E
@@ -260,7 +260,7 @@ def run_test_parse_abnum_data_bothchains():
     ------------------------------------------
 
     """
-    resnuml, resnumh = parse_abnum_data(test_input)
+    resnuml, resnumh = parse_abnum_data(test_input, directory)
     expected_resnuml = [['L1', 'E'], ['L2', 'I'], ['L3', 'V'], ['L4', 'L'], ['L5', 'T']]
     expected_resnumh = [['H1', 'Q'], ['H2', 'V'], ['H3', 'Q'], ['H4', 'L']]
 
@@ -278,8 +278,8 @@ if __name__ == '__main__':
 
     run_test_parse_agl_data_bothchains()
     run_test_parse_agl_data_singlechainL()
-    run_test_parse_abnum_data_bothchains()
-    
+    run_test_parse_abnum_data_bothchains(args.fastadir)
+
     # df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
     df_mutations = extract_mut_data(args.fastadir)
     # combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
