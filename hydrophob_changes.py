@@ -70,7 +70,7 @@ def parse_abnum_data(num_res):
     print('split:', split_res_num)
 
     def make_LH_list(chain):
-        num_res_list = [i for i in split_res_num if i.startswith(chain)]
+        num_res_list = [i.strip() for i in split_res_num if i.strip().startswith(chain)]
         print(num_res_list)
         # num_res_list = [i for i in split_res_num if i.startswith('L') or i.startswith('H')]
         num_res_list = [i.split(' ') for i in num_res_list]
