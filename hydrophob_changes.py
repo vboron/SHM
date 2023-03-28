@@ -176,7 +176,8 @@ def run_test1():
     # computed_output = func(l1, l2)
     # expected_output = [[label1, P1, M1], ...]
     # assert computed_output == expected_output
-    assert True
+    # TODO: implement
+    utils_shm.check_equal(1, 1)
 
 def run_test_parse_agl_data_both():
     test_input = """

@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 
+import sys
+
 def check_equal(computed, expected):
-    if computed != expected:
-        print(f'Test check failed, computed={computed}, expected={expected}')
+    test_name = sys._getframe().f_back.f_code.co_name
+    if computed == expected:
+        print(f'Check within {test_name} PASSED')
+    else:
+        print(f'Check within {test_name} FAILED; computed={computed}, expected={expected}')
     assert computed == expected
 
 def one_letter_code(pdb, res):
