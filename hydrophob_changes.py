@@ -104,8 +104,10 @@ def parse_agl_data(agl_out):
     del agl_lines[0]
     agl_lines = [i.strip() for i in agl_lines]
     print(agl_lines)
-    chainl = []
-    chainh = []
+    chainl = [i for i in agl_lines if i.startswith('Light')]
+    chainh = [i for i in agl_lines if i.startswith('Heavy')]
+    print(chainl)
+    print(chainh)
     def process_chain(chain_list, element):
         if 'Homo sapiens' in element:
             element = agl_out.replace('Homo sapiens\n', 'splitter')
