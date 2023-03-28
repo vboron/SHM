@@ -104,15 +104,11 @@ def parse_agl_data(agl_out):
     del agl_lines[0]
     agl_lines = [i.strip() for i in agl_lines]
     
-    
-
     def process_chain(chain):
-        chain_data = [i for i in agl_lines if i.startswith(chain)]
+        chain_data = [l for l in agl_lines if l.startswith(chain)]
 
-        if 'Homo sapiens' in chain_data:
-            chain_data = [i.replace('Homo sapiens\n', 'splitter') for i in chain_data]
-        if 'Mus musculus' in chain_data:
-            chain_data = [i.replace('Mus musculus\n', 'splitter') for i in chain_data]
+        for species in ['Homo sapiens', 'Mus musculus']:
+            chain_data = [i.replace(f'{species}\n', 'splitter') for i in chain_data if species in i]
         chain_data = [i.replace('Mismatches:', 'splitter') for i in chain_data]
         chain_data = [i.split('splitter') for i in chain_data]
         # # element = element[1::2]
@@ -120,8 +116,10 @@ def parse_agl_data(agl_out):
         return chain_data
     
     chainl = process_chain('Light')
-    print(chainl)
+    print(f'Chain L: {chainl}')
     chainh = process_chain('Heavy')
+    print(f'Chain H: {chainh}')
+
     # process_chain(chainl, agl_lines[0])
     # agl_lines = [line.strip() for line in agl_lines]
     # print(agl_lines)
