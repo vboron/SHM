@@ -100,7 +100,8 @@ def parse_agl_data(agl_out):
     # input_germ_list = [list(a) for a in zip(input_res_list, germline_res_list)]
 
 
-    agl_lines = agl_out.strip().split('>')
+    agl_lines = agl_out.split('>')
+    del agl_lines[0]
     # agl_lines = [line.strip() for line in agl_lines]
     print(agl_lines)
     return
