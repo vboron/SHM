@@ -110,11 +110,11 @@ def parse_agl_data(agl_out):
         chain_data = [i for i in agl_lines if i.startswith(chain)]
 
         if 'Homo sapiens' in chain_data:
-            chain_data = chain_data.replace('Homo sapiens\n', 'splitter')
+            chain_data = [i.replace('Homo sapiens\n', 'splitter') for i in chain_data]
         if 'Mus musculus' in chain_data:
-            chain_data = chain_data.replace('Mus musculus\n', 'splitter')
-        chain_data = chain_data.replace('Mismatches:', 'splitter')
-        chain_data = chain_data.split('splitter')
+            chain_data = [i.replace('Mus musculus\n', 'splitter') for i in chain_data]
+        chain_data = [i.replace('Mismatches:', 'splitter') for i in chain_data]
+        chain_data = [i.split('splitter') for i in chain_data]
         # # element = element[1::2]
         # print(element)
         return chain_data
