@@ -111,7 +111,8 @@ def parse_agl_data(agl_out):
             chain_data = [i.replace(f'{species}\n', 'splitter') for i in chain_data]
         chain_data = [i.replace('Mismatches:', 'splitter') for i in chain_data]
         chain_data = [i.split('splitter') for i in chain_data]
-        chain_data = chain_data[1::2]
+        print(len(chain_data))
+        # chain_data = chain_data[1::2]
         # print(element)
         return chain_data
     
