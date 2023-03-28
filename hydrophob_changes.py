@@ -111,7 +111,7 @@ def parse_agl_data(agl_out):
             element = element.replace('Mus musculus\n', 'splitter')
         element = element.replace('Mismatches:', 'splitter')
         element = element.split('splitter')
-        element = element[1::2]
+        # element = element[1::2]
         print(element)
     process_chain(chainl, agl_lines[0])
     # agl_lines = [line.strip() for line in agl_lines]
