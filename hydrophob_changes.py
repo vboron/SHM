@@ -113,13 +113,19 @@ def parse_agl_data(agl_out):
         chain_data = chain_data[0].split('splitter')
         chain_data = chain_data[1::2]
         chain_data = [i.strip().split('\n') for i in chain_data]
+        germline = []
+        input_seq = []
+        for element in chain_data:
+            germline = germline + element[0]
+            input_seq = input_seq + element[2]
+        print(germline)
         # print(element)
         return chain_data
     
     chainl = process_chain('Light')
-    print(f'Chain L: {chainl}')
+    # print(f'Chain L: {chainl}')
     chainh = process_chain('Heavy')
-    print(f'Chain H: {chainh}')
+    # print(f'Chain H: {chainh}')
 
     # process_chain(chainl, agl_lines[0])
     # agl_lines = [line.strip() for line in agl_lines]
