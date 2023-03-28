@@ -67,9 +67,20 @@ def run_AGL(file, dire):
 def parse_abnum_data(in_file, dire):
     num_res = run_abnum(in_file, dire)
     split_res_num = num_res.split('\n')
-    num_res_list = [i for i in split_res_num if i.startswith('L') or i.startswith('H')]
-    num_res_list = [i.split(' ') for i in num_res_list]
-    return num_res_list
+
+    def make_LH_list(chain):
+        num_res_list = [i for i in split_res_num if i.startswith(chain)]
+        # num_res_list = [i for i in split_res_num if i.startswith('L') or i.startswith('H')]
+        num_res_list = [i.split(' ') for i in num_res_list]
+        return num_res_list
+    
+    num_res_l = []
+    num_res_h = []
+    if any('L' in line for line in split_res_num):
+        num_res_l = make_LH_list('L')
+    if any('H' in line for line in split_res_num):
+        num_res_h = make_LH_list('H')
+    return num_res_l, num_res_h
 
 
 def parse_agl_data(agl_out):
@@ -97,10 +108,10 @@ def parse_agl_data(agl_out):
     chainh = []
     if any('Light' in line for line in agl_lines):
         chainl = process_chain('Light')
-        print(f'Chain L: {chainl}')
+        # print(f'Chain L: {chainl}')
     if any('Heavy' in line for line in agl_lines):
         chainh = process_chain('Heavy')
-        print(f'Chain H: {chainh}')
+        # print(f'Chain H: {chainh}')
     return chainl, chainh
 
 
@@ -151,7 +162,7 @@ def extract_mut_data(fastadir):
         #         mismatch = data_list[1]
         #         mismatch_data.append(mismatch)
         # dfdata.append(mismatch_data)
-        print(f'len abnum: {len(parse_abnum_data(file, fastadir))}')
+        print(f'abnum: {parse_abnum_data(file, fastadir)}')
         parse_agl_data(run_AGL(file, fastadir))
         # print(f'len agl: {len(parse_agl_data(run_AGL(file, fastadir)))}')
         # print([list(a) for a in zip(parse_abnum_data(file, fastadir), parse_agl_data(run_AGL(file, fastadir)))])
@@ -170,7 +181,7 @@ def combine_mut_hydrophob(hydrophob_df, mut_df):
         x_values=final_df['total_mut'], y_values=final_df['delta_hydrophobicity'], name='hydrophobicity')
 
 
-def run_test_parse_agl_data_both():
+def run_test_parse_agl_data_bothchains():
     test_input = """
 >ChainL
 # Chain type: Light
@@ -230,6 +241,34 @@ JL      :  91.67% : IGKJ2*01     : F2 : Homo sapiens
 
     utils_shm.check_equal(chainl, expected_chainl)
     utils_shm.check_equal(chainh, expected_chainh)
+
+
+def run_test_parse_abnum_data_bothchains():
+    test_input = """
+    # Numbered sequence  1
+    L1 E
+    L2 I
+    L3 V
+    L4 L
+    L5 T
+    ------------------------------------------
+    # Numbered sequence  2
+    H1 Q
+    H2 V
+    H3 Q
+    H4 L
+    ------------------------------------------
+
+    """
+    resnuml, resnumh = parse_abnum_data(test_input)
+    expected_chainl = [['E', 'E'], ['I', 'I'], ['V', 'V'], ['L', 'G'], ['T', 'T'], ['Q', 'Q'], ['Y', 'Y'], ['T', 'T'], ['F', 'F']]
+    expected_chainh = []
+
+    # utils_shm.check_equal(chainl, expected_chainl)
+    # utils_shm.check_equal(chainh, expected_chainh)
+
+
+# *************************************************************************
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Compile.....')
@@ -237,7 +276,7 @@ if __name__ == '__main__':
         '--fastadir', help='Directory of fasta files', required=True)
     args = parser.parse_args()
 
-    run_test_parse_agl_data_both()
+    run_test_parse_agl_data_bothchains()
     run_test_parse_agl_data_singlechainL()
 
     # df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
