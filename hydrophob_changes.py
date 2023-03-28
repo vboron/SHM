@@ -270,6 +270,24 @@ def run_test_parse_abnum_data_bothchains():
     utils_shm.check_equal(resnumh, expected_resnumh)
 
 
+def run_test_parse_abnum_data_singlechainH():
+    test_input = """
+    # Numbered sequence  1
+    H1 Q
+    H2 V
+    H3 Q
+    H4 L
+    ------------------------------------------
+
+    """
+    resnuml, resnumh = parse_abnum_data(test_input)
+    expected_resnuml = []
+    expected_resnumh = [['H1', 'Q'], ['H2', 'V'], ['H3', 'Q'], ['H4', 'L']]
+
+    utils_shm.check_equal(resnuml, expected_resnuml)
+    utils_shm.check_equal(resnumh, expected_resnumh)
+
+
 # *************************************************************************
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
