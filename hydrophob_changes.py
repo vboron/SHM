@@ -299,6 +299,7 @@ if __name__ == '__main__':
     run_test_parse_agl_data_bothchains()
     run_test_parse_agl_data_singlechainL()
     run_test_parse_abnum_data_bothchains()
+    run_test_parse_abnum_data_singlechainH()
 
     # df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
     df_mutations = extract_mut_data(args.fastadir)
