@@ -109,10 +109,9 @@ def parse_agl_data(agl_out):
 
         for species in ['Homo sapiens', 'Mus musculus']:
             chain_data = [i.replace(f'{species}\n', 'splitter') for i in chain_data]
-        print('After species replacement:', chain_data)
         chain_data = [i.replace('Mismatches:', 'splitter') for i in chain_data]
         chain_data = [i.split('splitter') for i in chain_data]
-        # # element = element[1::2]
+        chain_data = chain_data[1::2]
         # print(element)
         return chain_data
     
