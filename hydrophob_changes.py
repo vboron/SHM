@@ -77,23 +77,12 @@ def parse_abnum_data(in_file, dire):
 
 
 def parse_agl_data(agl_out):
-    # input_seq = ''
-    # germline_seq = ''
-    # for seq in agl_list_stripped:
-    #     input_seq = input_seq + seq[0]
-    #     germline_seq = germline_seq + seq[1]
-    # input_res_list = list(input_seq)
-    # germline_res_list = list(germline_seq)
-    # input_germ_list = [list(a) for a in zip(input_res_list, germline_res_list)]
-
-
     agl_lines = agl_out.split('Chain type:')
     del agl_lines[0]
     agl_lines = [i.strip() for i in agl_lines]
-    
+
     def process_chain(chain):
         chain_data = [l for l in agl_lines if l.startswith(chain)]
-
         for species in ['Homo sapiens', 'Mus musculus']:
             chain_data = [i.replace(f'{species}\n', 'splitter') for i in chain_data]
         chain_data = [i.replace('Mismatches:', 'splitter') for i in chain_data]
@@ -112,11 +101,7 @@ def parse_agl_data(agl_out):
     print(f'Chain L: {chainl}')
     chainh = process_chain('Heavy')
     print(f'Chain H: {chainh}')
-
-    # process_chain(chainl, agl_lines[0])
-    # agl_lines = [line.strip() for line in agl_lines]
-    # print(agl_lines)
-    return
+    return chainl, chainh
 
 
 def cal_hydrophob_change(imput_germ_pairs):
@@ -193,6 +178,43 @@ def run_test1():
     # assert computed_output == expected_output
     assert True
 
+def run_test_parse_agl_data_both():
+    test_input = """
+>ChainL
+# Chain type: Light
+VL      :  78.12% : IGKV3-20*01  : F0 : Homo sapiens
+    EIVLTQ
+    ||| ||
+    EIVGTQ
+    Mismatches: 1
+
+JL      :  91.67% : IGKJ2*01     : F2 : Homo sapiens
+    YTF
+    |||
+    YTF
+    Mismatches: 0
+
+>ChainH
+# Chain type: Heavy
+VH      :  79.59% : IGHV1-3*01   : F0 : Homo sapiens
+    QVQL
+    ||
+    QVDK
+    Mismatches: 2
+
+JH      :  75.00% : IGHJ6*03     : F2 : Homo sapiens
+    PQDN
+        
+    YYYY
+    Mismatches: 4
+    """
+    chainl, chainh = parse_agl_data(test_input)
+    expected_chainl = [['E', 'E'], ['I', 'I'], ['V', 'V'], ['L', 'G'], ['T', 'T'], ['Q', 'Q'], ['Y', 'Y'], ['T', 'T'], ['F', 'F']]
+    expected_chainh = [['Q', 'Q'], ['V', 'V'], ['Q', 'D'], ['L', 'K'], ['P', 'Y'], ['Q', 'Y'], ['D', 'Y'], ['N', 'Y']]
+
+    utils_shm.check_equal(chainl, expected_chainl)
+    utils_shm.check_equal(chainh, expected_chainh)
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Compile.....')
@@ -201,7 +223,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     run_test1()
-
+    run_test_parse_agl_data_both()
 
     # df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
     df_mutations = extract_mut_data(args.fastadir)

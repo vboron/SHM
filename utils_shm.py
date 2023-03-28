@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+def check_equal(computed, expected):
+    if computed != expected:
+        print(f'Test check failed, computed={computed}, expected={expected}')
+    assert computed == expected
+
 def one_letter_code(pdb, res):
     """
     Go from the three-letter code to the one-letter code.
