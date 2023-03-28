@@ -77,8 +77,10 @@ def parse_abnum_data(num_res):
     num_res_h = []
     if any('L' in line for line in split_res_num):
         num_res_l = make_LH_list('L')
+        print('L residues:', num_res_l)
     if any('H' in line for line in split_res_num):
         num_res_h = make_LH_list('H')
+        print('H residues:', num_res_h)
     return num_res_l, num_res_h
 
 
