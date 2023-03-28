@@ -102,6 +102,7 @@ def parse_agl_data(agl_out):
 
     agl_lines = agl_out.split('Chain type:')
     del agl_lines[0]
+    agl_lines = [i.strip() for i in agl_lines]
     print(agl_lines)
     chainl = []
     chainh = []
