@@ -103,20 +103,24 @@ def parse_agl_data(agl_out):
     agl_lines = agl_out.split('Chain type:')
     del agl_lines[0]
     agl_lines = [i.strip() for i in agl_lines]
-    print(agl_lines)
-    chainl = [i for i in agl_lines if i.startswith('Light')]
-    chainh = [i for i in agl_lines if i.startswith('Heavy')]
-    print(chainl)
-    print(chainh)
-    def process_chain(chain_list, element):
-        if 'Homo sapiens' in element:
-            element = agl_out.replace('Homo sapiens\n', 'splitter')
-        if 'Mus musculus' in element:
-            element = element.replace('Mus musculus\n', 'splitter')
-        element = element.replace('Mismatches:', 'splitter')
-        element = element.split('splitter')
-        # element = element[1::2]
-        print(element)
+    
+    
+
+    def process_chain(chain):
+        chain_data = [i for i in agl_lines if i.startswith(chain)]
+
+        # if 'Homo sapiens' in element:
+        #     element = agl_out.replace('Homo sapiens\n', 'splitter')
+        # if 'Mus musculus' in element:
+        #     element = element.replace('Mus musculus\n', 'splitter')
+        # element = element.replace('Mismatches:', 'splitter')
+        # element = element.split('splitter')
+        # # element = element[1::2]
+        # print(element)
+        return chain_data
+    
+    chainl = process_chain('Light')
+    chainh = process_chain('Heavy')
     # process_chain(chainl, agl_lines[0])
     # agl_lines = [line.strip() for line in agl_lines]
     # print(agl_lines)
