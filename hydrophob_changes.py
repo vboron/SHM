@@ -109,9 +109,9 @@ def parse_agl_data(agl_out):
         return chain_data
     
     chainl = process_chain('Light')
-    # print(f'Chain L: {chainl}')
+    print(f'Chain L: {chainl}')
     chainh = process_chain('Heavy')
-    # print(f'Chain H: {chainh}')
+    print(f'Chain H: {chainh}')
 
     # process_chain(chainl, agl_lines[0])
     # agl_lines = [line.strip() for line in agl_lines]
