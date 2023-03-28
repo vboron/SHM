@@ -65,14 +65,10 @@ def run_AGL(file, dire):
 
 
 def parse_abnum_data(num_res):
-    print(num_res)
     split_res_num = num_res.split('\n')
-    print('split:', split_res_num)
 
     def make_LH_list(chain):
         num_res_list = [i.strip() for i in split_res_num if i.strip().startswith(chain)]
-        print(num_res_list)
-        # num_res_list = [i for i in split_res_num if i.startswith('L') or i.startswith('H')]
         num_res_list = [i.split(' ') for i in num_res_list]
         return num_res_list
     
@@ -80,10 +76,8 @@ def parse_abnum_data(num_res):
     num_res_h = []
     if any('L' in line for line in split_res_num):
         num_res_l = make_LH_list('L')
-        print('L residues:', num_res_l)
     if any('H' in line for line in split_res_num):
         num_res_h = make_LH_list('H')
-        print('H residues:', num_res_h)
     return num_res_l, num_res_h
 
 
@@ -118,10 +112,8 @@ def parse_agl_data(agl_out):
     chainh = []
     if any('Light' in line for line in agl_lines):
         chainl = process_chain('Light')
-        # print(f'Chain L: {chainl}')
     if any('Heavy' in line for line in agl_lines):
         chainh = process_chain('Heavy')
-        # print(f'Chain H: {chainh}')
     return chainl, chainh
 
 
