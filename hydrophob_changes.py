@@ -105,8 +105,7 @@ def parse_agl_data(agl_out):
         for element in chain_data:
             germline = germline + element[0]
             input_seq = input_seq + element[2]
-        print(list(germline))
-        # print(element)
+        chain_data = [list(a) for a in zip(list(input_seq), list(germline))]
         return chain_data
     
     chainl = process_chain('Light')
