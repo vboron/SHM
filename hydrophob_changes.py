@@ -65,7 +65,9 @@ def run_AGL(file, dire):
 
 
 def parse_abnum_data(num_res):
+    print(num_res)
     split_res_num = num_res.split('\n')
+    print('split:', split_res_num)
 
     def make_LH_list(chain):
         num_res_list = [i for i in split_res_num if i.startswith(chain)]
@@ -87,7 +89,6 @@ def parse_abnum_data(num_res):
 
 def extract_abnum_data(in_file, dire):
     numbered_residues = run_abnum(in_file, dire)
-    print(numbered_residues)
     l_residues, h_residues = parse_abnum_data(numbered_residues)
     return l_residues, h_residues
 
