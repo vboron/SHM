@@ -115,7 +115,7 @@ def parse_agl_data(agl_out):
         print(element)
     process_chain(chainl, agl_lines[0])
     # agl_lines = [line.strip() for line in agl_lines]
-    print(agl_lines)
+    # print(agl_lines)
     return
 
 
