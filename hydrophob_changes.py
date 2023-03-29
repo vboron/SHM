@@ -191,7 +191,7 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
         m = 0
         while n < len(num_list) and m < len(mut_list):
             if num_list[n][1] == mut_list[m][0]:
-                comb_list.append([num_list[n][0] + mut_list[m]])
+                print([num_list[n][0] + mut_list[m]])
                 n+=1
                 m+=1
             else:
