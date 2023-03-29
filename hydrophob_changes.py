@@ -164,7 +164,7 @@ def extract_mut_data(fastadir):
         #         mismatch = data_list[1]
         #         mismatch_data.append(mismatch)
         # dfdata.append(mismatch_data)
-        print(f'abnum: {extract_abnum_data(file, fastadir)}')
+        extract_abnum_data(file, fastadir)
         parse_agl_data(run_AGL(file, fastadir))
         # print(f'len agl: {len(parse_agl_data(run_AGL(file, fastadir)))}')
         # print([list(a) for a in zip(extract_abnum_data(file, fastadir), parse_agl_data(run_AGL(file, fastadir)))])
@@ -181,6 +181,11 @@ def combine_mut_hydrophob(hydrophob_df, mut_df):
     final_df = pd.merge(mut_df, hydrophob_df, on='code')
     graph.hydrophobicity_vs_mutations(
         x_values=final_df['total_mut'], y_values=final_df['delta_hydrophobicity'], name='hydrophobicity')
+
+
+def label_res_mut(l_muts, h_muts, l_num, h_num):
+    l_list = [list(a) for a in zip(l_num, l_muts)]
+    return l_list
 
 
 def run_test_parse_agl_data_bothchains():
@@ -288,6 +293,17 @@ def run_test_parse_abnum_data_singlechainH():
     utils_shm.check_equal(resnumh, expected_resnumh)
 
 
+def run_test_label_res_mut():
+    test_l_num = [['L1', 'E'], ['L2', 'I'], ['L3', 'V'], ['L4', 'L'], ['L5', 'T']]
+    test_l_mut = [['E', 'E'], ['I', 'I'], ['V', 'V'], ['L', 'G'], ['T', 'T'], ['Q', 'Q'], ['Y', 'Y'], ['T', 'T'], ['F', 'F']]
+    test_h_num = [['H1', 'Q'], ['H2', 'V'], ['H3', 'Q'], ['H4', 'L']]
+    test_h_mut = [['Q', 'Q'], ['V', 'V'], ['Q', 'D'], ['L', 'K'], ['P', 'Y'], ['Q', 'Y'], ['D', 'Y'], ['N', 'Y']]
+
+    l_data = label_res_mut(test_l_mut, test_h_mut, test_l_num, test_h_num)
+    expected_ldata = [(['L1', 'E'], ['E', 'E']), (['L2', 'I'], ['I', 'I']), (['L3', 'V'], ['V', 'V']), (['L4', 'L'], ['L', 'G']), (['L5', 'T'], ['T', 'T'])]
+    utils_shm.check_equal(l_data, expected_ldata)
+
+
 # *************************************************************************
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -300,6 +316,7 @@ if __name__ == '__main__':
     run_test_parse_agl_data_singlechainL()
     run_test_parse_abnum_data_bothchains()
     run_test_parse_abnum_data_singlechainH()
+    run_test_label_res_mut()
 
     # df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
     df_mutations = extract_mut_data(args.fastadir)
