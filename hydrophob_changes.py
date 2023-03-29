@@ -117,41 +117,14 @@ def parse_agl_data(agl_out):
     return chainl, chainh
 
 
-def cal_hydrophob_change(imput_germ_pairs):
-    df = pd.DataFrame(data=imput_germ_pairs, columns=['input', 'germline'])
-    df = df[df['input'] != df['germline']]
-    df['input_hydrophob'] = df['input'].map(
-        lambda x: utils_shm.hydrophobicity(x))
-    df['germ_hydrophob'] = df['germline'].map(
-        lambda x: utils_shm.hydrophobicity(x))
-    change_in_hydrophobicity = df['germ_hydrophob'].sum() - df['input_hydrophob'].sum()
-    return change_in_hydrophobicity
+# def extract_mut_data(fastadir):
+#     files = os.listdir(fastadir)
+#     col = ['code', 'VL', 'JL', 'VH', 'JH']
+#     dfdata = []
+#     mismatch_data = []
 
-
-def extract_hydrophob_data(fastadir):
-    files = os.listdir(fastadir)
-    hydrophob_data = []
-    for file in files:
-        agl_output = run_AGL(file, fastadir)
-        in_germ_res_pairs = parse_agl_data(agl_output)
-        delta_hydrophobicity = f'{cal_hydrophob_change(in_germ_res_pairs):.2f}'
-        name = file[3:-4]
-        data = [name, delta_hydrophobicity]
-        hydrophob_data.append(data)
-    df = pd.DataFrame(data=hydrophob_data, columns=[
-                      'code', 'delta_hydrophobicity'])
-    df = df.astype({'delta_hydrophobicity': 'float64'})
-    return df
-
-
-def extract_mut_data(fastadir):
-    files = os.listdir(fastadir)
-    col = ['code', 'VL', 'JL', 'VH', 'JH']
-    dfdata = []
-    mismatch_data = []
-
-    for file in files:
-        print(file)
+#     for file in files:
+#         print(file)
         # result = run_AGL(file, fastadir)
         # result = result.replace(' ', '')
         # temp = re.split('\n', result)
@@ -164,22 +137,19 @@ def extract_mut_data(fastadir):
         #         mismatch = data_list[1]
         #         mismatch_data.append(mismatch)
         # dfdata.append(mismatch_data)
-        resl, resh = extract_abnum_data(file, fastadir)
-        chainl_mut, chainh_mut = parse_agl_data(run_AGL(file, fastadir))
-        label_res_mut(chainl_mut, chainh_mut, resl, resh)
     # df = pd.DataFrame(data=dfdata, columns=col)
     # df.dropna(inplace=True)
     # df.drop(columns=['JL', 'JH'], inplace=True)
     # df = df.astype({'VH': 'int64', 'VL': 'int64'})
     # df['total_mut'] = df['VL'] + df['VH']
     # return df
-    return
+    # return
 
 
-def combine_mut_hydrophob(hydrophob_df, mut_df):
-    final_df = pd.merge(mut_df, hydrophob_df, on='code')
-    graph.hydrophobicity_vs_mutations(
-        x_values=final_df['total_mut'], y_values=final_df['delta_hydrophobicity'], name='hydrophobicity')
+# def combine_mut_hydrophob(hydrophob_df, mut_df):
+#     final_df = pd.merge(mut_df, hydrophob_df, on='code')
+#     graph.hydrophobicity_vs_mutations(
+#         x_values=final_df['total_mut'], y_values=final_df['delta_hydrophobicity'], name='hydrophobicity')
 
 
 def label_res_mut(l_muts, h_muts, l_num, h_num):
@@ -204,6 +174,38 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
     return num_mut_pairs
 
 
+
+def find_hydrophobicity_for_positions(fastadir):
+    
+    def cal_hydrophob_change(numbered_res_pairs):
+        df = pd.DataFrame(data=numbered_res_pairs, columns=['position', 'input', 'germline'])
+        df = df[df['input'] != df['germline']]
+        df['input_hydrophob'] = df['input'].map(
+            lambda x: utils_shm.hydrophobicity(x))
+        df['germ_hydrophob'] = df['germline'].map(
+            lambda x: utils_shm.hydrophobicity(x))
+        change_in_hydrophobicity = df['germ_hydrophob'].sum() - df['input_hydrophob'].sum()
+        return change_in_hydrophobicity
+    
+    files = os.listdir(fastadir)
+    hydrophob_data = []
+    for file in files:
+        # print(file)
+        resl, resh = extract_abnum_data(file, fastadir)
+        chainl_mut, chainh_mut = parse_agl_data(run_AGL(file, fastadir))
+        res_pos_pairs = label_res_mut(chainl_mut, chainh_mut, resl, resh)
+        delta_hydrophobicity = f'{cal_hydrophob_change(res_pos_pairs):.2f}'
+        name = file[3:-4]
+        data = [name, delta_hydrophobicity]
+        hydrophob_data.append(data)
+    df = pd.DataFrame(data=hydrophob_data, columns=[
+                      'code', 'delta_hydrophobicity'])
+    df = df.astype({'delta_hydrophobicity': 'float64'})
+    print(df)
+    return df
+
+
+# ********* Testing ********************************************
 def run_test_parse_agl_data_bothchains():
     test_input = """
 >ChainL
@@ -336,9 +338,5 @@ if __name__ == '__main__':
     run_test_parse_abnum_data_singlechainH()
     # run_test_label_res_mut()
 
-    # df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
-    df_mutations = extract_mut_data(args.fastadir)
+    df_mutations = find_hydrophobicity_for_positions(args.fastadir)
     # combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
-
-#####TODO
-#Remove the blank [''] from the abnum list
