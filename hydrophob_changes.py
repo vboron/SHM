@@ -335,11 +335,11 @@ def run_test_label_res_mut():
     test_h_num = [['H1', 'Q'], ['H2', 'V'], ['H3', 'Q'], ['H4', 'L']]
     test_h_mut = [['Q', 'Q'], ['V', 'V'], ['Q', 'D'], ['L', 'K'], ['P', 'Y'], ['Q', 'Y'], ['D', 'Y'], ['N', 'Y']]
 
-    l_data, h_data = label_res_mut(test_l_mut, test_h_mut, test_l_num, test_h_num)
-    expected_ldata = [[['L1', 'E'], ['E', 'E']], [['L2', 'I'], ['I', 'I']], [['L3', 'V'], ['V', 'V']], [['L4', 'L'], ['L', 'G']], [['L5', 'T'], ['T', 'T']]]
-    expected_hdata = [[['H1', 'Q'], ['Q', 'Q']], [['H2', 'V'], ['V', 'V']], [['H3', 'Q'], ['Q', 'D']], [['H4', 'L'], ['L', 'K']]]
-    utils_shm.check_equal(l_data, expected_ldata)
-    utils_shm.check_equal(h_data, expected_hdata)
+    data = label_res_mut(test_l_mut, test_h_mut, test_l_num, test_h_num)
+    expected_data = [[['L1', 'E'], ['E', 'E']], [['L2', 'I'], ['I', 'I']], [['L3', 'V'], ['V', 'V']], 
+                     [['L4', 'L'], ['L', 'G']], [['L5', 'T'], ['T', 'T']], [['H1', 'Q'], ['Q', 'Q']], 
+                     [['H2', 'V'], ['V', 'V']], [['H3', 'Q'], ['Q', 'D']], [['H4', 'L'], ['L', 'K']]]
+    utils_shm.check_equal(data, expected_data)
 
 
 # *************************************************************************
@@ -354,7 +354,7 @@ if __name__ == '__main__':
     run_test_parse_agl_data_singlechainL()
     run_test_parse_abnum_data_bothchains()
     run_test_parse_abnum_data_singlechainH()
-    # run_test_label_res_mut()
+    run_test_label_res_mut()
 
     df_mutations = extract_mut_data(args.fastadir)
     df_deltahydrophobicity = find_hydrophobicity_for_positions(args.fastadir)
