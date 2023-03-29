@@ -217,7 +217,7 @@ def find_hydrophobicity_for_positions(fastadir):
         hydrophob_data.append(data)
     df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
                       'code', 'dh_all', 'dh_l1', 'dh_h2', 'dh_h3'])
-    df_hydroph = df_hydroph.astype({'delta_hydrophobicity': 'float64', 'dh_l1': 'float64', 'dh_h2': 'float64', 'dh_h3': 'float64'})
+    df_hydroph = df_hydroph.astype({'dh_all': 'float64', 'dh_l1': 'float64', 'dh_h2': 'float64', 'dh_h3': 'float64'})
     print(df_hydroph)
     return df_hydroph
 
