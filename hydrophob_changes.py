@@ -117,41 +117,6 @@ def parse_agl_data(agl_out):
     return chainl, chainh
 
 
-# def extract_mut_data(fastadir):
-#     files = os.listdir(fastadir)
-#     col = ['code', 'VL', 'JL', 'VH', 'JH']
-#     dfdata = []
-#     mismatch_data = []
-
-#     for file in files:
-#         print(file)
-        # result = run_AGL(file, fastadir)
-        # result = result.replace(' ', '')
-        # temp = re.split('\n', result)
-        # result_data = [l for l in temp if ':' in l]
-        # code = file[3:-4]
-        # mismatch_data = [code]
-        # for data in result_data:
-        #     if data.startswith('Mismatches'):
-        #         data_list = data.split(':')
-        #         mismatch = data_list[1]
-        #         mismatch_data.append(mismatch)
-        # dfdata.append(mismatch_data)
-    # df = pd.DataFrame(data=dfdata, columns=col)
-    # df.dropna(inplace=True)
-    # df.drop(columns=['JL', 'JH'], inplace=True)
-    # df = df.astype({'VH': 'int64', 'VL': 'int64'})
-    # df['total_mut'] = df['VL'] + df['VH']
-    # return df
-    # return
-
-
-# def combine_mut_hydrophob(hydrophob_df, mut_df):
-#     final_df = pd.merge(mut_df, hydrophob_df, on='code')
-#     graph.hydrophobicity_vs_mutations(
-#         x_values=final_df['total_mut'], y_values=final_df['delta_hydrophobicity'], name='hydrophobicity')
-
-
 def label_res_mut(l_muts, h_muts, l_num, h_num):
     l_list = []
     h_list = []
@@ -220,6 +185,45 @@ def find_hydrophobicity_for_positions(fastadir):
     df_hydroph = df_hydroph.astype({'dh_all': 'float64', 'dh_l1': 'float64', 'dh_h2': 'float64', 'dh_h3': 'float64'})
     print(df_hydroph)
     return df_hydroph
+
+
+def extract_mut_data(fastadir):
+    files = os.listdir(fastadir)
+    col = ['code', 'VL', 'JL', 'VH', 'JH']
+    dfdata = []
+    mismatch_data = []
+
+    for file in files:
+        print(file)
+        result = run_AGL(file, fastadir)
+        result = result.replace(' ', '')
+        temp = re.split('\n', result)
+        result_data = [l for l in temp if ':' in l]
+        code = file[3:-4]
+        mismatch_data = [code]
+        for data in result_data:
+            if data.startswith('Mismatches'):
+                data_list = data.split(':')
+                mismatch = data_list[1]
+                mismatch_data.append(mismatch)
+        dfdata.append(mismatch_data)
+    df = pd.DataFrame(data=dfdata, columns=col)
+    df.dropna(inplace=True)
+    df.drop(columns=['JL', 'JH'], inplace=True)
+    df = df.astype({'VH': 'int64', 'VL': 'int64'})
+    df['total_mut'] = df['VL'] + df['VH']
+    return df
+
+
+def combine_mut_hydrophob(hydrophob_df, mut_df):
+    final_df = pd.merge(mut_df, hydrophob_df, on='code')
+    def plot_hydrophobicity(col):
+        graph.hydrophobicity_vs_mutations(x_values=final_df['total_mut'], 
+                                          y_values=final_df[f'dh_{col}'], 
+                                          name=f'{col}_hydrophobicity')
+    for value in ['all', 'l1', 'h2', 'h3']:
+        print(value)
+        plot_hydrophobicity(value)
 
 
 # ********* Testing ********************************************
@@ -355,5 +359,6 @@ if __name__ == '__main__':
     run_test_parse_abnum_data_singlechainH()
     # run_test_label_res_mut()
 
-    df_mutations = find_hydrophobicity_for_positions(args.fastadir)
-    # combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
+    df_mutations = extract_mut_data(args.fastadir)
+    df_deltahydrophobicity = find_hydrophobicity_for_positions(args.fastadir)
+    combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
