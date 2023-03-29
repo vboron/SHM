@@ -176,16 +176,30 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
 
 
 def find_hydrophobicity_for_positions(fastadir):
-    
-    def cal_hydrophob_change(numbered_res_pairs):
-        df = pd.DataFrame(data=numbered_res_pairs, columns=['position', 'input', 'germline'])
-        df = df[df['input'] != df['germline']]
+    def cal_hydrophob_change(df):
         df['input_hydrophob'] = df['input'].map(
             lambda x: utils_shm.hydrophobicity(x))
         df['germ_hydrophob'] = df['germline'].map(
             lambda x: utils_shm.hydrophobicity(x))
         change_in_hydrophobicity = df['germ_hydrophob'].sum() - df['input_hydrophob'].sum()
         return change_in_hydrophobicity
+    
+
+    def calc_hydrophobicity_for_loops(df):
+        cdrL1_pos = [f'L{i}' for i in range(24, 35)]
+        cdrH2_pos = [f'H{i}' for i in range(50, 59)]
+        cdrH3_pos = [f'H{i}' for i in range(95, 103)]
+
+        def hydrophob_for_loop(pos_list, df):
+            df_loop = df[df['L/H position'].isin(pos_list)]
+            hydrophob_change = f'{cal_hydrophob_change(df_loop):.2f}'
+            return hydrophob_change
+        
+        delta_hydrophobicity_l1 = hydrophob_for_loop(cdrL1_pos, df)
+        delta_hydrophobicity_h2 = hydrophob_for_loop(cdrH2_pos, df)
+        delta_hydrophobicity_h3 = hydrophob_for_loop(cdrH3_pos, df)
+        return delta_hydrophobicity_l1, delta_hydrophobicity_h2, delta_hydrophobicity_h3
+        
     
     files = os.listdir(fastadir)
     hydrophob_data = []
@@ -194,15 +208,18 @@ def find_hydrophobicity_for_positions(fastadir):
         resl, resh = extract_abnum_data(file, fastadir)
         chainl_mut, chainh_mut = parse_agl_data(run_AGL(file, fastadir))
         res_pos_pairs = label_res_mut(chainl_mut, chainh_mut, resl, resh)
-        delta_hydrophobicity = f'{cal_hydrophob_change(res_pos_pairs):.2f}'
+        posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
+        mut_df = posres_df[posres_df['input'] != posres_df['germline']]
+        delta_hydrophobicity_all = f'{cal_hydrophob_change(mut_df):.2f}'
+        dh_l1, dh_h2, dh_h3 = calc_hydrophobicity_for_loops(mut_df)
         name = file[3:-4]
-        data = [name, delta_hydrophobicity]
+        data = [name, delta_hydrophobicity_all, dh_l1, dh_h2, dh_h3]
         hydrophob_data.append(data)
-    df = pd.DataFrame(data=hydrophob_data, columns=[
-                      'code', 'delta_hydrophobicity'])
-    df = df.astype({'delta_hydrophobicity': 'float64'})
-    print(df)
-    return df
+    df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
+                      'code', 'dh_all', 'dh_l1', 'dh_h2', 'dh_h3'])
+    df_hydroph = df_hydroph.astype({'delta_hydrophobicity': 'float64', 'dh_l1': 'float64', 'dh_h2': 'float64', 'dh_h3': 'float64'})
+    print(df_hydroph)
+    return df_hydroph
 
 
 # ********* Testing ********************************************
