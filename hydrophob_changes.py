@@ -300,7 +300,7 @@ def run_test_label_res_mut():
     test_h_mut = [['Q', 'Q'], ['V', 'V'], ['Q', 'D'], ['L', 'K'], ['P', 'Y'], ['Q', 'Y'], ['D', 'Y'], ['N', 'Y']]
 
     l_data = label_res_mut(test_l_mut, test_h_mut, test_l_num, test_h_num)
-    expected_ldata = [(['L1', 'E'], ['E', 'E']), (['L2', 'I'], ['I', 'I']), (['L3', 'V'], ['V', 'V']), (['L4', 'L'], ['L', 'G']), (['L5', 'T'], ['T', 'T'])]
+    expected_ldata = [[['L1', 'E'], ['E', 'E']], [['L2', 'I'], ['I', 'I']], [['L3', 'V'], ['V', 'V']], [['L4', 'L'], ['L', 'G']], [['L5', 'T'], ['T', 'T']]]
     utils_shm.check_equal(l_data, expected_ldata)
 
 
