@@ -183,8 +183,16 @@ def combine_mut_hydrophob(hydrophob_df, mut_df):
 
 
 def label_res_mut(l_muts, h_muts, l_num, h_num):
-    l_list = [list(a) for a in zip(l_num, l_muts)]
-    h_list = [list(a) for a in zip(h_num, h_muts)]
+    l_list = []
+    h_list = []
+
+    def pair_pos_num_w_res(mut_list, num_list, comb_list):
+        n, m = 0
+        while n < len(num_list) and m < len(mut_list):
+            if num_list[n][1] == mut_list[m][0]:
+                comb_list.append(num_list[n][0]+mut_list[m])
+    
+    pair_pos_num_w_res(l_muts, l_num, l_list)
     print('L:', l_list)
     print('H:', h_list)
     return l_list, h_list
@@ -320,7 +328,7 @@ if __name__ == '__main__':
     run_test_parse_agl_data_singlechainL()
     run_test_parse_abnum_data_bothchains()
     run_test_parse_abnum_data_singlechainH()
-    run_test_label_res_mut()
+    # run_test_label_res_mut()
 
     # df_deltahydrophobicity = extract_hydrophob_data(args.fastadir)
     df_mutations = extract_mut_data(args.fastadir)
