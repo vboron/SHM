@@ -135,7 +135,6 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
     pair_pos_num_w_res(l_muts, l_num, l_list)
     pair_pos_num_w_res(h_muts, h_num, h_list)
     num_mut_pairs = l_list + h_list
-    print(num_mut_pairs)
     return num_mut_pairs
 
 
@@ -169,7 +168,6 @@ def find_hydrophobicity_for_positions(fastadir):
     files = os.listdir(fastadir)
     hydrophob_data = []
     for file in files:
-        # print(file)
         resl, resh = extract_abnum_data(file, fastadir)
         chainl_mut, chainh_mut = parse_agl_data(run_AGL(file, fastadir))
         res_pos_pairs = label_res_mut(chainl_mut, chainh_mut, resl, resh)
@@ -194,7 +192,6 @@ def extract_mut_data(fastadir):
     mismatch_data = []
 
     for file in files:
-        print(file)
         result = run_AGL(file, fastadir)
         result = result.replace(' ', '')
         temp = re.split('\n', result)
@@ -222,7 +219,6 @@ def combine_mut_hydrophob(hydrophob_df, mut_df):
                                           y_values=final_df[f'dh_{col}'], 
                                           name=f'{col}_hydrophobicity')
     for value in ['all', 'l1', 'h2', 'h3']:
-        print(value)
         plot_hydrophobicity(value)
 
 
