@@ -164,10 +164,9 @@ def extract_mut_data(fastadir):
         #         mismatch = data_list[1]
         #         mismatch_data.append(mismatch)
         # dfdata.append(mismatch_data)
-        extract_abnum_data(file, fastadir)
-        parse_agl_data(run_AGL(file, fastadir))
-        # print(f'len agl: {len(parse_agl_data(run_AGL(file, fastadir)))}')
-        # print([list(a) for a in zip(extract_abnum_data(file, fastadir), parse_agl_data(run_AGL(file, fastadir)))])
+        resl, resh = extract_abnum_data(file, fastadir)
+        chainl_mut, chainh_mut = parse_agl_data(run_AGL(file, fastadir))
+        label_res_mut(chainl_mut, chainh_mut, resl, resh)
     # df = pd.DataFrame(data=dfdata, columns=col)
     # df.dropna(inplace=True)
     # df.drop(columns=['JL', 'JH'], inplace=True)
