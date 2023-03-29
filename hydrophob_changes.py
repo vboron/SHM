@@ -186,6 +186,8 @@ def combine_mut_hydrophob(hydrophob_df, mut_df):
 def label_res_mut(l_muts, h_muts, l_num, h_num):
     l_list = [list(a) for a in zip(l_num, l_muts)]
     h_list = [list(a) for a in zip(h_num, h_muts)]
+    print('L:', l_list)
+    print('H:', h_list)
     return l_list, h_list
 
 
