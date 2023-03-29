@@ -185,7 +185,8 @@ def combine_mut_hydrophob(hydrophob_df, mut_df):
 
 def label_res_mut(l_muts, h_muts, l_num, h_num):
     l_list = [list(a) for a in zip(l_num, l_muts)]
-    return l_list
+    h_list = [list(a) for a in zip(h_num, h_muts)]
+    return l_list, h_list
 
 
 def run_test_parse_agl_data_bothchains():
@@ -299,9 +300,11 @@ def run_test_label_res_mut():
     test_h_num = [['H1', 'Q'], ['H2', 'V'], ['H3', 'Q'], ['H4', 'L']]
     test_h_mut = [['Q', 'Q'], ['V', 'V'], ['Q', 'D'], ['L', 'K'], ['P', 'Y'], ['Q', 'Y'], ['D', 'Y'], ['N', 'Y']]
 
-    l_data = label_res_mut(test_l_mut, test_h_mut, test_l_num, test_h_num)
+    l_data, h_data = label_res_mut(test_l_mut, test_h_mut, test_l_num, test_h_num)
     expected_ldata = [[['L1', 'E'], ['E', 'E']], [['L2', 'I'], ['I', 'I']], [['L3', 'V'], ['V', 'V']], [['L4', 'L'], ['L', 'G']], [['L5', 'T'], ['T', 'T']]]
+    expected_hdata = [[['H1', 'Q'], ['Q', 'Q']], [['H2', 'V'], ['V', 'V']], [['H3', 'Q'], ['Q', 'D']], [['H4', 'L'], ['L', 'K']]]
     utils_shm.check_equal(l_data, expected_ldata)
+    utils_shm.check_equal(h_data, expected_hdata)
 
 
 # *************************************************************************
