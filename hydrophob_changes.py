@@ -198,10 +198,10 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
                 m+=1
     
     pair_pos_num_w_res(l_muts, l_num, l_list)
-    print('L:', l_list)
     pair_pos_num_w_res(h_muts, h_num, h_list)
-    print('H:', h_list)
-    return l_list, h_list
+    num_mut_pairs = l_list + h_list
+    print(num_mut_pairs)
+    return num_mut_pairs
 
 
 def run_test_parse_agl_data_bothchains():
