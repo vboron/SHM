@@ -344,14 +344,13 @@ def run_test_label_res_mut_noresiduesskippedwithin():
 def run_test_label_res_mut_skippedres():
     test_l_num = [['L1', 'E'], ['L2', 'I'], ['L3', 'V'], ['L4', 'L'], ['L5', 'T']]
     test_l_mut = [['E', 'E'], ['I', 'I'], ['V', 'V'], ['L', 'G'], ['T', 'T'], ['Q', 'Q'], ['Y', 'Y'], ['T', 'T'], ['F', 'F']]
-    test_h_num = [['H1', 'Q'], ['H2', 'V'], ['H3', 'Q'], ['H4', 'L'], ['H95', 'V'], ['H96', 'G'], ['H97', 'P'], ['H111', 'V'], ['H112', 'S'], ['H113', 'S']]
+    test_h_num = [['H1', 'Q'], ['H2', 'V'], ['H3', 'Q'], ['H4', 'L'], ['H96', 'G'], ['H97', 'P'], ['H111', 'V'], ['H112', 'S'], ['H113', 'S']]
     test_h_mut = [['Q', 'Q'], ['V', 'V'], ['Q', 'D'], ['L', 'K'], ['V', 'V'], ['S', 'Y'], ['S', 'S']]
 
     data = label_res_mut(test_l_mut, test_h_mut, test_l_num, test_h_num)
-    expected_data = [[['L1', 'E'], ['E', 'E']], [['L2', 'I'], ['I', 'I']], [['L3', 'V'], ['V', 'V']], 
-                     [['L4', 'L'], ['L', 'G']], [['L5', 'T'], ['T', 'T']], [['H1', 'Q'], ['Q', 'Q']], 
-                     [['H2', 'V'], ['V', 'V']], [['H3', 'Q'], ['Q', 'D']], [['H4', 'L'], ['L', 'K']],
-                     ['H111', 'V'], ['H112', 'S'], ['H113', 'S']]
+    expected_data = [['L1', 'E', 'E'], ['L2', 'I', 'I'], ['L3', 'V', 'V'], ['L4', 'L', 'G'], ['L5', 'T', 'T'], 
+                     ['H1', 'Q', 'Q'], ['H2', 'V', 'V'], ['H3', 'Q', 'D'], ['H4', 'L', 'K'], ['H111', 'V', 'V'], 
+                     ['H112', 'S', 'Y'], ['H113', 'S', 'S']]
     utils_shm.check_equal(data, expected_data)
 
 
@@ -368,6 +367,7 @@ if __name__ == '__main__':
     run_test_parse_abnum_data_bothchains()
     run_test_parse_abnum_data_singlechainH()
     run_test_label_res_mut_noresiduesskippedwithin()
+    run_test_label_res_mut_skippedres()
 
     df_mutations = extract_mut_data(args.fastadir)
     df_deltahydrophobicity = find_hydrophobicity_for_positions(args.fastadir)
