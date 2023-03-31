@@ -78,7 +78,7 @@ def hydrophobicity_vs_mutations(x_values, y_values, name):
     # Sets the maximum and minimum values for the axes
     # axes.autoscale(tight=True)
     axes.set_xlim([0, 50])
-    axes.set_ylim([-0.5, 10])
+    axes.set_ylim([-10, 10])
 
     # axes.axline((0, 0), (1, 1), color='k')
 
