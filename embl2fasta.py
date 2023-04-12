@@ -19,10 +19,14 @@ def get_data4fasta(file):
     rel_lines = []
     fasta_data = ['AC', 'FT                   /organism="Homo sapiens"', 
                     'FT                   /organism="Mus musculus"', 'FT                   ']
+    ignore_list = ['FT                   /transl_table', 'FT                   /db_xref', 
+                   'FT                   /mol_type', 'FT                   /cell_type', 
+                   'FT                   /clone', 'FT                   /product', 'FT                   /note',
+                   'FT                   variable region', 'FT                   /codon_start']
     with open(os.path.join(file), 'r') as f:
         for line in f:
             for fdata in fasta_data:
-                if line.startswith(fdata) and not line.startswith('FT                   /transl_table') and not line.startswith('FT                   /db_xref') and not line.startswith('FT                   /mol_type'):
+                if line.startswith(fdata) and not line.startswith() and not line.startswith(tuple(ignore_list)):
                         rel_lines.append(line)
     return rel_lines
 
