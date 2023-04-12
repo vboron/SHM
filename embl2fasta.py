@@ -18,17 +18,14 @@ import graphing_shm as graph
 def get_data4fasta(file):
     rel_lines = []
     fasta_data = ['AC', 'FT                   /organism="Homo sapiens"', 
-                    'FT                   /organism="Mus musculus"', 'FT                   ']
-    ignore_list = ['FT                   /transl_table', 'FT                   /db_xref', 
-                   'FT                   /mol_type', 'FT                   /cell_type', 
-                   'FT                   /clone', 'FT                   /product', 'FT                   /note',
-                   'FT                   variable region', 'FT                   /codon_start',
-                   'FT                   /locus_tag', 'FT                   /rpt_family', 'FT                   /number']
+                    'FT                   /organism="Mus musculus"']
     with open(os.path.join(file), 'r') as f:
         for line in f:
-            for fdata in fasta_data:
-                if line.startswith(fdata) or not line.startswith('FT                   /'):
-                        rel_lines.append(line)
+            if line.startswith('FT') or line.startswith('AC'):
+                rel_lines.append(line)
+    firsthalf = [l for l in rel_lines if l.startswith(tuple(fasta_data))]
+    secondhalf = [l for l in rel_lines if not l.startswith('FT                   /')]
+    rel_lines = firsthalf + secondhalf
     return rel_lines
 
 def run_test_get_data4fasta():
