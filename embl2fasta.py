@@ -22,7 +22,8 @@ def get_data4fasta(file):
     ignore_list = ['FT                   /transl_table', 'FT                   /db_xref', 
                    'FT                   /mol_type', 'FT                   /cell_type', 
                    'FT                   /clone', 'FT                   /product', 'FT                   /note',
-                   'FT                   variable region', 'FT                   /codon_start']
+                   'FT                   variable region', 'FT                   /codon_start',
+                   'FT                   /locus_tag', 'FT                   /rpt_family', 'FT                   /number']
     with open(os.path.join(file), 'r') as f:
         for line in f:
             for fdata in fasta_data:
