@@ -27,7 +27,7 @@ def get_data4fasta(file):
     with open(os.path.join(file), 'r') as f:
         for line in f:
             for fdata in fasta_data:
-                if line.startswith(fdata) and not line.startswith(tuple(ignore_list)):
+                if line.startswith(fdata) or not line.startswith('FT                   /'):
                         rel_lines.append(line)
     return rel_lines
 
