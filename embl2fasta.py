@@ -21,7 +21,7 @@ def get_data4fasta(file):
                     'FT                   /organism="Mus musculus"']
     with open(os.path.join(file), 'r') as f:
         for line in f:
-            if line.startswith('FT') or line.startswith('AC'):
+            if line.startswith('FT                   ') or line.startswith('AC'):
                 rel_lines.append(line)
     firsthalf = [l for l in rel_lines if l.startswith(tuple(fasta_data))]
     secondhalf = [l for l in rel_lines if not l.startswith('FT                   /')]
