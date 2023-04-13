@@ -34,10 +34,11 @@ def get_data4fasta(file):
         for line in f:
             if line.startswith('FT                   ') or line.startswith('AC') or line.startswith('//'):
                 rel_lines = rel_lines + line
+    files = rel_lines.split('//')
     # firsthalf = [l for l in rel_lines if l.startswith(tuple(fasta_data))]
     # secondhalf = [l for l in rel_lines if not l.startswith('FT                   /')]
     # rel_lines = firsthalf + secondhalf
-    return rel_lines
+    return files
 
 def run_test_get_data4fasta():
     test_input = """
