@@ -45,6 +45,7 @@ def filter_file(f):
     firsthalf = [l for l in lines if l.startswith(tuple(fasta_data))]
     secondhalf = [l for l in lines if not l.startswith('FT                   /')]
     rel_lines = firsthalf + secondhalf
+    rel_lines = [l.replace(' ', '') for l in rel_lines]
     print(rel_lines)
 
 
