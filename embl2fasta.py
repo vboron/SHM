@@ -27,18 +27,26 @@ def split_sequences(file):
 
 def get_data4fasta(file):
     rel_lines = ''
-    fasta_data = ['AC', 'FT                   /organism="Homo sapiens"',
-                  'FT                   /organism="Mus musculus"', 'FT                   /protein_id',
-                  'FT                   /translation']
     with open(os.path.join(file), 'r') as f:
         for line in f:
             if line.startswith('FT                   ') or line.startswith('AC') or line.startswith('//'):
                 rel_lines = rel_lines + line
     files = rel_lines.split('//')
-    # firsthalf = [l for l in rel_lines if l.startswith(tuple(fasta_data))]
-    # secondhalf = [l for l in rel_lines if not l.startswith('FT                   /')]
-    # rel_lines = firsthalf + secondhalf
-    return files
+    for file in files:
+        filter_file(file)
+    return
+
+
+def filter_file(f):
+    fasta_data = ['AC', 'FT                   /organism="Homo sapiens"',
+                  'FT                   /organism="Mus musculus"', 'FT                   /protein_id',
+                  'FT                   /translation']
+    lines = f.split('\n')
+    firsthalf = [l for l in lines if l.startswith(tuple(fasta_data))]
+    secondhalf = [l for l in lines if not l.startswith('FT                   /')]
+    rel_lines = firsthalf + secondhalf
+    print(rel_lines)
+
 
 def run_test_get_data4fasta():
     test_input = """
@@ -115,4 +123,3 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     data = get_data4fasta(args.emblfile)
-    print(data)
