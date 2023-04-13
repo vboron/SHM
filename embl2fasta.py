@@ -32,15 +32,14 @@ def get_data4fasta(file):
             if line.startswith('FT                   ') or line.startswith('AC') or line.startswith('//'):
                 rel_lines = rel_lines + line
     files = rel_lines.split('//')
+    files = [file for file in files if 'FT                   /organism="Homo sapiens"' in file or 'FT                   /organism="Mus musculus"' in file]
     for file in files:
         filter_file(file)
     return
 
 
 def filter_file(f):
-    fasta_data = ['AC', 'FT                   /organism="Homo sapiens"',
-                  'FT                   /organism="Mus musculus"', 'FT                   /protein_id',
-                  'FT                   /translation']
+    fasta_data = ['AC', 'FT                   /protein_id', 'FT                   /translation']
     lines = f.split('\n')
     firsthalf = [l for l in lines if l.startswith(tuple(fasta_data))]
     secondhalf = [l for l in lines if not l.startswith('FT                   /')]
