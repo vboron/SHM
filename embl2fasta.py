@@ -19,10 +19,10 @@ def split_sequences(file):
     
     files = []
     with open(os.path.join(file), 'r') as f:
-        data = f.read().replace('\n', '')
-        files = data.split('//')
+        data = f.read()
+        # files = data.split('//')
     print(data)
-    print(files)
+    # print(files)
 
 
 def get_data4fasta(file):
