@@ -42,17 +42,14 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
     plt.text(s=f'Correlation: {pearson_a}', x=10, y=17, fontsize=8)
 
     # Plot highest values
-    def plotting(x, y, color):
-        plt.scatter(x, y, s=3, color=color)
-        m, b = np.polyfit(x, y, 1)
-        plt.plot(x, m * x + b, color=color,
-             linestyle='dashed', linewidth=1)
-        bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
-        plt.text(s=f'Best fit: {bf_line}',
-             x=10, y=15, fontsize=8, color=color)
-    
-    plotting(x_all, y_all, color_all)
-    plotting(x_max, y_max, color_top)
+    plt.scatter(x_all, y_all, s=3, color=color_all)
+    plt.scatter(x_max, y_max, s=3, color=color_top)
+    m, b = np.polyfit(x_max, y_max, 1)
+    plt.plot(x_max, m * x_max + b, color=color_top,
+            linestyle='dashed', linewidth=1)
+    bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
+    plt.text(s=f'Best fit: {bf_line}',
+            x=10, y=15, fontsize=8, color=color_top)
 
     # Exports the figure as a .jpg file
     path_fig = os.path.join(directory, f'{name}.jpg')
