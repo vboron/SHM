@@ -16,9 +16,12 @@ import graphing_shm as graph
 
 
 def split_sequences(file):
+    
     files = []
     with open(os.path.join(file), 'r') as f:
-        files = f.split('//')
+        data = f.read().replace('\n', '')
+        files = data.split('//')
+    print(data)
     print(files)
 
 
