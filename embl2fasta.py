@@ -24,7 +24,7 @@ def get_data4fasta(file, dire):
     files = rel_lines.split('//')
     files = [file for file in files if 'FT                   /organism="Homo sapiens"' in file or 'FT                   /organism="Mus musculus"' in file]
     for file in files:
-        filter_file(file)
+        filter_file(file, dire)
     return
 
 
