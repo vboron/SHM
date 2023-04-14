@@ -51,8 +51,9 @@ def filter_file(f):
     rel_lines = [l.replace('/translation=', '') for l in rel_lines]
     rel_lines = [l for l in rel_lines if not l.islower()]
     rel_lines = [l for l in rel_lines if l.isupper() == True]
+    print([''.join(rel_lines[3:])])
     final = rel_lines[:3] + [''.join(rel_lines[3:])]
-    print(final)
+    # print(final)
 
 
 def run_test_get_data4fasta():
