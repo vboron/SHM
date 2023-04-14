@@ -46,7 +46,7 @@ def filter_file(f):
     secondhalf = [l for l in lines if not l.startswith(tuple(ignore))]
     rel_lines = firsthalf + secondhalf
     rel_lines = [l.replace(' ', '') for l in rel_lines]
-    rel_lines = [l for l in rel_lines if l != '']
+    rel_lines = [l[2:].replace('"', '') for l in rel_lines if l != '']
     print(rel_lines)
 
 
