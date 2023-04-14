@@ -40,11 +40,13 @@ def get_data4fasta(file):
 
 def filter_file(f):
     fasta_data = ['AC', 'FT                   /protein_id', 'FT                   /translation']
+    ignore = ['FT                   /', 'AC']
     lines = f.split('\n')
     firsthalf = [l for l in lines if l.startswith(tuple(fasta_data))]
-    secondhalf = [l for l in lines if not l.startswith('FT                   /')]
+    secondhalf = [l for l in lines if not l.startswith(tuple(ignore))]
     rel_lines = firsthalf + secondhalf
     rel_lines = [l.replace(' ', '') for l in rel_lines]
+    rel_lines = [l for l in rel_lines if l != '']
     print(rel_lines)
 
 
