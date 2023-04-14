@@ -47,6 +47,8 @@ def filter_file(f):
     rel_lines = firsthalf + secondhalf
     rel_lines = [l.replace(' ', '') for l in rel_lines]
     rel_lines = [l[2:].replace('"', '') for l in rel_lines if l != '']
+    rel_lines = [l.replace('/protein_id=', '') for l in rel_lines]
+    rel_lines = [l.replace('/translation=', '') for l in rel_lines]
     print(rel_lines)
 
 
