@@ -50,6 +50,7 @@ def filter_file(f):
     rel_lines = [l.replace('/protein_id=', '') for l in rel_lines]
     rel_lines = [l.replace('/translation=', '') for l in rel_lines]
     rel_lines = [l for l in rel_lines if not l.islower()]
+    rel_lines = [l for l in rel_lines if l.isupper() == True]
     print(rel_lines)
 
 
