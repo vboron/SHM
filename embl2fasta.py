@@ -15,17 +15,7 @@ import re
 import graphing_shm as graph
 
 
-def split_sequences(file):
-    
-    files = []
-    with open(os.path.join(file), 'r') as f:
-        data = f.read()
-        files = data.split('//')
-    # print(data)
-    print(files)
-
-
-def get_data4fasta(file):
+def get_data4fasta(file, dire):
     rel_lines = ''
     with open(os.path.join(file), 'r') as f:
         for line in f:
@@ -38,7 +28,7 @@ def get_data4fasta(file):
     return
 
 
-def filter_file(f):
+def filter_file(f, direct):
     fasta_data = ['AC', 'FT                   /protein_id', 'FT                   /translation']
     ignore = ['FT                   /', 'AC']
     lines = f.split('\n')
@@ -52,9 +42,11 @@ def filter_file(f):
     rel_lines = [l.replace(';', '') for l in rel_lines]
     rel_lines = [l for l in rel_lines if not l.islower()]
     rel_lines = [l for l in rel_lines if l.isupper() == True]
-    # print([''.join(rel_lines[3:])])
     final = rel_lines[:2] + [''.join(rel_lines[2:])]
-    print(final)
+
+    with open(os.path.join(direct, final[0]), 'w') as fasta:
+        fasta.write(f'>{final[1]}\n{final[2]}')
+    return
 
 
 def run_test_get_data4fasta():
@@ -129,6 +121,8 @@ if __name__ == '__main__':
         description='Compile.....')
     parser.add_argument(
         '--emblfile', help='EMBL file', required=True)
+    parser.add_argument(
+        '--newfastadir', help='Directory for location of new fasta files', required=True)
     args = parser.parse_args()
 
-    data = get_data4fasta(args.emblfile)
+    get_data4fasta(args.emblfile, args.newfastadir)
