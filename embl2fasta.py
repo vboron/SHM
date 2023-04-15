@@ -44,7 +44,7 @@ def filter_file(f, direct):
     rel_lines = [l for l in rel_lines if l.isupper() == True]
     final = rel_lines[:2] + [''.join(rel_lines[2:])]
 
-    with open(os.path.join(direct, final[0]), 'w') as fasta:
+    with open(os.path.join(direct, f'{final[0]}.faa'), 'w') as fasta:
         fasta.write(f'>{final[1]}\n{final[2]}')
     return
 
