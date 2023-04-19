@@ -195,7 +195,7 @@ def find_hydrophobicity_for_positions(fastadir):
 def extract_mut_data(fastadir):
     files = os.listdir(fastadir)
     col = ['code', 'VL', 'VH']
-    dfdata = []
+    mismatch_dic = {}
     mismatch_data = []
 
     for file in files:
@@ -209,7 +209,16 @@ def extract_mut_data(fastadir):
         temp = [t for t in temp if t.startswith('VH') or t.startswith('VL')]
         temp = [t.replace(' ', '') for t in temp]
         temp = [t.split('\n') for t in temp]
-        print(temp)
+
+        for t in temp:
+            if t[0].startswith('VH'):
+                mismatch_s = t[-1].split(':')
+                mismatch_dic['VH'] = mismatch_s[1]
+            if t[0].startswith('VL'):
+                mismatch_s = t[-1].split(':')
+                mismatch_dic['VL'] = mismatch_s[1]
+
+        print(mismatch_dic)
     #     result = result.replace(' ', '')
     #     code = file[3:-4]
     #     mismatch_data = [code]
