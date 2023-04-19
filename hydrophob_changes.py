@@ -194,7 +194,7 @@ def find_hydrophobicity_for_positions(fastadir):
 
 def extract_mut_data(fastadir):
     files = os.listdir(fastadir)
-    col = ['code', 'VL', 'JL', 'VH', 'JH']
+    col = ['code', 'VL', 'VH']
     dfdata = []
     mismatch_data = []
 
@@ -207,24 +207,22 @@ def extract_mut_data(fastadir):
         temp = [t.replace('Chain type: Heavy\n', '') for t in temp]
         temp = [t.replace('Chain type: Light\n', '') for t in temp]
         temp = [t for t in temp if t.startswith('VH') or t.startswith('VL')]
+        temp = temp.replace(' ', '')
         print(temp)
-        result = result.replace(' ', '')
-        temp = re.split('\n', result)
-        result_data = [l for l in temp if ':' in l]
-        code = file[3:-4]
-        mismatch_data = [code]
-        for data in result_data:
-            if data.startswith('Mismatches'):
-                data_list = data.split(':')
-                mismatch = data_list[1]
-                mismatch_data.append(mismatch)
-        dfdata.append(mismatch_data)
-    df = pd.DataFrame(data=dfdata, columns=col)
-    df.dropna(inplace=True)
-    df.drop(columns=['JL', 'JH'], inplace=True)
-    df = df.astype({'VH': 'int64', 'VL': 'int64'})
-    df['total_mut'] = df['VL'] + df['VH']
-    return df
+    #     result = result.replace(' ', '')
+    #     code = file[3:-4]
+    #     mismatch_data = [code]
+    #     for data in result_data:
+    #         if data.startswith('Mismatches'):
+    #             data_list = data.split(':')
+    #             mismatch = data_list[1]
+    #             mismatch_data.append(mismatch)
+    #     dfdata.append(mismatch_data)
+    # df = pd.DataFrame(data=dfdata, columns=col)
+    # df.dropna(inplace=True)
+    # df = df.astype({'VH': 'int64', 'VL': 'int64'})
+    # df['total_mut'] = df['VL'] + df['VH']
+    return 
 
 # TODO
 # Graph dH/mutation vs count
@@ -387,5 +385,5 @@ if __name__ == '__main__':
     # run_test_label_res_mut_skippedres()
 
     df_mutations = extract_mut_data(args.fastadir)
-    df_deltahydrophobicity = find_hydrophobicity_for_positions(args.fastadir)
-    combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
+    # df_deltahydrophobicity = find_hydrophobicity_for_positions(args.fastadir)
+    # combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)
