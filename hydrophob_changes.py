@@ -200,7 +200,7 @@ def extract_mut_data(fastadir):
 
     for file in files:
         result = run_AGL(file, fastadir)
-        print(result)
+        print(result.split('\n'))
         result = result.replace(' ', '')
         temp = re.split('\n', result)
         result_data = [l for l in temp if ':' in l]
