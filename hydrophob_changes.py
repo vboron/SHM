@@ -204,9 +204,8 @@ def extract_mut_data(fastadir):
         temp = temp.replace('\n\n', 'splitter')
         temp = temp.split('splitter')
         temp = [t for t in temp if '>' not in t]
-        # temp = result.split('\n\n')
-        # temp = [t.replace('# Chain type: Heavy\n', '') for t in temp]
-        # temp = [t.replace('# Chain type: Light\n', '') for t in temp]
+        temp = [t.replace('Chain type: Heavy\n', '') for t in temp]
+        temp = [t.replace('Chain type: Light\n', '') for t in temp]
         print(temp)
         result = result.replace(' ', '')
         temp = re.split('\n', result)
