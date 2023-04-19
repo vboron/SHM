@@ -151,18 +151,24 @@ def find_hydrophobicity_for_positions(fastadir):
 
     def calc_hydrophobicity_for_loops(df):
         cdrL1_pos = [f'L{i}' for i in range(24, 35)]
+        cdrL2_pos = [f'L{i}' for i in range(50, 57)]
+        cdrL3_pos = [f'L{i}' for i in range(89, 98)]
+        cdrH1_pos = [f'H{i}' for i in range(31, 36)]
         cdrH2_pos = [f'H{i}' for i in range(50, 59)]
-        cdrH3_pos = [f'H{i}' for i in range(95, 103)]
+        # cdrH3_pos = [f'H{i}' for i in range(95, 103)]
 
         def hydrophob_for_loop(pos_list, df):
             df_loop = df[df['L/H position'].isin(pos_list)]
             hydrophob_change = f'{cal_hydrophob_change(df_loop):.2f}'
             return hydrophob_change
         
-        delta_hydrophobicity_l1 = hydrophob_for_loop(cdrL1_pos, df)
-        delta_hydrophobicity_h2 = hydrophob_for_loop(cdrH2_pos, df)
-        delta_hydrophobicity_h3 = hydrophob_for_loop(cdrH3_pos, df)
-        return delta_hydrophobicity_l1, delta_hydrophobicity_h2, delta_hydrophobicity_h3
+        dH_l1 = hydrophob_for_loop(cdrL1_pos, df)
+        dH_l2 = hydrophob_for_loop(cdrL2_pos, df)
+        dH_l3 = hydrophob_for_loop(cdrL3_pos, df)
+        dH_h1 = hydrophob_for_loop(cdrH1_pos, df)
+        dH_h2 = hydrophob_for_loop(cdrH2_pos, df)
+        
+        return dH_l1, dH_l2, dH_l3, dH_h1, dH_h2
         
     
     files = os.listdir(fastadir)
@@ -174,13 +180,14 @@ def find_hydrophobicity_for_positions(fastadir):
         posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
         mut_df = posres_df[posres_df['input'] != posres_df['germline']]
         delta_hydrophobicity_all = f'{cal_hydrophob_change(mut_df):.2f}'
-        dh_l1, dh_h2, dh_h3 = calc_hydrophobicity_for_loops(mut_df)
+        dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
         name = file[3:-4]
-        data = [name, delta_hydrophobicity_all, dh_l1, dh_h2, dh_h3]
+        data = [name, delta_hydrophobicity_all, dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
         hydrophob_data.append(data)
     df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
-                      'code', 'dh_all', 'dh_l1', 'dh_h2', 'dh_h3'])
-    df_hydroph = df_hydroph.astype({'dh_all': 'float64', 'dh_l1': 'float64', 'dh_h2': 'float64', 'dh_h3': 'float64'})
+                      'code', 'dh_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
+    df_hydroph = df_hydroph.astype({'dh_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
+                                    'dH_H1': 'float64', 'dH_H2': 'float64'})
     print(df_hydroph)
     return df_hydroph
 
@@ -193,6 +200,7 @@ def extract_mut_data(fastadir):
 
     for file in files:
         result = run_AGL(file, fastadir)
+        print(result)
         result = result.replace(' ', '')
         temp = re.split('\n', result)
         result_data = [l for l in temp if ':' in l]
@@ -211,6 +219,8 @@ def extract_mut_data(fastadir):
     df['total_mut'] = df['VL'] + df['VH']
     return df
 
+# TODO
+# Graph dH/mutation vs count
 
 def combine_mut_hydrophob(hydrophob_df, mut_df):
     final_df = pd.merge(mut_df, hydrophob_df, on='code')
@@ -367,7 +377,7 @@ if __name__ == '__main__':
     run_test_parse_abnum_data_bothchains()
     run_test_parse_abnum_data_singlechainH()
     run_test_label_res_mut_noresiduesskippedwithin()
-    run_test_label_res_mut_skippedres()
+    # run_test_label_res_mut_skippedres()
 
     df_mutations = extract_mut_data(args.fastadir)
     df_deltahydrophobicity = find_hydrophobicity_for_positions(args.fastadir)
