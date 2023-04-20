@@ -199,10 +199,10 @@ def extract_mut_data(fastadir):
     mismatch_data = []
 
     for file in files:
-        input_L = []
-        germline_L = []
-        input_H = []
-        germline_H = []
+        input_L = ''
+        germline_L = ''
+        input_H = ''
+        germline_H = ''
         print(file)
         result = run_AGL(file, fastadir)
         temp = result.replace('\n# ', 'splitter')
