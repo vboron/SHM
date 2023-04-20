@@ -224,7 +224,7 @@ def extract_mut_data(fastadir):
             if 'VH' not in mismatch_dic:
                 mismatch_dic['VH'] = 0
             for element in t:
-                if not all(item in element for item in ignore_for_seq):
+                if not any(item in element for item in ignore_for_seq):
                     print(element)
         mismatch_data.append([mismatch_dic['VL'], mismatch_dic['VH']])
     #     result = result.replace(' ', '')
