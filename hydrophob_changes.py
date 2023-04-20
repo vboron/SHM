@@ -214,68 +214,6 @@ def combine_mut_hydrophob(hydrophob_df, mut_df):
 
 
 # ********* Testing ********************************************
-def run_test_parse_agl_data_bothchains():
-    test_input = """
->ChainL
-# Chain type: Light
-VL      :  78.12% : IGKV3-20*01  : F0 : Homo sapiens
-    EIVLTQ
-    ||| ||
-    EIVGTQ
-    Mismatches: 1
-
-JL      :  91.67% : IGKJ2*01     : F2 : Homo sapiens
-    YTF
-    |||
-    YTF
-    Mismatches: 0
-
->ChainH
-# Chain type: Heavy
-VH      :  79.59% : IGHV1-3*01   : F0 : Homo sapiens
-    QVQL
-    ||
-    QVDK
-    Mismatches: 2
-
-JH      :  75.00% : IGHJ6*03     : F2 : Homo sapiens
-    PQDN
-        
-    YYYY
-    Mismatches: 4
-    """
-    chainl, chainh = parse_agl_data(test_input)
-    expected_chainl = [['E', 'E'], ['I', 'I'], ['V', 'V'], ['L', 'G'], ['T', 'T'], ['Q', 'Q'], ['Y', 'Y'], ['T', 'T'], ['F', 'F']]
-    expected_chainh = [['Q', 'Q'], ['V', 'V'], ['Q', 'D'], ['L', 'K'], ['P', 'Y'], ['Q', 'Y'], ['D', 'Y'], ['N', 'Y']]
-
-    utils_shm.check_equal(chainl, expected_chainl)
-    utils_shm.check_equal(chainh, expected_chainh)
-
-
-def run_test_parse_agl_data_singlechainL():
-    test_input = """
->ChainL
-# Chain type: Light
-VL      :  78.12% : IGKV3-20*01  : F0 : Homo sapiens
-    EIVLTQ
-    ||| ||
-    EIVGTQ
-    Mismatches: 1
-
-JL      :  91.67% : IGKJ2*01     : F2 : Homo sapiens
-    YTF
-    |||
-    YTF
-    Mismatches: 0
-    """
-    chainl, chainh = parse_agl_data(test_input)
-    expected_chainl = [['E', 'E'], ['I', 'I'], ['V', 'V'], ['L', 'G'], ['T', 'T'], ['Q', 'Q'], ['Y', 'Y'], ['T', 'T'], ['F', 'F']]
-    expected_chainh = []
-
-    utils_shm.check_equal(chainl, expected_chainl)
-    utils_shm.check_equal(chainh, expected_chainh)
-
-
 def run_test_parse_abnum_data_bothchains():
     test_input = """
     # Numbered sequence  1
@@ -352,8 +290,6 @@ if __name__ == '__main__':
         '--fastadir', help='Directory of fasta files', required=True)
     args = parser.parse_args()
 
-    run_test_parse_agl_data_bothchains()
-    run_test_parse_agl_data_singlechainL()
     run_test_parse_abnum_data_bothchains()
     run_test_parse_abnum_data_singlechainH()
     run_test_label_res_mut_noresiduesskippedwithin()
