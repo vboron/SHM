@@ -214,12 +214,12 @@ def extract_mut_data(fastadir):
         for t in temp:
             if t[0].startswith('VH'):
                 mismatch_s = t[-1].split(':')
-                mismatch_dic['VH'] = mismatch_s[1]
+                mismatch_dic['VH'] = int(mismatch_s[1])
             else:
                 mismatch_dic['VH'] = 0
             if t[0].startswith('VL'):
                 mismatch_s = t[-1].split(':')
-                mismatch_dic['VL'] = mismatch_s[1]
+                mismatch_dic['VL'] = int(mismatch_s[1])
             else:
                 mismatch_dic['VL'] = 0
 
