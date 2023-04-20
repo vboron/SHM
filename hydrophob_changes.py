@@ -215,13 +215,13 @@ def extract_mut_data(fastadir):
             if t[0].startswith('VH'):
                 mismatch_s = t[-1].split(':')
                 mismatch_dic['VH'] = int(mismatch_s[1])
-            else:
-                mismatch_dic['VH'] = 0
             if t[0].startswith('VL'):
                 mismatch_s = t[-1].split(':')
                 mismatch_dic['VL'] = int(mismatch_s[1])
-            else:
+            if 'VL' not in mismatch_dic:
                 mismatch_dic['VL'] = 0
+            if 'VH' not in mismatch_dic:
+                mismatch_dic['VH'] = 0
 
         print(mismatch_dic)
     #     result = result.replace(' ', '')
