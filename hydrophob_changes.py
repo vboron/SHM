@@ -232,7 +232,7 @@ def extract_mut_data(fastadir):
             if 'VH' not in mismatch_dic:
                 mismatch_dic['VH'] = 0
         tot_mismatches = mismatch_dic['VL'] + mismatch_dic['VH']
-        mismatch_data.append([file[:-4], tot_mismatches, (input_L + input_H), + (germline_L + germline_H)])
+        mismatch_data.append([file[:-4], tot_mismatches, (input_L + input_H), (germline_L + germline_H)])
         print(mismatch_data)
     #     result = result.replace(' ', '')
     #     code = file[3:-4]
