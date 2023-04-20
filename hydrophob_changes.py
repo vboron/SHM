@@ -211,6 +211,7 @@ def extract_mut_data(fastadir):
         temp = [t.replace(' ', '') for t in temp]
         temp = [t.split('\n') for t in temp]
 
+        ignore_for_seq = ['VH:', 'VL:', '|']
         for t in temp:
             if t[0].startswith('VH'):
                 mismatch_s = t[-1].split(':')
@@ -222,7 +223,8 @@ def extract_mut_data(fastadir):
                 mismatch_dic['VL'] = 0
             if 'VH' not in mismatch_dic:
                 mismatch_dic['VH'] = 0
-        print(temp)
+            if any(item in t for item in ignore_for_seq):
+                print(t)
         mismatch_data.append([mismatch_dic['VL'], mismatch_dic['VH']])
     #     result = result.replace(' ', '')
     #     code = file[3:-4]
