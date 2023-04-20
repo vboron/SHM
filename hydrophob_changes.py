@@ -199,6 +199,7 @@ def extract_mut_data(fastadir):
     mismatch_data = []
 
     for file in files:
+        print(file)
         result = run_AGL(file, fastadir)
         temp = result.replace('\n# ', 'splitter')
         temp = temp.replace('\n\n', 'splitter')
@@ -214,9 +215,13 @@ def extract_mut_data(fastadir):
             if t[0].startswith('VH'):
                 mismatch_s = t[-1].split(':')
                 mismatch_dic['VH'] = mismatch_s[1]
+            else:
+                mismatch_dic['VH'] = 0
             if t[0].startswith('VL'):
                 mismatch_s = t[-1].split(':')
                 mismatch_dic['VL'] = mismatch_s[1]
+            else:
+                mismatch_dic['VL'] = 0
 
         print(mismatch_dic)
     #     result = result.replace(' ', '')
