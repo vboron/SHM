@@ -87,36 +87,6 @@ def extract_abnum_data(in_file, dire):
     return l_residues, h_residues
 
 
-def parse_agl_data(agl_out):
-    agl_lines = agl_out.split('Chain type:')
-    del agl_lines[0]
-    agl_lines = [i.strip() for i in agl_lines]
-
-    def process_chain(chain):
-        chain_data = [l for l in agl_lines if l.startswith(chain)]
-        for species in ['Homo sapiens', 'Mus musculus']:
-            chain_data = [i.replace(f'{species}\n', 'splitter') for i in chain_data]
-        chain_data = [i.replace('Mismatches:', 'splitter') for i in chain_data]
-        chain_data = chain_data[0].split('splitter')
-        chain_data = chain_data[1::2]
-        chain_data = [i.strip().split('\n') for i in chain_data]
-        germline = ''
-        input_seq = ''
-        for element in chain_data:
-            germline = germline + element[2].strip()
-            input_seq = input_seq + element[0].strip()
-        chain_data = [list(a) for a in zip(list(input_seq), list(germline))]
-        return chain_data
-    
-    chainl = []
-    chainh = []
-    if any('Light' in line for line in agl_lines):
-        chainl = process_chain('Light')
-    if any('Heavy' in line for line in agl_lines):
-        chainh = process_chain('Heavy')
-    return chainl, chainh
-
-
 def label_res_mut(l_muts, h_muts, l_num, h_num):
     l_list = []
     h_list = []
@@ -138,8 +108,8 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
     return num_mut_pairs
 
 
+def extract_mut_data(fastadir):
 
-def find_hydrophobicity_for_positions(fastadir):
     def cal_hydrophob_change(df):
         df['input_hydrophob'] = df['input'].map(
             lambda x: utils_shm.hydrophobicity(x))
@@ -169,34 +139,12 @@ def find_hydrophobicity_for_positions(fastadir):
         dH_h2 = hydrophob_for_loop(cdrH2_pos, df)
         
         return dH_l1, dH_l2, dH_l3, dH_h1, dH_h2
-        
     
     files = os.listdir(fastadir)
-    hydrophob_data = []
-    for file in files:
-        resl, resh = extract_abnum_data(file, fastadir)
-        chainl_mut, chainh_mut = parse_agl_data(run_AGL(file, fastadir))
-        res_pos_pairs = label_res_mut(chainl_mut, chainh_mut, resl, resh)
-        posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
-        mut_df = posres_df[posres_df['input'] != posres_df['germline']]
-        delta_hydrophobicity_all = f'{cal_hydrophob_change(mut_df):.2f}'
-        dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
-        name = file[3:-4]
-        data = [name, delta_hydrophobicity_all, dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
-        hydrophob_data.append(data)
-    df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
-                      'code', 'dh_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
-    df_hydroph = df_hydroph.astype({'dh_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
-                                    'dH_H1': 'float64', 'dH_H2': 'float64'})
-    print(df_hydroph)
-    return df_hydroph
-
-
-def extract_mut_data(fastadir):
-    files = os.listdir(fastadir)
-    col = ['code', 'total_mut', 'seq', 'germline']
+    col = ['code', 'total_mut']
     mismatch_dic = {}
     mismatch_data = []
+    hydrophob_data = []
 
     for file in files:
         input_L = ''
@@ -215,7 +163,6 @@ def extract_mut_data(fastadir):
         temp = [t.replace(' ', '') for t in temp]
         temp = [t.split('\n') for t in temp]
 
-        # ignore_for_seq = ['VH:', 'VL:', '|', 'Mismatches']
         for t in temp:
             if t[0].startswith('VL'):
                 mismatch_s = t[-1].split(':')
@@ -232,9 +179,24 @@ def extract_mut_data(fastadir):
             if 'VH' not in mismatch_dic:
                 mismatch_dic['VH'] = 0
         tot_mismatches = mismatch_dic['VL'] + mismatch_dic['VH']
-        mismatch_data.append([file[:-4], tot_mismatches, (input_L + input_H), (germline_L + germline_H)])
-    df = pd.DataFrame(data=mismatch_data, columns=col)
-    print(df)
+        mismatch_data.append([file[:-4], tot_mismatches])
+        l_mut = [list(a) for a in zip(list(input_L), list(germline_L))]
+        h_mut = [list(a) for a in zip(list(input_H), list(germline_H))]
+        resl, resh = extract_abnum_data(file, fastadir)
+        res_pos_pairs = label_res_mut(l_mut, h_mut, resl, resh)
+        posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
+        mut_df = posres_df[posres_df['input'] != posres_df['germline']]
+        delta_hydrophobicity_all = f'{cal_hydrophob_change(mut_df):.2f}'
+        dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
+        data = [file[:-4], delta_hydrophobicity_all, dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
+        hydrophob_data.append(data)
+
+    df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
+                      'code', 'dh_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
+    df_hydroph = df_hydroph.astype({'dh_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
+                                    'dH_H1': 'float64', 'dH_H2': 'float64'})
+    df_mismatch = pd.DataFrame(data=mismatch_data, columns=col)
+    print(df_hydroph)
     return 
 
 # TODO
