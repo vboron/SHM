@@ -194,7 +194,7 @@ def find_hydrophobicity_for_positions(fastadir):
 
 def extract_mut_data(fastadir):
     files = os.listdir(fastadir)
-    col = ['code', 'VL', 'VH']
+    col = ['code', 'total_mut', 'seq', 'germline']
     mismatch_dic = {}
     mismatch_data = []
 
@@ -233,20 +233,8 @@ def extract_mut_data(fastadir):
                 mismatch_dic['VH'] = 0
         tot_mismatches = mismatch_dic['VL'] + mismatch_dic['VH']
         mismatch_data.append([file[:-4], tot_mismatches, (input_L + input_H), (germline_L + germline_H)])
-        print(mismatch_data)
-    #     result = result.replace(' ', '')
-    #     code = file[3:-4]
-    #     mismatch_data = [code]
-    #     for data in result_data:
-    #         if data.startswith('Mismatches'):
-    #             data_list = data.split(':')
-    #             mismatch = data_list[1]
-    #             mismatch_data.append(mismatch)
-    #     dfdata.append(mismatch_data)
-    # df = pd.DataFrame(data=dfdata, columns=col)
-    # df.dropna(inplace=True)
-    # df = df.astype({'VH': 'int64', 'VL': 'int64'})
-    # df['total_mut'] = df['VL'] + df['VH']
+    df = pd.DataFrame(data=mismatch_data, columns=col)
+    print(df)
     return 
 
 # TODO
