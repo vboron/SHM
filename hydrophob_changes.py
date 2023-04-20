@@ -223,7 +223,7 @@ def extract_mut_data(fastadir):
             if 'VH' not in mismatch_dic:
                 mismatch_dic['VH'] = 0
 
-        print(mismatch_dic)
+        print([mismatch_dic['VL'], mismatch_dic['VH']])
     #     result = result.replace(' ', '')
     #     code = file[3:-4]
     #     mismatch_data = [code]
