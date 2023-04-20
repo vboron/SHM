@@ -199,6 +199,10 @@ def extract_mut_data(fastadir):
     mismatch_data = []
 
     for file in files:
+        input_L = []
+        germline_L = []
+        input_H = []
+        germline_H = []
         print(file)
         result = run_AGL(file, fastadir)
         temp = result.replace('\n# ', 'splitter')
@@ -211,21 +215,23 @@ def extract_mut_data(fastadir):
         temp = [t.replace(' ', '') for t in temp]
         temp = [t.split('\n') for t in temp]
 
-        ignore_for_seq = ['VH:', 'VL:', '|']
+        # ignore_for_seq = ['VH:', 'VL:', '|', 'Mismatches']
         for t in temp:
-            if t[0].startswith('VH'):
-                mismatch_s = t[-1].split(':')
-                mismatch_dic['VH'] = int(mismatch_s[1])
             if t[0].startswith('VL'):
                 mismatch_s = t[-1].split(':')
                 mismatch_dic['VL'] = int(mismatch_s[1])
+                input_L = input_L + t[1]
+                germline_L = germline_L + t[3]
+            if t[0].startswith('VH'):
+                mismatch_s = t[-1].split(':')
+                mismatch_dic['VH'] = int(mismatch_s[1])
+                input_H = input_H + t[1]
+                germline_H = germline_H + t[3]
             if 'VL' not in mismatch_dic:
                 mismatch_dic['VL'] = 0
             if 'VH' not in mismatch_dic:
                 mismatch_dic['VH'] = 0
-            for element in t:
-                if not any(item in element for item in ignore_for_seq):
-                    print(element)
+        print(input_L, input_H)
         mismatch_data.append([mismatch_dic['VL'], mismatch_dic['VH']])
     #     result = result.replace(' ', '')
     #     code = file[3:-4]
