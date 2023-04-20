@@ -129,6 +129,7 @@ def extract_mut_data(fastadir):
 
         def hydrophob_for_loop(pos_list, df):
             df_loop = df[df['L/H position'].isin(pos_list)]
+            print(df_loop)
             hydrophob_change = f'{cal_hydrophob_change(df_loop):.2f}'
             return hydrophob_change
         
