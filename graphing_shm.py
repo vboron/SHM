@@ -64,5 +64,5 @@ def hydrophobicity_vs_mutations(x_values, labels):
     n_bins = 10
     color=['maroon', 'peachpuff', 'mediumseagreen', 'mediumorchid', 'lightpink']
     plt.figure()
-    plt.hist(x_values, bins=n_bins, stacked=True, density=True, color=color, label=labels)
+    plt.hist(x_values, bins=n_bins, density=True, color=color, label=labels)
     plt.savefig('test_graph.jpg', format='jpg')
