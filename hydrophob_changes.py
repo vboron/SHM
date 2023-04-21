@@ -205,7 +205,7 @@ def extract_mut_data(fastadir):
     #                                   ['dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
     graph.hydrophobicity_vs_mutations([df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
                                        df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
-                                      ['dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
+                                      ['mean_dH_L1', 'mean_dH_L2', 'mean_dH_L3', 'mean_dH_H1', 'mean_dH_H2'])
     return df_hydroph
 
 # TODO
