@@ -129,7 +129,10 @@ def extract_mut_data(fastadir):
 
         def hydrophob_for_loop(pos_list, df):
             df_loop = df[df['L/H position'].isin(pos_list)]
-            mean_hydrophob_change = cal_hydrophob_change(df_loop)/df.shape[0]
+            try:
+                mean_hydrophob_change = cal_hydrophob_change(df_loop)/df.shape[0]
+            except:
+                mean_hydrophob_change = 0
             mean_hydrophob_change = f'{mean_hydrophob_change:.3f}'
             return mean_hydrophob_change
         
@@ -187,7 +190,10 @@ def extract_mut_data(fastadir):
         res_pos_pairs = label_res_mut(l_mut, h_mut, resl, resh)
         posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
         mut_df = posres_df[posres_df['input'] != posres_df['germline']]
-        mean_delta_hydrophobicity_all = cal_hydrophob_change(mut_df) / mut_df.shape[0]
+        try:
+            mean_delta_hydrophobicity_all = cal_hydrophob_change(mut_df) / mut_df.shape[0]
+        except:
+            mean_delta_hydrophobicity_all = 0
         mean_delta_hydrophobicity_all = f'{mean_delta_hydrophobicity_all:.3f}'
         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
         data = [file[:-4], f'{cal_hydrophob_change(mut_df):.3f}', mean_delta_hydrophobicity_all, 
