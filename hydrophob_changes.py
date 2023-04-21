@@ -199,18 +199,11 @@ def extract_mut_data(fastadir):
     df_hydroph = df_hydroph.astype({'dH_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
                                     'dH_H1': 'float64', 'dH_H2': 'float64'})
     # df_mismatch = pd.DataFrame(data=mismatch_data, columns=col)
-    print(df_hydroph)
+    df_hydroph.to_csv('hydrophobicity.csv', index=False)
     graph.hydrophobicity_vs_mutations([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
                                        df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
-                                      ['All', 'L1', 'L2', 'L3', 'H1', 'H2'])
-    # graph.hydrophobicity_vs_mutations([df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
-    #                                    df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
-    #                                   ['L1', 'L2', 'L3', 'H1', 'H2'])
+                                      ['All', 'L1', 'L2', 'L3', 'H1', 'H2'], 'hydrophobicity_graph')
     return df_hydroph
-
-# TODO
-# Graph dH/mutation vs count
-
 
 
 # ********* Testing ********************************************
