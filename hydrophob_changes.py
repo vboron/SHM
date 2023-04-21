@@ -166,21 +166,21 @@ def extract_mut_data(fastadir):
 
         for t in temp:
             if t[0].startswith('VL'):
-                mismatch_s = t[-1].split(':')
-                mismatch_dic['VL'] = int(mismatch_s[1])
+                # mismatch_s = t[-1].split(':')
+                # mismatch_dic['VL'] = int(mismatch_s[1])
                 input_L = input_L + t[1]
                 germline_L = germline_L + t[3]
             if t[0].startswith('VH'):
-                mismatch_s = t[-1].split(':')
-                mismatch_dic['VH'] = int(mismatch_s[1])
+                # mismatch_s = t[-1].split(':')
+                # mismatch_dic['VH'] = int(mismatch_s[1])
                 input_H = input_H + t[1]
                 germline_H = germline_H + t[3]
-            if 'VL' not in mismatch_dic:
-                mismatch_dic['VL'] = 0
-            if 'VH' not in mismatch_dic:
-                mismatch_dic['VH'] = 0
-        tot_mismatches = mismatch_dic['VL'] + mismatch_dic['VH']
-        mismatch_data.append([file[:-4], tot_mismatches])
+            # if 'VL' not in mismatch_dic:
+            #     mismatch_dic['VL'] = 0
+            # if 'VH' not in mismatch_dic:
+            #     mismatch_dic['VH'] = 0
+        # tot_mismatches = mismatch_dic['VL'] + mismatch_dic['VH']
+        # mismatch_data.append([file[:-4], tot_mismatches])
         l_mut = [list(a) for a in zip(list(input_L), list(germline_L))]
         h_mut = [list(a) for a in zip(list(input_H), list(germline_H))]
         resl, resh = extract_abnum_data(file, fastadir)
@@ -198,22 +198,15 @@ def extract_mut_data(fastadir):
                       'code', 'total_dH', 'dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
     df_hydroph = df_hydroph.astype({'dH_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
                                     'dH_H1': 'float64', 'dH_H2': 'float64'})
-    df_mismatch = pd.DataFrame(data=mismatch_data, columns=col)
+    # df_mismatch = pd.DataFrame(data=mismatch_data, columns=col)
     print(df_hydroph)
-    return 
+    graph.hydrophobicity_vs_mutations([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
+                                       df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']])
+    return df_hydroph
 
 # TODO
 # Graph dH/mutation vs count
 
-def combine_mut_hydrophob(hydrophob_df, mut_df):
-    final_df = pd.merge(mut_df, hydrophob_df, on='code')
-    final_df.to_csv('hydrophobicity.csv', index=False)
-    def plot_hydrophobicity(col):
-        graph.hydrophobicity_vs_mutations(x_values=final_df['total_mut'], 
-                                          y_values=final_df[f'dh_{col}'], 
-                                          name=f'{col}_hydrophobicity')
-    for value in ['all', 'l1', 'h2', 'h3']:
-        plot_hydrophobicity(value)
 
 
 # ********* Testing ********************************************
@@ -299,5 +292,3 @@ if __name__ == '__main__':
     # run_test_label_res_mut_skippedres()
 
     df_mutations = extract_mut_data(args.fastadir)
-    # df_deltahydrophobicity = find_hydrophobicity_for_positions(args.fastadir)
-    # combine_mut_hydrophob(df_deltahydrophobicity, df_mutations)

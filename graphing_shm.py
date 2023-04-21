@@ -60,48 +60,8 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
     return
 
 
-def hydrophobicity_vs_mutations(x_values, y_values, name):
-    # Plot all data
-    # .corr() returns the correlation between two columns
-    pearson_a = x_values.corr(y_values)
-
+def hydrophobicity_vs_mutations(x_values):
+    n_bins = 10
     plt.figure()
-
-    color_data = 'burlywood'
-    color_bf = 'rebeccapurple'
-
-    axes = plt.gca()
-
-    # Sets the maximum and minimum values for the axes
-    # axes.autoscale(tight=True)
-    axes.set_xlim([0, 50])
-    axes.set_ylim([-10, 10])
-
-    # axes.axline((0, 0), (1, 1), color='k')
-
-    # Sets the axes labels
-    plt.xlabel(f'Mutations from germline (VH&VL)')
-    plt.ylabel('Change in hydrophobicity')
-
-    # Adds graph annotations
-    plt.text(s=f'Correlation: {pearson_a}', x=10, y=9, fontsize=8)
-
-    # Plot highest values
-    def plotting(x, y):
-        plt.scatter(x, y, s=3, color=color_data)
-        m, b = np.polyfit(x, y, 1)
-        plt.plot(x, m * x + b, color=color_bf,
-             linestyle='dashed', linewidth=1)
-        bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
-        plt.text(s=f'Best fit: {bf_line}',
-             x=10, y=15, fontsize=8, color=color_bf)
-    
-    plotting(x_values, y_values)
-
-    # Exports the figure as a .jpg file
-    path_fig = os.path.join(f'{name}.jpg')
-    plt.savefig(path_fig, format='jpg')
-    plt.close()
-
-    # return m, b
-    return
+    plt.hist(x_values, bins=n_bins, stacked=True, density=True)
+    plt.savefig('test_graph', format='jpg')
