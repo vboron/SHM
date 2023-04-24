@@ -169,21 +169,11 @@ def extract_mut_data(fastadir):
 
         for t in temp:
             if t[0].startswith('VL'):
-                # mismatch_s = t[-1].split(':')
-                # mismatch_dic['VL'] = int(mismatch_s[1])
                 input_L = input_L + t[1]
                 germline_L = germline_L + t[3]
             if t[0].startswith('VH'):
-                # mismatch_s = t[-1].split(':')
-                # mismatch_dic['VH'] = int(mismatch_s[1])
                 input_H = input_H + t[1]
                 germline_H = germline_H + t[3]
-            # if 'VL' not in mismatch_dic:
-            #     mismatch_dic['VL'] = 0
-            # if 'VH' not in mismatch_dic:
-            #     mismatch_dic['VH'] = 0
-        # tot_mismatches = mismatch_dic['VL'] + mismatch_dic['VH']
-        # mismatch_data.append([file[:-4], tot_mismatches])
         l_mut = [list(a) for a in zip(list(input_L), list(germline_L))]
         h_mut = [list(a) for a in zip(list(input_H), list(germline_H))]
         resl, resh = extract_abnum_data(file, fastadir)
@@ -204,7 +194,6 @@ def extract_mut_data(fastadir):
                       'code', 'total_dH', 'dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
     df_hydroph = df_hydroph.astype({'dH_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
                                     'dH_H1': 'float64', 'dH_H2': 'float64'})
-    # df_mismatch = pd.DataFrame(data=mismatch_data, columns=col)
     df_hydroph.to_csv('hydrophobicity.csv', index=False)
     graph.hydrophobicity_vs_mutations([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
                                        df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
