@@ -177,6 +177,7 @@ def extract_mut_data(fastadir):
         res_pos_pairs = label_res_mut(l_mut, h_mut, resl, resh)
         posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
         mut_df = posres_df[posres_df['input'] != posres_df['germline']]
+        print(mut_df)
         try:
             mean_delta_hydrophobicity_all = cal_hydrophob_change(mut_df) / mut_df.shape[0]
         except:
