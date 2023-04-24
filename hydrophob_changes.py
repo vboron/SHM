@@ -109,10 +109,17 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
 
 
 def extract_mut_data(fastadir):
-    clear_hydrophobic = ['I', 'F', 'V', 'L', 'W', 'M']
-    clear_hydrophilic = ['R', 'K', 'D', 'Q', 'N', 'E', 'H', 'S']
+    hydrophobicity_class = {'I': 'hydrophobic', 'F': 'hydrophobic', 'L': 'hydrophobic', 'W': 'hydrophobic', 
+                            'M': 'hydrophobic', 'R': 'hydrophilic', 'K': 'hydrophilic', 'D': 'hydrophilic', 
+                            'Q': 'hydrophilic', 'N': 'hydrophilic', 'E': 'hydrophilic', 'H': 'hydrophilic', 
+                            'S': 'hydrophilic'}
 
     def cal_hydrophob_change(df):
+        df['input_class'] = df['input'].map(
+            lambda x: hydrophobicity_class(x))
+        df['germ_class'] = df['germline'].map(
+            lambda x: hydrophobicity_class(x))
+        print(df)
         df['input_hydrophob'] = df['input'].map(
             lambda x: utils_shm.hydrophobicity(x))
         df['germ_hydrophob'] = df['germline'].map(
@@ -180,9 +187,6 @@ def extract_mut_data(fastadir):
         posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
         mut_df = posres_df[posres_df['input'] != posres_df['germline']]
         
-        if mut_df['input'].isin(clear_hydrophilic) and not mut_df['germline'].isin(clear_hydrophilic):
-            mut_df['clear_hydrophilic'] = 1
-        print(mut_df)
         try:
             mean_delta_hydrophobicity_all = cal_hydrophob_change(mut_df) / mut_df.shape[0]
         except:
@@ -197,7 +201,6 @@ def extract_mut_data(fastadir):
                       'code', 'total_dH', 'dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
     df_hydroph = df_hydroph.astype({'dH_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
                                     'dH_H1': 'float64', 'dH_H2': 'float64'})
-    print(df_hydroph)
     # df_hydroph.to_csv('hydrophobicity.csv', index=False)
     # graph.hydrophobicity_vs_mutations([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
     #                                    df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
