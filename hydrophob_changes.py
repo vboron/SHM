@@ -109,6 +109,8 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
 
 
 def extract_mut_data(fastadir):
+    clear_hydrophobic = ['I', 'F', 'V', 'L', 'W', 'M']
+    clear_hydrophilic = ['R', 'K', 'D', 'Q', 'N', 'E', 'H', 'S']
 
     def cal_hydrophob_change(df):
         df['input_hydrophob'] = df['input'].map(
@@ -177,6 +179,9 @@ def extract_mut_data(fastadir):
         res_pos_pairs = label_res_mut(l_mut, h_mut, resl, resh)
         posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
         mut_df = posres_df[posres_df['input'] != posres_df['germline']]
+        
+        if mut_df['input'].isin(clear_hydrophilic) and not mut_df['germline'].isin(clear_hydrophilic):
+            mut_df['clear_hydrophilic'] = 1
         print(mut_df)
         try:
             mean_delta_hydrophobicity_all = cal_hydrophob_change(mut_df) / mut_df.shape[0]
