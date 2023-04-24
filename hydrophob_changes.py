@@ -115,10 +115,8 @@ def extract_mut_data(fastadir):
                             'S': 'hydrophilic'}
 
     def cal_hydrophob_change(df):
-        df['input_class'] = df['input'].map(
-            lambda x: hydrophobicity_class(x))
-        df['germ_class'] = df['germline'].map(
-            lambda x: hydrophobicity_class(x))
+        df['input_class'] = df['input'].map(hydrophobicity_class)
+        df['germ_class'] = df['germline'].map(hydrophobicity_class)
         print(df)
         df['input_hydrophob'] = df['input'].map(
             lambda x: utils_shm.hydrophobicity(x))
