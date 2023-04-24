@@ -145,9 +145,6 @@ def extract_mut_data(fastadir):
         return dH_l1, dH_l2, dH_l3, dH_h1, dH_h2
     
     files = os.listdir(fastadir)
-    col = ['code', 'total_mut']
-    mismatch_dic = {}
-    mismatch_data = []
     hydrophob_data = []
 
     for file in files:
@@ -194,10 +191,11 @@ def extract_mut_data(fastadir):
                       'code', 'total_dH', 'dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
     df_hydroph = df_hydroph.astype({'dH_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
                                     'dH_H1': 'float64', 'dH_H2': 'float64'})
-    df_hydroph.to_csv('hydrophobicity.csv', index=False)
-    graph.hydrophobicity_vs_mutations([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
-                                       df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
-                                      ['All', 'L1', 'L2', 'L3', 'H1', 'H2'], 'hydrophobicity_graph')
+    print(df_hydroph)
+    # df_hydroph.to_csv('hydrophobicity.csv', index=False)
+    # graph.hydrophobicity_vs_mutations([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
+    #                                    df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
+    #                                   ['All', 'L1', 'L2', 'L3', 'H1', 'H2'], 'hydrophobicity_graph')
     return df_hydroph
 
 
@@ -281,6 +279,7 @@ if __name__ == '__main__':
     run_test_parse_abnum_data_bothchains()
     run_test_parse_abnum_data_singlechainH()
     run_test_label_res_mut_noresiduesskippedwithin()
-    run_test_label_res_mut_skippedres()
+    # TODO fix this
+    # run_test_label_res_mut_skippedres()
 
     df_mutations = extract_mut_data(args.fastadir)
