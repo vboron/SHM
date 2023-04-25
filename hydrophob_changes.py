@@ -192,8 +192,7 @@ def extract_mut_data(fastadir):
         # except:
         #     mean_delta_hydrophobicity_all = 0
         # mean_delta_hydrophobicity_all = f'{mean_delta_hydrophobicity_all:.3f}'
-        # dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
-        calc_hydrophobicity_for_loops(mut_df)
+        dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
         # data = [file[:-4], f'{cal_hydrophob_change(mut_df):.3f}', mean_delta_hydrophobicity_all, 
         #         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
         # hydrophob_data.append(data)
@@ -206,7 +205,8 @@ def extract_mut_data(fastadir):
     # graph.hydrophobicity_vs_mutations([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
     #                                    df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
     #                                   ['All', 'L1', 'L2', 'L3', 'H1', 'H2'], 'hydrophobicity_graph')
-    return df_hydroph
+    # return df_hydroph
+    return
 
 
 # ********* Testing ********************************************
