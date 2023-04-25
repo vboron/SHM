@@ -117,13 +117,15 @@ def extract_mut_data(fastadir):
     def cal_hydrophob_change(df):
         df['input_class'] = df['input'].map(hydrophobicity_class)
         df['germ_class'] = df['germline'].map(hydrophobicity_class)
-        print(df)
-        df['input_hydrophob'] = df['input'].map(
-            lambda x: utils_shm.hydrophobicity(x))
-        df['germ_hydrophob'] = df['germline'].map(
-            lambda x: utils_shm.hydrophobicity(x))
-        change_in_hydrophobicity = df['germ_hydrophob'].sum() - df['input_hydrophob'].sum()
-        return change_in_hydrophobicity
+        df_clear = posres_df[posres_df['input_class'] != posres_df['germ_class']]
+        print(df_clear)
+        # df['input_hydrophob'] = df['input'].map(
+        #     lambda x: utils_shm.hydrophobicity(x))
+        # df['germ_hydrophob'] = df['germline'].map(
+        #     lambda x: utils_shm.hydrophobicity(x))
+        # change_in_hydrophobicity = df['germ_hydrophob'].sum() - df['input_hydrophob'].sum()
+        # return change_in_hydrophobicity
+        return df_clear
     
 
     def calc_hydrophobicity_for_loops(df):
@@ -136,12 +138,13 @@ def extract_mut_data(fastadir):
 
         def hydrophob_for_loop(pos_list, df):
             df_loop = df[df['L/H position'].isin(pos_list)]
-            try:
-                mean_hydrophob_change = cal_hydrophob_change(df_loop)/df.shape[0]
-            except:
-                mean_hydrophob_change = 0
-            mean_hydrophob_change = f'{mean_hydrophob_change:.3f}'
-            return mean_hydrophob_change
+            # try:
+            #     mean_hydrophob_change = cal_hydrophob_change(df_loop)/df.shape[0]
+            # except:
+            #     mean_hydrophob_change = 0
+            # mean_hydrophob_change = f'{mean_hydrophob_change:.3f}'
+            # return mean_hydrophob_change
+            return df_loop
         
         dH_l1 = hydrophob_for_loop(cdrL1_pos, df)
         dH_l2 = hydrophob_for_loop(cdrL2_pos, df)
@@ -184,21 +187,21 @@ def extract_mut_data(fastadir):
         res_pos_pairs = label_res_mut(l_mut, h_mut, resl, resh)
         posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
         mut_df = posres_df[posres_df['input'] != posres_df['germline']]
-        
-        try:
-            mean_delta_hydrophobicity_all = cal_hydrophob_change(mut_df) / mut_df.shape[0]
-        except:
-            mean_delta_hydrophobicity_all = 0
-        mean_delta_hydrophobicity_all = f'{mean_delta_hydrophobicity_all:.3f}'
-        dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
-        data = [file[:-4], f'{cal_hydrophob_change(mut_df):.3f}', mean_delta_hydrophobicity_all, 
-                dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
-        hydrophob_data.append(data)
+        # try:
+        #     mean_delta_hydrophobicity_all = cal_hydrophob_change(mut_df) / mut_df.shape[0]
+        # except:
+        #     mean_delta_hydrophobicity_all = 0
+        # mean_delta_hydrophobicity_all = f'{mean_delta_hydrophobicity_all:.3f}'
+        # dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
+        calc_hydrophobicity_for_loops(mut_df)
+        # data = [file[:-4], f'{cal_hydrophob_change(mut_df):.3f}', mean_delta_hydrophobicity_all, 
+        #         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
+        # hydrophob_data.append(data)
 
-    df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
-                      'code', 'total_dH', 'dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
-    df_hydroph = df_hydroph.astype({'dH_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
-                                    'dH_H1': 'float64', 'dH_H2': 'float64'})
+    # df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
+    #                   'code', 'total_dH', 'dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
+    # df_hydroph = df_hydroph.astype({'dH_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
+    #                                 'dH_H1': 'float64', 'dH_H2': 'float64'})
     # df_hydroph.to_csv('hydrophobicity.csv', index=False)
     # graph.hydrophobicity_vs_mutations([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
     #                                    df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
