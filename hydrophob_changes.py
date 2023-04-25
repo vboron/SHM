@@ -202,21 +202,26 @@ def extract_mut_data(fastadir):
         #     mean_delta_hydrophobicity_all = 0
         # mean_delta_hydrophobicity_all = f'{mean_delta_hydrophobicity_all:.3f}'
         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
-        print(dh_l1, dh_l2, dh_l3, dh_h1, dh_h2)
+        data = [file[:-4], dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
+                dh_h1[0], dh_h1[1], dh_h2[0], dh_h2[1]]
         # data = [file[:-4], f'{cal_hydrophob_change(mut_df):.3f}', mean_delta_hydrophobicity_all, 
         #         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
-        # hydrophob_data.append(data)
+        hydrophob_data.append(data)
 
     # df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
     #                   'code', 'total_dH', 'dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
+    df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
+                      'code', 'hydrophilics_L1', 'hydrophobics_L1', 'hydrophilics_L2', 'hydrophobics_L2', 
+                      'hydrophilics_L3', 'hydrophobics_L3', 'hydrophilics_H1', 'hydrophobics_H1', 
+                      'hydrophilics_H2', 'hydrophobics_H2'])
     # df_hydroph = df_hydroph.astype({'dH_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
     #                                 'dH_H1': 'float64', 'dH_H2': 'float64'})
     # df_hydroph.to_csv('hydrophobicity.csv', index=False)
     # graph.hydrophobicity_vs_mutations([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
     #                                    df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
     #                                   ['All', 'L1', 'L2', 'L3', 'H1', 'H2'], 'hydrophobicity_graph')
-    # return df_hydroph
-    return
+    print(df_hydroph)
+    return df_hydroph
 
 
 # ********* Testing ********************************************
