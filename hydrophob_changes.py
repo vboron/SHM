@@ -220,10 +220,10 @@ def extract_mut_data(fastadir):
     # graph.hydrophobicity_histagram([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
     #                                    df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
     #                                   ['All', 'L1', 'L2', 'L3', 'H1', 'H2'], 'hydrophobicity_graph')
-    graph.introduced_hydrophobicity([dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
-                dh_h1[0], dh_h1[1], dh_h2[0], dh_h2[1]], ['hydrophilics_L1', 'hydrophobics_L1', 'hydrophilics_L2', 'hydrophobics_L2', 
-                      'hydrophilics_L3', 'hydrophobics_L3', 'hydrophilics_H1', 'hydrophobics_H1', 
-                      'hydrophilics_H2', 'hydrophobics_H2'], 'testing_graph')
+    # graph.introduced_hydrophobicity([dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
+    #             dh_h1[0], dh_h1[1], dh_h2[0], dh_h2[1]], ['hydrophilics_L1', 'hydrophobics_L1', 'hydrophilics_L2', 'hydrophobics_L2', 
+    #                   'hydrophilics_L3', 'hydrophobics_L3', 'hydrophilics_H1', 'hydrophobics_H1', 
+    #                   'hydrophilics_H2', 'hydrophobics_H2'], 'testing_graph')
     print(df_hydroph)
     return df_hydroph
 
