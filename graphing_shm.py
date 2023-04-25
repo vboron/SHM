@@ -74,7 +74,7 @@ def introduced_hydrophobicity(x_values, labels, name):
     color=['black', 'silver', 'darkred', 'red', 'darkgreen', 'lawngreen', 'darkorange', 
            'bisque', 'darkmagenta', 'magenta']
     plt.figure()
-    plt.hist(x_values, density=True, color=color, label=labels)
+    plt.hist(x_values, density=True, color='darkmagenta', label=labels)
     plt.legend(prop={'size': 10})
     plt.xlabel(f'X')
     plt.ylabel('Frequency')
