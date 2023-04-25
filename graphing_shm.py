@@ -60,12 +60,22 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
     return
 
 
-def hydrophobicity_vs_mutations(x_values, labels, name):
+def hydrophobicity_histagram(x_values, labels, name):
     n_bins = 20
     color=['teal', 'peachpuff', 'dodgerblue', 'indigo', 'mediumorchid', 'lightpink']
     plt.figure()
     plt.hist(x_values, bins=n_bins, density=True, color=color, label=labels)
     plt.legend(prop={'size': 10})
     plt.xlabel(f'Mean change in hydrophobicity')
+    plt.ylabel('Frequency')
+    plt.savefig(f'{name}.jpg', format='jpg')
+
+def introduced_hydrophobicity(x_values, labels, name):
+    color=['black', 'silver', 'darkred', 'red', 'darkgreen', 'lawngreen', 'darkorange', 
+           'bisque', 'darkmagenta', 'magenta']
+    plt.figure()
+    plt.hist(x_values, density=True, color=color, label=labels)
+    plt.legend(prop={'size': 10})
+    plt.xlabel(f'X')
     plt.ylabel('Frequency')
     plt.savefig(f'{name}.jpg', format='jpg')
