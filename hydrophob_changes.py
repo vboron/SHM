@@ -118,21 +118,23 @@ def extract_mut_data(fastadir):
         df['input_class'] = df['input'].map(hydrophobicity_class)
         df['germ_class'] = df['germline'].map(hydrophobicity_class)
         df_clear = df[df['input_class'] != df['germ_class']]
+        induced_hydrophilic = ''
+        induced_hydrophobic = ''
         try:
-            print(df_clear['input_class'].value_counts()['hydrophilic'])
+            induced_hydrophilic = int(df_clear['input_class'].value_counts()['hydrophilic'])
         except:
-            print(0)
+            induced_hydrophilic = 0
         try:
-            print(df_clear['input_class'].value_counts()['hydrophobic'])
+            induced_hydrophobic = int(df_clear['input_class'].value_counts()['hydrophobic'])
         except:
-            print(0)
+            induced_hydrophobic = 0
         # df['input_hydrophob'] = df['input'].map(
         #     lambda x: utils_shm.hydrophobicity(x))
         # df['germ_hydrophob'] = df['germline'].map(
         #     lambda x: utils_shm.hydrophobicity(x))
         # change_in_hydrophobicity = df['germ_hydrophob'].sum() - df['input_hydrophob'].sum()
         # return change_in_hydrophobicity
-        return df_clear
+        return [induced_hydrophilic, induced_hydrophobic]
     
 
     def calc_hydrophobicity_for_loops(df):
@@ -145,14 +147,13 @@ def extract_mut_data(fastadir):
 
         def hydrophob_for_loop(pos_list, df):
             df_loop = df[df['L/H position'].isin(pos_list)]
-            cal_hydrophob_change(df_loop)
             # try:
             #     mean_hydrophob_change = cal_hydrophob_change(df_loop)/df.shape[0]
             # except:
             #     mean_hydrophob_change = 0
             # mean_hydrophob_change = f'{mean_hydrophob_change:.3f}'
             # return mean_hydrophob_change
-            return df_loop
+            return cal_hydrophob_change(df_loop)
         
         dH_l1 = hydrophob_for_loop(cdrL1_pos, df)
         dH_l2 = hydrophob_for_loop(cdrL2_pos, df)
@@ -201,6 +202,7 @@ def extract_mut_data(fastadir):
         #     mean_delta_hydrophobicity_all = 0
         # mean_delta_hydrophobicity_all = f'{mean_delta_hydrophobicity_all:.3f}'
         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
+        print(dh_l1, dh_l2, dh_l3, dh_h1, dh_h2)
         # data = [file[:-4], f'{cal_hydrophob_change(mut_df):.3f}', mean_delta_hydrophobicity_all, 
         #         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
         # hydrophob_data.append(data)
