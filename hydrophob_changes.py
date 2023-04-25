@@ -118,7 +118,7 @@ def extract_mut_data(fastadir):
         df['input_class'] = df['input'].map(hydrophobicity_class)
         df['germ_class'] = df['germline'].map(hydrophobicity_class)
         df_clear = df[df['input_class'] != df['germ_class']]
-        print(df_clear)
+        print(df_clear['input_class'].value_counts())
         # df['input_hydrophob'] = df['input'].map(
         #     lambda x: utils_shm.hydrophobicity(x))
         # df['germ_hydrophob'] = df['germline'].map(
