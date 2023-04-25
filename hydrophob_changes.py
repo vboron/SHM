@@ -117,7 +117,7 @@ def extract_mut_data(fastadir):
     def cal_hydrophob_change(df):
         df['input_class'] = df['input'].map(hydrophobicity_class)
         df['germ_class'] = df['germline'].map(hydrophobicity_class)
-        df_clear = posres_df[posres_df['input_class'] != posres_df['germ_class']]
+        df_clear = df[df['input_class'] != df['germ_class']]
         print(df_clear)
         # df['input_hydrophob'] = df['input'].map(
         #     lambda x: utils_shm.hydrophobicity(x))
