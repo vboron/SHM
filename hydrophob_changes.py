@@ -201,9 +201,10 @@ def extract_mut_data(fastadir):
         # except:
         #     mean_delta_hydrophobicity_all = 0
         # mean_delta_hydrophobicity_all = f'{mean_delta_hydrophobicity_all:.3f}'
+        mut_count = mut_df.shape[0]
         dh_all = cal_hydrophob_change(mut_df)
         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
-        data = [file[:-4], dh_all[0], dh_all[1], dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
+        data = [file[:-4], mut_count, dh_all[0], dh_all[1], dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
                 dh_h1[0], dh_h1[1], dh_h2[0], dh_h2[1]]
         # data = [file[:-4], f'{cal_hydrophob_change(mut_df):.3f}', mean_delta_hydrophobicity_all, 
         #         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
@@ -212,7 +213,7 @@ def extract_mut_data(fastadir):
     # df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
     #                   'code', 'total_dH', 'dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
     df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
-                      'code', 'hydrophilics_all', 'hydrophobics_all', 'hydrophilics_L1', 'hydrophobics_L1', 
+                      'code','mut_count', 'hydrophilics_all', 'hydrophobics_all', 'hydrophilics_L1', 'hydrophobics_L1', 
                       'hydrophilics_L2', 'hydrophobics_L2', 'hydrophilics_L3', 'hydrophobics_L3', 
                       'hydrophilics_H1', 'hydrophobics_H1', 'hydrophilics_H2', 'hydrophobics_H2'])
     # df_hydroph = df_hydroph.astype({'dH_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
