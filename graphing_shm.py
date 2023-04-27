@@ -82,8 +82,8 @@ def introduced_hydrophobicity(x_values, labels, name):
 
 
 def introduced_fractional_hydrophobicity(x_values, name):
-    groups = range(0, 50, 10)
-    print(groups[0:])
+    groups = [range(0, 50, 10)]
+    print(groups[1])
     # color=['black', 'silver', 'darkred', 'red', 'darkgreen', 'lawngreen', 'darkorange', 
     #        'bisque', 'darkmagenta', 'magenta']
     # nbins = 10
