@@ -205,7 +205,7 @@ def extract_mut_data(fastadir):
         mut_count = mut_df.shape[0]
         dh_all = cal_hydrophob_change(mut_df)
         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
-        data = [file[:-4], mut_count, dh_all[0], dh_all[1], dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
+        data = [file[:-4], int(mut_count), dh_all[0], dh_all[1], dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
                 dh_h1[0], dh_h1[1], dh_h2[0], dh_h2[1]]
         # data = [file[:-4], f'{cal_hydrophob_change(mut_df):.3f}', mean_delta_hydrophobicity_all, 
         #         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
@@ -221,8 +221,8 @@ def extract_mut_data(fastadir):
     #                                 'dH_H1': 'float64', 'dH_H2': 'float64'})
     df_hydroph.sort_values('mut_count', inplace=True)
     df_dist = df_hydroph[['code','mut_count', 'hydrophilics_all', 'hydrophobics_all']]
-    df_dist['fraction_hydrophilic'] = df_dist['hydrophilics_all'] / df_dist['mut_count']
-    df_dist['fraction_hydrophobic'] = df_dist['hydrophobics_all'] / df_dist['mut_count']
+    df_dist['fraction_hydrophilic'] = float(df_dist['hydrophilics_all'] / df_dist['mut_count'])
+    df_dist['fraction_hydrophobic'] = float(df_dist['hydrophobics_all'] / df_dist['mut_count'])
     print(df_dist)
     graph.introduced_fractional_hydrophobicity([df_dist['fraction_hydrophobic']], 'foo')
     # df_hydroph.to_csv('introduced_hydrophobicity.csv', index=False)
