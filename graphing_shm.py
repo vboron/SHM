@@ -90,11 +90,11 @@ def introduced_fractional_hydrophobicity(x_values):
     
     nbins = 10
     for min_mut, max_mut in min_max_vals:
-        print(x_values[x_values['mut_count'].between(int(min_mut), int(max_mut))])
+        df = x_values[x_values['mut_count'].between(int(min_mut), int(max_mut))]
 
         def make_graph(x_col, color):
             plt.figure()
-            plt.hist(x_values[f'fraction_{x_col}'], density=True, color=color, bins=nbins)
+            plt.hist(df[f'fraction_{x_col}'], density=True, color=color, bins=nbins)
             plt.xlabel(f'Fraction of mutations which are {x_col}')
             plt.ylabel('Frequency')
             plt.savefig(f'{x_col}_{min_mut}_{max_mut}.jpg', format='jpg')
