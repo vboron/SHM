@@ -88,7 +88,7 @@ def introduced_fractional_hydrophobicity(x_values, name):
         min_max_vals.append([i, i+10])
     
     for min_mut, max_mut in min_max_vals:
-        print(min_mut)
+        print(x_values[x_values['mut_count'].between(min_mut, max_mut)])
     
     # color=['black', 'silver', 'darkred', 'red', 'darkgreen', 'lawngreen', 'darkorange', 
     #        'bisque', 'darkmagenta', 'magenta']
@@ -99,4 +99,3 @@ def introduced_fractional_hydrophobicity(x_values, name):
     # plt.xlabel(f'X')
     # plt.ylabel('Frequency')
     # plt.savefig(f'{name}.jpg', format='jpg')
-    # df[df['angle'].between(min_norm, max_norm)]
