@@ -81,22 +81,23 @@ def introduced_hydrophobicity(x_values, labels, name):
     plt.savefig(f'{name}.jpg', format='jpg')
 
 
-def introduced_fractional_hydrophobicity(x_values, name):
+def introduced_fractional_hydrophobicity(x_values):
     groups = [*range(0, 50, 10)]
     min_max_vals = []
     for i in groups:
         i_int = int(i)
         min_max_vals.append([i_int, i_int+10])
     
+    nbins = 10
     for min_mut, max_mut in min_max_vals:
         print(x_values[x_values['mut_count'].between(int(min_mut), int(max_mut))])
-    
-    # color=['black', 'silver', 'darkred', 'red', 'darkgreen', 'lawngreen', 'darkorange', 
-    #        'bisque', 'darkmagenta', 'magenta']
-    # nbins = 10
-    # plt.figure()
-    # plt.hist(x_values, density=True, color='darkmagenta', bins=nbins)
-    # plt.legend(prop={'size': 10})
-    # plt.xlabel(f'X')
-    # plt.ylabel('Frequency')
-    # plt.savefig(f'{name}.jpg', format='jpg')
+
+        def make_graph(x_col, color):
+            plt.figure()
+            plt.hist(x_values[f'fraction_{x_col}'], density=True, color=color, bins=nbins)
+            plt.xlabel(f'Fraction of mutations which are {x_col}')
+            plt.ylabel('Frequency')
+            plt.savefig(f'{x_col}_{min_mut}_{max_mut}.jpg', format='jpg')
+        
+        make_graph('hydrophilic', 'turquoise')
+        make_graph('hydrophobic', 'maroon')
