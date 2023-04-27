@@ -223,7 +223,7 @@ def extract_mut_data(fastadir):
     df_dist = df_hydroph[['code','mut_count', 'hydrophilics_all', 'hydrophobics_all']]
     df_dist['fraction_hydrophilic'] = df_dist['hydrophilics_all'] / df_dist['mut_count']
     df_dist['fraction_hydrophobic'] = df_dist['hydrophobics_all'] / df_dist['mut_count']
-    graph.introduced_fractional_hydrophobicity(df_dist, 'foo')
+    graph.introduced_fractional_hydrophobicity(df_dist)
     # df_hydroph.to_csv('introduced_hydrophobicity.csv', index=False)
     # graph.hydrophobicity_histagram([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
     #                                    df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
