@@ -85,7 +85,8 @@ def introduced_fractional_hydrophobicity(x_values, name):
     groups = [*range(0, 50, 10)]
     min_max_vals = []
     for i in groups:
-        min_max_vals.append([i, i+10])
+        i_int = int(i)
+        min_max_vals.append([i_int, i_int+10])
     
     for min_mut, max_mut in min_max_vals:
         print(x_values[x_values['mut_count'].between(min_mut, max_mut)])
