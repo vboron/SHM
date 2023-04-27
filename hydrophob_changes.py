@@ -219,7 +219,9 @@ def extract_mut_data(fastadir):
     # df_hydroph = df_hydroph.astype({'dH_all': 'float64', 'dH_L1': 'float64', 'dH_L2': 'float64', 'dH_L3': 'float64', 
     #                                 'dH_H1': 'float64', 'dH_H2': 'float64'})
     df_hydroph.sort_values('mut_count', inplace=True)
-    df_hydroph.to_csv('introduced_hydrophobicity.csv', index=False)
+    df_dist = df_hydroph[['code','mut_count', 'hydrophilics_all', 'hydrophobics_all']]
+    print(df_dist)
+    # df_hydroph.to_csv('introduced_hydrophobicity.csv', index=False)
     # graph.hydrophobicity_histagram([df_hydroph['dH_all'], df_hydroph['dH_L1'], df_hydroph['dH_L2'], 
     #                                    df_hydroph['dH_L3'], df_hydroph['dH_H1'], df_hydroph['dH_H2']], 
     #                                   ['All', 'L1', 'L2', 'L3', 'H1', 'H2'], 'hydrophobicity_graph')
