@@ -79,3 +79,18 @@ def introduced_hydrophobicity(x_values, labels, name):
     plt.xlabel(f'X')
     plt.ylabel('Frequency')
     plt.savefig(f'{name}.jpg', format='jpg')
+
+
+def introduced_fractional_hydrophobicity(x_values, name):
+    groups = range(0, 50, 10)
+    print(groups)
+    # color=['black', 'silver', 'darkred', 'red', 'darkgreen', 'lawngreen', 'darkorange', 
+    #        'bisque', 'darkmagenta', 'magenta']
+    # nbins = 10
+    # plt.figure()
+    # plt.hist(x_values, density=True, color='darkmagenta', bins=nbins)
+    # plt.legend(prop={'size': 10})
+    # plt.xlabel(f'X')
+    # plt.ylabel('Frequency')
+    # plt.savefig(f'{name}.jpg', format='jpg')
+    # df[df['angle'].between(min_norm, max_norm)]
