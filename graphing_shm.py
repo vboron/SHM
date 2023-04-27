@@ -94,7 +94,7 @@ def introduced_fractional_hydrophobicity(x_values):
 
         def make_graph(x_col, color):
             plt.figure()
-            plt.hist(df[f'fraction_{x_col}'], density=True, color=color, bins=nbins)
+            plt.hist(df[f'fraction_{x_col}'], color=color, bins=nbins)
             plt.xlabel(f'Fraction of mutations which are {x_col}')
             plt.ylabel('Frequency')
             axes = plt.gca()
