@@ -89,8 +89,7 @@ def introduced_fractional_hydrophobicity(x_values, name):
         min_max_vals.append([i_int, i_int+10])
     
     for min_mut, max_mut in min_max_vals:
-        print(x_values.dtypes)
-        print(x_values['mut_count'].between(int(min_mut), int(max_mut)))
+        print(x_values[x_values['mut_count'].between(int(min_mut), int(max_mut))])
     
     # color=['black', 'silver', 'darkred', 'red', 'darkgreen', 'lawngreen', 'darkorange', 
     #        'bisque', 'darkmagenta', 'magenta']
