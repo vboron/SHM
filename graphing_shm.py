@@ -71,6 +71,7 @@ def hydrophobicity_histagram(x_values, labels, name):
     plt.savefig(f'{name}.jpg', format='jpg')
 
 def introduced_hydrophobicity(df):
+    print(df)
     x = df['mut_count']
     y_values = df[1:].columns
 
