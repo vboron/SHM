@@ -70,15 +70,30 @@ def hydrophobicity_histagram(x_values, labels, name):
     plt.ylabel('Frequency')
     plt.savefig(f'{name}.jpg', format='jpg')
 
-def introduced_hydrophobicity(x_values, labels, name):
-    color=['black', 'silver', 'darkred', 'red', 'darkgreen', 'lawngreen', 'darkorange', 
-           'bisque', 'darkmagenta', 'magenta']
-    plt.figure()
-    plt.hist(x_values, density=True, color='darkmagenta', label=labels)
-    plt.legend(prop={'size': 10})
-    plt.xlabel(f'X')
-    plt.ylabel('Frequency')
-    plt.savefig(f'{name}.jpg', format='jpg')
+def introduced_hydrophobicity(df):
+    x = df['mut_count']
+    y_values = df[1:].columns
+
+    for y in y_values:
+        plt.figure()
+        color = ''
+        label_y = ''
+        if 'hydrophilic' in y:
+            color = 'turquoise'
+            label_y = 'Number of hydrophilic residues'
+        if 'hydrophobic' in y:
+            color = 'maroon'
+            label_y = 'Number of hydrophobic residues'
+        plt.scatter(x, df[y], s=3, color=color)
+        plt.xlabel(f'Number of mutations from germline')
+        plt.ylabel(label_y)
+        axes = plt.gca()
+        axes.set_xlim([0, 50])
+        axes.set_ylim([0, 20])
+        plt.savefig(f'{y}.jpg', format='jpg')
+
+    
+    
 
 
 def introduced_fractional_hydrophobicity(x_values):
