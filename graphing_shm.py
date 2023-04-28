@@ -85,7 +85,7 @@ def introduced_hydrophobicity(df):
         if 'hydrophobic' in y:
             color = 'maroon'
             label_y = 'Number of hydrophobic residues'
-        plt.scatter(x, df[y], s=3, color=color)
+        plt.scatter(x=x, y=df[y], s=3, color=color)
         plt.xlabel(f'Number of mutations from germline')
         plt.ylabel(label_y)
         axes = plt.gca()
