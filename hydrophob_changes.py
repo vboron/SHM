@@ -219,7 +219,7 @@ def extract_mut_data(fastadir):
                       'hydrophilics_H1', 'hydrophobics_H1', 'hydrophilics_H2', 'hydrophobics_H2'])
 
     df_hydroph.sort_values('mut_count', inplace=True)
-    df_final_hydroph = df_hydroph[2:].groupby('mut_count').aggregate('mean')
+    df_final_hydroph = df_hydroph[2:].groupby('mut_count').aggregate('mean').reset_index(inplace=True)
     df_dist = df_hydroph[['code','mut_count', 'hydrophilics_all', 'hydrophobics_all']]
     df_dist['fraction_hydrophilic'] = df_dist['hydrophilics_all'] / df_dist['mut_count']
     df_dist['fraction_hydrophobic'] = df_dist['hydrophobics_all'] / df_dist['mut_count']
