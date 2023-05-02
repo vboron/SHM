@@ -93,13 +93,11 @@ def introduced_hydrophobicity(df):
         plt.ylabel(label_y)
         axes = plt.gca()
         axes.set_xlim([0, 50])
+        # Fix axes as integer
         axes.xaxis.set_major_locator(MaxNLocator(integer=True))
         axes.set_ylim([0, 20])
         axes.yaxis.set_major_locator(MaxNLocator(integer=True))
         plt.savefig(f'{y}.jpg', format='jpg')
-
-    
-    
 
 
 def introduced_fractional_hydrophobicity(x_values):
@@ -119,6 +117,7 @@ def introduced_fractional_hydrophobicity(x_values):
             plt.ylabel('Frequency')
             axes = plt.gca()
             axes.set_xlim([0, 1])
+            axes.yaxis.set_major_locator(MaxNLocator(integer=True))
             plt.savefig(f'{x_col}_{min_mut}_{max_mut}.jpg', format='jpg')
         
         make_graph('hydrophilic', 'turquoise')
