@@ -77,8 +77,8 @@ def introduced_hydrophobicity(df):
 
     for y in y_values:
         print('y:', y)
-        print('df:', df[y])
-        # plt.figure()
+        print('df:', df[df[y]])
+        plt.figure()
         color = ''
         label_y = ''
         if 'hydrophilic' in y:
@@ -87,13 +87,13 @@ def introduced_hydrophobicity(df):
         if 'hydrophobic' in y:
             color = 'maroon'
             label_y = 'Number of hydrophobic residues'
-        # plt.scatter(x=x, y=df[y], s=3, color=color)
-        # plt.xlabel(f'Number of mutations from germline')
-        # plt.ylabel(label_y)
-        # axes = plt.gca()
-        # axes.set_xlim([0, 50])
-        # axes.set_ylim([0, 20])
-        # plt.savefig(f'{y}.jpg', format='jpg')
+        plt.scatter(x=x, y=df[y], s=3, color=color)
+        plt.xlabel(f'Number of mutations from germline')
+        plt.ylabel(label_y)
+        axes = plt.gca()
+        axes.set_xlim([0, 50])
+        axes.set_ylim([0, 20])
+        plt.savefig(f'{y}.jpg', format='jpg')
 
     
     
