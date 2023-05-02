@@ -73,11 +73,11 @@ def hydrophobicity_histagram(x_values, labels, name):
 def introduced_hydrophobicity(df):
     # print(df)
     x = df['mut_count']
-    y_values = df[1:]
+    y_values = df[2:]
 
     for y in y_values:
         print('y:', y)
-        print('df:', df[df[y]])
+        print('df:', df[y])
         plt.figure()
         color = ''
         label_y = ''
