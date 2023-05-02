@@ -76,6 +76,8 @@ def introduced_hydrophobicity(df):
     y_values = df[1:].columns
 
     for y in y_values:
+        print(y)
+        print(df[y])
         plt.figure()
         color = ''
         label_y = ''
