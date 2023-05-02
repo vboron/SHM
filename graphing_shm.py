@@ -6,6 +6,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.ticker import MaxNLocator
 
 
 # *************************************************************************
@@ -92,6 +93,7 @@ def introduced_hydrophobicity(df):
         plt.ylabel(label_y)
         axes = plt.gca()
         axes.set_xlim([0, 50])
+        axes.xaxis.set_major_locator(MaxNLocator(integer=True))
         axes.set_ylim([0, 20])
         plt.savefig(f'{y}.jpg', format='jpg')
 
