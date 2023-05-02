@@ -95,6 +95,7 @@ def introduced_hydrophobicity(df):
         axes.set_xlim([0, 50])
         axes.xaxis.set_major_locator(MaxNLocator(integer=True))
         axes.set_ylim([0, 20])
+        axes.yaxis.set_major_locator(MaxNLocator(integer=True))
         plt.savefig(f'{y}.jpg', format='jpg')
 
     
