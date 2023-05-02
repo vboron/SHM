@@ -73,7 +73,7 @@ def hydrophobicity_histagram(x_values, labels, name):
 def introduced_hydrophobicity(df):
     # print(df)
     x = df['mut_count']
-    y_values = df[2:]
+    y_values = df.drop(['mut_count'], axis=1)
 
     for y in y_values:
         print('y:', y)
@@ -87,7 +87,7 @@ def introduced_hydrophobicity(df):
         if 'hydrophobic' in y:
             color = 'maroon'
             label_y = 'Number of hydrophobic residues'
-        plt.scatter(x=x, y=y, s=3, color=color)
+        plt.scatter(x=x, y=df[y], s=3, color=color)
         plt.xlabel(f'Number of mutations from germline')
         plt.ylabel(label_y)
         axes = plt.gca()
