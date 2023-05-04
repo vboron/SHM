@@ -105,6 +105,7 @@ def introduced_hydrophobicity(df):
         axes.set_ylim([0, 10])
         axes.yaxis.set_major_locator(MaxNLocator(integer=True))
         plt.savefig(f'{y}.jpg', format='jpg')
+        plt.close()
 
 
 def introduced_fractional_hydrophobicity(x_values):
@@ -126,6 +127,7 @@ def introduced_fractional_hydrophobicity(x_values):
             axes.set_xlim([0, 1])
             axes.yaxis.set_major_locator(MaxNLocator(integer=True))
             plt.savefig(f'{x_col}_{min_mut}_{max_mut}.jpg', format='jpg')
+            plt.close()
         
         make_graph('hydrophilic', 'turquoise')
         make_graph('hydrophobic', 'maroon')
