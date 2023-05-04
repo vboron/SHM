@@ -78,6 +78,7 @@ def introduced_hydrophobicity(df):
 
     for y in y_values:
         plt.figure()
+        pearson_a = x.corr(df[y])
         color = ''
         label_y = ''
         if 'hydrophilic' in y:
@@ -89,11 +90,18 @@ def introduced_hydrophobicity(df):
         plt.scatter(x=x, y=df[y], s=3, color=color)
         plt.xlabel(f'Number of mutations from germline')
         plt.ylabel(label_y)
+        m, b = np.polyfit(x, y, 1)
+        plt.plot(x, m * x + b, color='black',
+                linestyle='dashed', linewidth=1)
+        bf_line = 'y={:.3f}x+{:.3f}'.format(m, b)
+        plt.text(s=f'Best fit: {bf_line}',
+            x=5, y=8, fontsize=8, color='black')
+        plt.text(s=f'Correlation: {pearson_a}', x=5, y=6, fontsize=8)
         axes = plt.gca()
         axes.set_xlim([0, 50])
         # Fix axes as integer
         axes.xaxis.set_major_locator(MaxNLocator(integer=True))
-        axes.set_ylim([0, 20])
+        axes.set_ylim([0, 10])
         axes.yaxis.set_major_locator(MaxNLocator(integer=True))
         plt.savefig(f'{y}.jpg', format='jpg')
 
