@@ -165,6 +165,8 @@ def extract_mut_data(fastadir):
         return dH_l1, dH_l2, dH_l3, dH_h1, dH_h2
     
     files = os.listdir(fastadir)
+    tot_files = len(files)
+    current_file = 0
     hydrophob_data = []
 
     for file in files:
@@ -210,6 +212,8 @@ def extract_mut_data(fastadir):
         # data = [file[:-4], f'{cal_hydrophob_change(mut_df):.3f}', mean_delta_hydrophobicity_all, 
         #         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
         hydrophob_data.append(data)
+        current_file += 1
+        print(f'Progress: {current_file/tot_files*100}')
 
     # df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
     #                   'code', 'total_dH', 'dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
