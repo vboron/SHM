@@ -78,7 +78,6 @@ def introduced_hydrophobicity(df):
 
     for y in y_values:
         plt.figure()
-        pearson_a = x.corr(df[y])
         color = ''
         label_y = ''
         if 'hydrophilic' in y:
@@ -87,7 +86,9 @@ def introduced_hydrophobicity(df):
         if 'hydrophobic' in y:
             color = 'maroon'
             label_y = 'Number of hydrophobic residues'
-        plt.scatter(x=x, y=df[y], s=3, color=color)
+        y = df[y]
+        pearson_a = x.corr(y)
+        plt.scatter(x=x, y=y, s=3, color=color)
         plt.xlabel(f'Number of mutations from germline')
         plt.ylabel(label_y)
         m, b = np.polyfit(x, y, 1)
