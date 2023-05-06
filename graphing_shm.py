@@ -76,17 +76,17 @@ def introduced_hydrophobicity(df):
     x = df['mut_count']
     y_values = df.drop(['mut_count'], axis=1)
 
-    for y in y_values:
+    for col in y_values:
         plt.figure()
         color = ''
         label_y = ''
-        if 'hydrophilic' in y:
+        if 'hydrophilic' in col:
             color = 'turquoise'
             label_y = 'Number of hydrophilic residues'
-        if 'hydrophobic' in y:
+        if 'hydrophobic' in col:
             color = 'maroon'
             label_y = 'Number of hydrophobic residues'
-        y = df[y]
+        y = df[col]
         pearson_a = x.corr(y)
         plt.scatter(x=x, y=y, s=3, color=color)
         plt.xlabel(f'Number of mutations from germline')
@@ -104,7 +104,7 @@ def introduced_hydrophobicity(df):
         axes.xaxis.set_major_locator(MaxNLocator(integer=True))
         axes.set_ylim([0, 10])
         axes.yaxis.set_major_locator(MaxNLocator(integer=True))
-        plt.savefig(f'{y}.jpg', format='jpg')
+        plt.savefig(f'{col}.jpg', format='jpg')
         plt.close()
 
 
