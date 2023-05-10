@@ -196,8 +196,8 @@ def extract_mut_data(fastadir):
     #     data = [file[:-4], int(mut_count), dh_all[0], dh_all[1], dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
     #             dh_h1[0], dh_h1[1], dh_h2[0], dh_h2[1]]
     #     hydrophob_data.append(data)
-    #     current_file += 1
-    #     print(f'Progress: {current_file/tot_files*100}')
+        current_file += 1
+        print(f'Progress: {current_file/tot_files*100}')
 
     # df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
     #                   'code','mut_count', 'hydrophilics_all', 'hydrophobics_all', 'hydrophilics_L1', 'hydrophobics_L1', 
