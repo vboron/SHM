@@ -129,12 +129,6 @@ def extract_mut_data(fastadir):
             induced_hydrophobic = int(df_clear['input_class'].value_counts()['hydrophobic'])
         except:
             induced_hydrophobic = 0
-        # df['input_hydrophob'] = df['input'].map(
-        #     lambda x: utils_shm.hydrophobicity(x))
-        # df['germ_hydrophob'] = df['germline'].map(
-        #     lambda x: utils_shm.hydrophobicity(x))
-        # change_in_hydrophobicity = df['germ_hydrophob'].sum() - df['input_hydrophob'].sum()
-        # return change_in_hydrophobicity
         return [induced_hydrophilic, induced_hydrophobic]
     
 
@@ -148,12 +142,6 @@ def extract_mut_data(fastadir):
 
         def hydrophob_for_loop(pos_list, df):
             df_loop = df[df['L/H position'].isin(pos_list)]
-            # try:
-            #     mean_hydrophob_change = cal_hydrophob_change(df_loop)/df.shape[0]
-            # except:
-            #     mean_hydrophob_change = 0
-            # mean_hydrophob_change = f'{mean_hydrophob_change:.3f}'
-            # return mean_hydrophob_change
             return cal_hydrophob_change(df_loop)
         
         dH_l1 = hydrophob_for_loop(cdrL1_pos, df)
@@ -199,24 +187,15 @@ def extract_mut_data(fastadir):
         res_pos_pairs = label_res_mut(l_mut, h_mut, resl, resh)
         posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
         mut_df = posres_df[posres_df['input'] != posres_df['germline']]
-        # try:
-        #     mean_delta_hydrophobicity_all = cal_hydrophob_change(mut_df) / mut_df.shape[0]
-        # except:
-        #     mean_delta_hydrophobicity_all = 0
-        # mean_delta_hydrophobicity_all = f'{mean_delta_hydrophobicity_all:.3f}'
         mut_count = mut_df.shape[0]
         dh_all = cal_hydrophob_change(mut_df)
         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2 = calc_hydrophobicity_for_loops(mut_df)
         data = [file[:-4], int(mut_count), dh_all[0], dh_all[1], dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
                 dh_h1[0], dh_h1[1], dh_h2[0], dh_h2[1]]
-        # data = [file[:-4], f'{cal_hydrophob_change(mut_df):.3f}', mean_delta_hydrophobicity_all, 
-        #         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2]
         hydrophob_data.append(data)
         current_file += 1
         print(f'Progress: {current_file/tot_files*100}')
 
-    # df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
-    #                   'code', 'total_dH', 'dH_all', 'dH_L1', 'dH_L2', 'dH_L3', 'dH_H1', 'dH_H2'])
     df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
                       'code','mut_count', 'hydrophilics_all', 'hydrophobics_all', 'hydrophilics_L1', 'hydrophobics_L1', 
                       'hydrophilics_L2', 'hydrophobics_L2', 'hydrophilics_L3', 'hydrophobics_L3', 
