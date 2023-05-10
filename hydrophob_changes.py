@@ -296,6 +296,6 @@ if __name__ == '__main__':
     run_test_parse_abnum_data_singlechainH()
     run_test_label_res_mut_noresiduesskippedwithin()
     # TODO fix this
-    # run_test_label_res_mut_skippedres()
+    run_test_label_res_mut_skippedres()
 
-    df_mutations = extract_mut_data(args.fastadir)
+    # df_mutations = extract_mut_data(args.fastadir)
