@@ -89,24 +89,30 @@ def extract_abnum_data(in_file, dire):
 
 
 def label_res_mut(l_muts, h_muts, l_num, h_num):
-    l_list = []
-    h_list = []
-
-    def pair_pos_num_w_res(mut_list, num_list, comb_list):
+    def pair_pos_num_w_res(mut_list, num_list):
+        res = []
         n = 0
         m = 0
         while n < len(num_list) and m < len(mut_list):
             if num_list[n][1] == mut_list[m][0]:
-                comb_list.append([num_list[n][0], mut_list[m][0], mut_list[m][1]])
-                n+=1
-                m+=1
+                res.append([num_list[n][0], mut_list[m][0], mut_list[m][1]])
+                n += 1
+                m += 1
             else:
-                m+=1
+                for m_search in range(m + 1, len(mut_list)):
+                    if num_list[n][1] == mut_list[m_search][0]:
+                        res.append([num_list[n][0], mut_list[m_search][0], mut_list[m_search][1]])
+                        n += 1
+                        m = m_search + 1
+                        break
+                # else executed if break never happened
+                else:
+                    n += 1
+        return res
     
-    pair_pos_num_w_res(l_muts, l_num, l_list)
-    pair_pos_num_w_res(h_muts, h_num, h_list)
-    num_mut_pairs = l_list + h_list
-    return num_mut_pairs
+    l_list = pair_pos_num_w_res(l_muts, l_num)
+    h_list = pair_pos_num_w_res(h_muts, h_num)
+    return l_list + h_list
 
 
 def extract_mut_data(fastadir):
@@ -271,7 +277,18 @@ def run_test_label_res_mut_noresiduesskippedwithin():
     utils_shm.check_equal(data, expected_data)
 
 
-def run_test_label_res_mut_skippedres():
+def run_test_label_res_mut_skippedres1():
+    test_l_num = []
+    test_l_mut = []
+    test_h_num = [['H4', 'L'], ['H97', 'P'], ['H111', 'V'], ['H112', 'S']]
+    test_h_mut = [['L', 'K'], ['V', 'V'], ['S', 'Y']]
+
+    data = label_res_mut(test_l_mut, test_h_mut, test_l_num, test_h_num)
+    expected_data = [['H4', 'L', 'K'], ['H111', 'V', 'V'], ['H112', 'S', 'Y']]
+    utils_shm.check_equal(data, expected_data)
+
+
+def run_test_label_res_mut_skippedres2():
     test_l_num = [['L1', 'E'], ['L2', 'I'], ['L3', 'V'], ['L4', 'L'], ['L5', 'T']]
     test_l_mut = [['E', 'E'], ['I', 'I'], ['V', 'V'], ['L', 'G'], ['T', 'T'], ['Q', 'Q'], ['Y', 'Y'], ['T', 'T'], ['F', 'F']]
     test_h_num = [['H1', 'Q'], ['H2', 'V'], ['H3', 'Q'], ['H4', 'L'], ['H96', 'G'], ['H97', 'P'], ['H111', 'V'], ['H112', 'S'], ['H113', 'S']]
@@ -282,7 +299,6 @@ def run_test_label_res_mut_skippedres():
                      ['H1', 'Q', 'Q'], ['H2', 'V', 'V'], ['H3', 'Q', 'D'], ['H4', 'L', 'K'], ['H111', 'V', 'V'], 
                      ['H112', 'S', 'Y'], ['H113', 'S', 'S']]
     utils_shm.check_equal(data, expected_data)
-
 
 # *************************************************************************
 if __name__ == '__main__':
@@ -296,6 +312,7 @@ if __name__ == '__main__':
     run_test_parse_abnum_data_singlechainH()
     run_test_label_res_mut_noresiduesskippedwithin()
     # TODO fix this
-    run_test_label_res_mut_skippedres()
+    run_test_label_res_mut_skippedres1()
+    run_test_label_res_mut_skippedres2()
 
     # df_mutations = extract_mut_data(args.fastadir)
