@@ -155,7 +155,7 @@ def extract_mut_data(fastadir):
         dH_l3 = hydrophob_for_loop(cdrL3_pos, df)
         dH_h1 = hydrophob_for_loop(cdrH1_pos, df)
         dH_h2 = hydrophob_for_loop(cdrH2_pos, df)
-        
+        # TODO: add H3 loop
         return dH_l1, dH_l2, dH_l3, dH_h1, dH_h2
     
     files = os.listdir(fastadir)
