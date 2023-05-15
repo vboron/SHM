@@ -214,10 +214,13 @@ def extract_mut_data(fastadir):
     df_dist = df_hydroph[['code','mut_count', 'hydrophilics_all', 'hydrophobics_all']]
     df_dist['fraction_hydrophilic'] = df_dist['hydrophilics_all'] / df_dist['mut_count']
     df_dist['fraction_hydrophobic'] = df_dist['hydrophobics_all'] / df_dist['mut_count']
+
     graph.introduced_fractional_hydrophobicity(df_dist)
     graph.introduced_hydrophobicity(df_final_hydroph)
-    df_final_hydroph.to_csv('hydrophobicity_data.csv', index=False)
-    return df_hydroph
+
+    df_dist.to_csv('fractional_hydrophobicity_data.csv', index=False)
+    df_final_hydroph.to_csv('introduced_hydrophobicity_data.csv', index=False)
+    return
 
 
 # ********* Testing ********************************************
@@ -313,4 +316,4 @@ if __name__ == '__main__':
     run_test_label_res_mut_skippedres1()
     run_test_label_res_mut_skippedres2()
 
-    df_mutations = extract_mut_data(args.fastadir)
+    extract_mut_data(args.fastadir)
