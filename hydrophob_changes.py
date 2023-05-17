@@ -85,7 +85,6 @@ def parse_abnum_data(num_res):
 def extract_abnum_data(in_file, dire):
     numbered_residues = run_abnum(in_file, dire)
     l_residues, h_residues = parse_abnum_data(numbered_residues)
-    print(l_residues, h_residues)
     return l_residues, h_residues
 
 
@@ -192,6 +191,8 @@ def extract_mut_data(fastadir):
         l_mut = [list(a) for a in zip(list(input_L), list(germline_L))]
         h_mut = [list(a) for a in zip(list(input_H), list(germline_H))]
         resl, resh = extract_abnum_data(file, fastadir)
+        abnum_seq = [l[1] for l in resl] + [h[1] for h in resh]
+        print(abnum_seq)
         res_pos_pairs = label_res_mut(l_mut, h_mut, resl, resh)
         posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
         mut_df = posres_df[posres_df['input'] != posres_df['germline']]
