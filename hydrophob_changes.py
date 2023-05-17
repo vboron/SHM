@@ -165,12 +165,20 @@ def extract_mut_data(fastadir):
     hydrophob_data = []
 
     for file in files:
+        print(file)
+        resl, resh = extract_abnum_data(file, fastadir)
+        abnum_seq = ''.join([l[1] for l in resl] + [h[1] for h in resh])
+        abnum_file = f'abnum_{file[:-4]}.faa'
+        abnum_fasta_dir = 'fasta_abnum'
+        abnum_file_path = os.path.join(abnum_fasta_dir, abnum_file)
+        with open(abnum_file_path, 'wr') as f:
+            f.write(abnum_seq)
+
         input_L = ''
         germline_L = ''
         input_H = ''
         germline_H = ''
-        print(file)
-        result = run_AGL(file, fastadir)
+        result = run_AGL(abnum_file, abnum_fasta_dir)
         temp = result.replace('\n# ', 'splitter')
         temp = temp.replace('\n\n', 'splitter')
         temp = temp.split('splitter')
@@ -190,9 +198,7 @@ def extract_mut_data(fastadir):
                 germline_H = germline_H + t[3]
         l_mut = [list(a) for a in zip(list(input_L), list(germline_L))]
         h_mut = [list(a) for a in zip(list(input_H), list(germline_H))]
-        resl, resh = extract_abnum_data(file, fastadir)
-        abnum_seq = ''.join([l[1] for l in resl] + [h[1] for h in resh])
-        print(abnum_seq)
+        
         res_pos_pairs = label_res_mut(l_mut, h_mut, resl, resh)
         posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
         mut_df = posres_df[posres_df['input'] != posres_df['germline']]
@@ -217,11 +223,11 @@ def extract_mut_data(fastadir):
     df_dist['fraction_hydrophilic'] = df_dist['hydrophilics_all'] / df_dist['mut_count']
     df_dist['fraction_hydrophobic'] = df_dist['hydrophobics_all'] / df_dist['mut_count']
 
-    graph.introduced_fractional_hydrophobicity(df_dist)
-    graph.introduced_hydrophobicity(df_final_hydroph)
+    # graph.introduced_fractional_hydrophobicity(df_dist)
+    # graph.introduced_hydrophobicity(df_final_hydroph)
 
-    df_dist.to_csv('fractional_hydrophobicity_data.csv', index=False)
-    df_final_hydroph.to_csv('introduced_hydrophobicity_data.csv', index=False)
+    # df_dist.to_csv('fractional_hydrophobicity_data.csv', index=False)
+    # df_final_hydroph.to_csv('introduced_hydrophobicity_data.csv', index=False)
     return
 
 
