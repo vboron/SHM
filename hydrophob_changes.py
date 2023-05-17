@@ -191,7 +191,7 @@ def extract_mut_data(fastadir):
         l_mut = [list(a) for a in zip(list(input_L), list(germline_L))]
         h_mut = [list(a) for a in zip(list(input_H), list(germline_H))]
         resl, resh = extract_abnum_data(file, fastadir)
-        abnum_seq = [l[1] for l in resl] + [h[1] for h in resh]
+        abnum_seq = ''.join([l[1] for l in resl] + [h[1] for h in resh])
         print(abnum_seq)
         res_pos_pairs = label_res_mut(l_mut, h_mut, resl, resh)
         posres_df = pd.DataFrame(data=res_pos_pairs, columns=['L/H position', 'input', 'germline'])
