@@ -85,6 +85,7 @@ def parse_abnum_data(num_res):
 def extract_abnum_data(in_file, dire):
     numbered_residues = run_abnum(in_file, dire)
     l_residues, h_residues = parse_abnum_data(numbered_residues)
+    print(l_residues, h_residues)
     return l_residues, h_residues
 
 
