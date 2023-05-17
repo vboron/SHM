@@ -171,7 +171,7 @@ def extract_mut_data(fastadir):
         abnum_file = f'abnum_{file[:-4]}.faa'
         abnum_fasta_dir = 'fasta_abnum'
         abnum_file_path = os.path.join(abnum_fasta_dir, abnum_file)
-        with open(abnum_file_path, 'wr') as f:
+        with open(abnum_file_path, 'w') as f:
             f.write(abnum_seq)
 
         input_L = ''
