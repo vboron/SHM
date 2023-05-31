@@ -92,25 +92,25 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
     def pair_pos_num_w_res(mut_list, num_list):
         res = []
         n = 0
-        if len(num_list) == len(mut_list):
-            while n < len(num_list) and n < len(mut_list):
-            # if num_list[n][1] == mut_list[m][0]:
+        # if len(num_list) == len(mut_list):
+        while n < len(num_list) and n < len(mut_list):
+            if num_list[n][1] == mut_list[m][0]:
                 print([num_list[n][0], mut_list[n][0], mut_list[n][1]])
                 res.append([num_list[n][0], mut_list[n][0], mut_list[n][1]])
                 n += 1
 
-        else:
-            'Lists are not the same lenth...'
-        #     else:
-        #         for m_search in range(m + 1, len(mut_list)):
-        #             if num_list[n][1] == mut_list[m_search][0]:
-        #                 res.append([num_list[n][0], mut_list[m_search][0], mut_list[m_search][1]])
-        #                 n += 1
-        #                 m = m_search + 1
-        #                 break
-        #         # else executed if break never happened
-        #         else:
-        #             n += 1
+        # else:
+        #     'Lists are not the same lenth...'
+            else:
+                for m_search in range(m + 1, len(mut_list)):
+                    if num_list[n][1] == mut_list[m_search][0]:
+                        res.append([num_list[n][0], mut_list[m_search][0], mut_list[m_search][1]])
+                        n += 1
+                        m = m_search + 1
+                        break
+                # else executed if break never happened
+                else:
+                    n += 1
         return res
     
     l_list = pair_pos_num_w_res(l_muts, l_num)
