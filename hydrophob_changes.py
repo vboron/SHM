@@ -108,7 +108,7 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
         #         # else executed if break never happened
         #         else:
         #             n += 1
-        res.append(num_list[0], mut_list[0], mut_list[1])
+        res.append([num_list[0], mut_list[0], mut_list[1]])
         return res
     
     l_list = pair_pos_num_w_res(l_muts, l_num)
