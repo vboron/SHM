@@ -93,14 +93,14 @@ def label_res_mut(l_muts, h_muts, l_num, h_num):
         res = []
         n = 0
         m = 0
-        while n < len(num_list) and m < len(mut_list):
+        if len(num_list) == len(mut_list):
+            while n < len(num_list) and m < len(mut_list):
             # if num_list[n][1] == mut_list[m][0]:
-            if len(num_list) == len(mut_list):
                 res.append([num_list[n][0], mut_list[m][0], mut_list[m][1]])
                 n += 1
                 m += 1
-            else:
-                'Lists are not the same lenth...'
+        else:
+            'Lists are not the same lenth...'
         #     else:
         #         for m_search in range(m + 1, len(mut_list)):
         #             if num_list[n][1] == mut_list[m_search][0]:
