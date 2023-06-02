@@ -166,7 +166,7 @@ def extract_mut_data(fastadir):
 
         # dH_fwk = pd.concat([df, dH_all_loops, dH_all_loops]).drop_duplicates(keep=False)
         
-        print(dH_h3)
+        print(dH_h1)
         return dH_l1, dH_l2, dH_l3, dH_h1, dH_h2, dH_h3, dH_all_loops, dH_fwk
     
     files = os.listdir(fastadir)
