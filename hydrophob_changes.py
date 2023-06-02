@@ -165,7 +165,8 @@ def extract_mut_data(fastadir):
         dH_all_loops = hydrophob_for_loop(cdr_pos, df)
 
         dH_fwk = pd.concat([df, dH_all_loops, dH_all_loops]).drop_duplicates(keep=False)
-        print(dH_fwk)
+        
+        print(dH_all_loops)
         return dH_l1, dH_l2, dH_l3, dH_h1, dH_h2, dH_h3, dH_all_loops, dH_fwk
     
     files = os.listdir(fastadir)
