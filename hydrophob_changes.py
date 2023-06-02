@@ -222,21 +222,21 @@ def extract_mut_data(fastadir):
         current_file += 1
         print(f'Progress: {current_file/tot_files*100:.2f}')
 
-    df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
-                      'code','mut_count', 'hydrophilics_all', 'hydrophilics_CDRs', 'hydrophobics_CDRs', 
-                      'hydrophilics_FWk', 'hydrophobics_FWk', 'hydrophobics_all', 'hydrophilics_L1', 'hydrophobics_L1', 
-                      'hydrophilics_L2', 'hydrophobics_L2', 'hydrophilics_L3', 'hydrophobics_L3', 
-                      'hydrophilics_H1', 'hydrophobics_H1', 'hydrophilics_H2', 'hydrophobics_H2', 
-                      'hydrophilics_H3', 'hydrophobics_H3'])
+    # df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
+    #                   'code','mut_count', 'hydrophilics_all', 'hydrophilics_CDRs', 'hydrophobics_CDRs', 
+    #                   'hydrophilics_FWk', 'hydrophobics_FWk', 'hydrophobics_all', 'hydrophilics_L1', 'hydrophobics_L1', 
+    #                   'hydrophilics_L2', 'hydrophobics_L2', 'hydrophilics_L3', 'hydrophobics_L3', 
+    #                   'hydrophilics_H1', 'hydrophobics_H1', 'hydrophilics_H2', 'hydrophobics_H2', 
+    #                   'hydrophilics_H3', 'hydrophobics_H3'])
 
-    df_hydroph.sort_values('mut_count', inplace=True)
-    df_final_hydroph = df_hydroph[2:].groupby('mut_count').aggregate('mean').reset_index()
+    # df_hydroph.sort_values('mut_count', inplace=True)
+    # df_final_hydroph = df_hydroph[2:].groupby('mut_count').aggregate('mean').reset_index()
     # df_dist = df_hydroph[['code','mut_count', 'hydrophilics_all', 'hydrophobics_all']]
     # df_dist['fraction_hydrophilic'] = df_dist['hydrophilics_all'] / df_dist['mut_count']
     # df_dist['fraction_hydrophobic'] = df_dist['hydrophobics_all'] / df_dist['mut_count']
 
     # graph.introduced_fractional_hydrophobicity(df_dist)
-    graph.introduced_hydrophobicity(df_final_hydroph)
+    # graph.introduced_hydrophobicity(df_final_hydroph)
 
     # df_dist.to_csv('fractional_hydrophobicity_data.csv', index=False)
     # df_final_hydroph.to_csv('introduced_hydrophobicity_data.csv', index=False)
