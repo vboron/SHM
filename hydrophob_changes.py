@@ -166,7 +166,7 @@ def extract_mut_data(fastadir):
 
         # dH_fwk = pd.concat([df, dH_all_loops, dH_all_loops]).drop_duplicates(keep=False)
         
-        print(dH_h1)
+        print(dH_all_loops)
         return dH_l1, dH_l2, dH_l3, dH_h1, dH_h2, dH_h3, dH_all_loops
     
     files = os.listdir(fastadir)
@@ -222,14 +222,15 @@ def extract_mut_data(fastadir):
         current_file += 1
         print(f'Progress: {current_file/tot_files*100:.2f}')
 
-    # df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
-    #                   'code','mut_count', 'hydrophilics_all', 'hydrophilics_CDRs', 'hydrophobics_CDRs', 
-    #                   'hydrophilics_FWk', 'hydrophobics_FWk', 'hydrophobics_all', 'hydrophilics_L1', 'hydrophobics_L1', 
-    #                   'hydrophilics_L2', 'hydrophobics_L2', 'hydrophilics_L3', 'hydrophobics_L3', 
-    #                   'hydrophilics_H1', 'hydrophobics_H1', 'hydrophilics_H2', 'hydrophobics_H2', 
-    #                   'hydrophilics_H3', 'hydrophobics_H3'])
+    df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
+                      'code','mut_count', 'hydrophilics_all', 'hydrophilics_CDRs', 'hydrophobics_CDRs', 
+                      'hydrophilics_FWk', 'hydrophobics_FWk', 'hydrophobics_all', 'hydrophilics_L1', 'hydrophobics_L1', 
+                      'hydrophilics_L2', 'hydrophobics_L2', 'hydrophilics_L3', 'hydrophobics_L3', 
+                      'hydrophilics_H1', 'hydrophobics_H1', 'hydrophilics_H2', 'hydrophobics_H2', 
+                      'hydrophilics_H3', 'hydrophobics_H3'])
 
-    # df_hydroph.sort_values('mut_count', inplace=True)
+    df_hydroph.sort_values('mut_count', inplace=True)
+    print(df_hydroph)
     # df_final_hydroph = df_hydroph[2:].groupby('mut_count').aggregate('mean').reset_index()
     # df_dist = df_hydroph[['code','mut_count', 'hydrophilics_all', 'hydrophobics_all']]
     # df_dist['fraction_hydrophilic'] = df_dist['hydrophilics_all'] / df_dist['mut_count']
