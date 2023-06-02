@@ -164,8 +164,8 @@ def extract_mut_data(fastadir):
         dH_h3 = hydrophob_for_loop(cdrH3_pos, df)
         dH_all_loops = hydrophob_for_loop(cdr_pos, df)
 
-        dH_fwk = df[~df['L/H position'].isin(cdr_pos)]
-
+        dH_fwk = pd.concat([df, dH_all_loops, dH_all_loops]).drop_duplicates(keep=False)
+        print(dH_fwk)
         return dH_l1, dH_l2, dH_l3, dH_h1, dH_h2, dH_h3, dH_all_loops, dH_fwk
     
     files = os.listdir(fastadir)
@@ -214,7 +214,6 @@ def extract_mut_data(fastadir):
         mut_count = mut_df.shape[0]
         dh_all = cal_hydrophob_change(mut_df)
         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2, dh_h3, dh_cdrs, dh_fwk = calc_hydrophobicity_for_loops(mut_df)
-        print(dh_fwk)
         data = [file[:-4], int(mut_count), dh_all[0], dh_all[1], dh_cdrs[0], dh_cdrs[1], dh_fwk[0], dh_fwk[1], 
                 dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
                 dh_h1[0], dh_h1[1], dh_h2[0], dh_h2[1], dh_h3[0], dh_h3[1]]
