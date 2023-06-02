@@ -231,15 +231,15 @@ def extract_mut_data(fastadir):
     df_hydroph.sort_values('mut_count', inplace=True)
 
     df_final_hydroph = df_hydroph[2:].groupby('mut_count').aggregate('mean').reset_index()
-    # df_dist = df_hydroph[['code','mut_count', 'hydrophilics_all', 'hydrophobics_all']]
-    # df_dist['fraction_hydrophilic'] = df_dist['hydrophilics_all'] / df_dist['mut_count']
-    # df_dist['fraction_hydrophobic'] = df_dist['hydrophobics_all'] / df_dist['mut_count']
+    df_dist = df_hydroph[['code','mut_count', 'hydrophilics_all', 'hydrophobics_all']]
+    df_dist['fraction_hydrophilic'] = df_dist['hydrophilics_all'] / df_dist['mut_count']
+    df_dist['fraction_hydrophobic'] = df_dist['hydrophobics_all'] / df_dist['mut_count']
 
     graph.introduced_hydrophobicity(df_final_hydroph)
-    # graph.introduced_fractional_hydrophobicity(df_dist)
+    graph.introduced_fractional_hydrophobicity(df_dist)
 
-    # df_dist.to_csv('fractional_hydrophobicity_data.csv', index=False)
-    # df_final_hydroph.to_csv('introduced_hydrophobicity_data.csv', index=False)
+    df_dist.to_csv('fractional_hydrophobicity_data.csv', index=False)
+    df_final_hydroph.to_csv('introduced_hydrophobicity_data.csv', index=False)
     return
 
 
