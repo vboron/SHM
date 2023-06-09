@@ -109,7 +109,7 @@ def introduced_hydrophobicity(df):
 
 
 def introduced_fractional_hydrophobicity(x_values):
-    groups = [*range(0, 50, 10)]
+    groups = [*range(1, 50, 10)]
     min_max_vals = []
     for i in groups:
         i_int = int(i)
