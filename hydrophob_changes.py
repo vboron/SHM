@@ -151,7 +151,7 @@ def extract_mut_data(fastadir):
         cdrH2_pos = [f'H{i}' for i in range(50, 59)]
         cdrH3_pos = [f'H{i}' for i in range(95, 103)]
         cdr_pos = cdrL1_pos + cdrL2_pos + cdrL3_pos + cdrH1_pos + cdrH2_pos + cdrH3_pos
-        print(cdr_pos)
+        print(df['L/H position'].tolist())
 
         def hydrophob_for_loop(pos_list, df):
             df_loop = df[df['L/H position'].isin(pos_list)]
