@@ -151,24 +151,27 @@ def extract_mut_data(fastadir):
         cdrH2_pos = [f'H{i}' for i in range(50, 59)]
         cdrH3_pos = [f'H{i}' for i in range(95, 103)]
         cdr_pos = cdrL1_pos + cdrL2_pos + cdrL3_pos + cdrH1_pos + cdrH2_pos + cdrH3_pos
+        print(df['L/H position'].values)
 
         def hydrophob_for_loop(pos_list, df):
             df_loop = df[df['L/H position'].isin(pos_list)]
+            loop_mut_count = len(df_loop[df_loop['input'] != df_loop['germline']].index)
             loop_len = len(df_loop.index)
-            return cal_hydrophob_change(df_loop), loop_len
-        
-        dH_l1, len_l1 = hydrophob_for_loop(cdrL1_pos, df)
-        dH_l2, len_l2 = hydrophob_for_loop(cdrL2_pos, df)
-        dH_l3, len_l3 = hydrophob_for_loop(cdrL3_pos, df)
-        dH_h1, len_h1 = hydrophob_for_loop(cdrH1_pos, df)
-        dH_h2, len_h2 = hydrophob_for_loop(cdrH2_pos, df)
-        dH_h3, len_h3 = hydrophob_for_loop(cdrH3_pos, df)
-        dH_all_loops, len_loops = hydrophob_for_loop(cdr_pos, df)
+            return [cal_hydrophob_change(df_loop), loop_len, loop_mut_count]
 
-        dH_fwk = cal_hydrophob_change(df[~df['L/H position'].isin(cdr_pos)])
-        len_fwk = len(df[~df['L/H position'].isin(cdr_pos)].index)
+        dH_l1_data = hydrophob_for_loop(cdrL1_pos, df)
+        dH_l2_data = hydrophob_for_loop(cdrL2_pos, df)
+        dH_l3_data = hydrophob_for_loop(cdrL3_pos, df)
+        dH_h1_data = hydrophob_for_loop(cdrH1_pos, df)
+        dH_h2_data = hydrophob_for_loop(cdrH2_pos, df)
+        dH_h3_data = hydrophob_for_loop(cdrH3_pos, df)
+        dH_all_loops_data = hydrophob_for_loop(cdr_pos, df)
+
+        # dH_fwk = cal_hydrophob_change(df[~df['L/H position'].isin(cdr_pos)])
+        # len_fwk = len(df[~df['L/H position'].isin(cdr_pos)].index)
+        # fwk_mut_count = len(df_loop[df_loop['input'] != df_loop['germline']].index)
         
-        return dH_l1, dH_l2, dH_l3, dH_h1, dH_h2, dH_h3, dH_all_loops, dH_fwk, len_loops, len_fwk
+        return dH_l1_data, dH_l2_data, dH_l3_data, dH_h1_data, dH_h2_data, dH_h3_data, dH_all_loops_data
     
     files = os.listdir(fastadir)
     tot_files = len(files)
@@ -237,11 +240,11 @@ def extract_mut_data(fastadir):
     df_dist['fraction_hydrophilic'] = df_dist['hydrophilics_CDRs'] / df_dist['length_CDRs']
     df_dist['fraction_hydrophobic'] = df_dist['hydrophobics_CDRs'] / df_dist['length_CDRs']
 
-    graph.introduced_hydrophobicity(df_final_hydroph)
-    graph.introduced_fractional_hydrophobicity(df_dist)
+    # graph.introduced_hydrophobicity(df_final_hydroph)
+    # graph.introduced_fractional_hydrophobicity(df_dist)
 
-    df_dist.to_csv('fractional_hydrophobicity_data.csv', index=False)
-    df_final_hydroph.to_csv('introduced_hydrophobicity_data.csv', index=False)
+    # df_dist.to_csv('fractional_hydrophobicity_data.csv', index=False)
+    # df_final_hydroph.to_csv('introduced_hydrophobicity_data.csv', index=False)
     return
 
 
