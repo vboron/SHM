@@ -144,7 +144,6 @@ def extract_mut_data(fastadir):
     
 
     def calc_hydrophobicity_for_loops(df):
-        print(df)
         cdrL1_pos = [f'L{i}' for i in range(24, 35)]
         cdrL2_pos = [f'L{i}' for i in range(50, 57)]
         cdrL3_pos = [f'L{i}' for i in range(89, 98)]
@@ -152,12 +151,14 @@ def extract_mut_data(fastadir):
         cdrH2_pos = [f'H{i}' for i in range(50, 59)]
         cdrH3_pos = [f'H{i}' for i in range(95, 103)]
         cdr_pos = cdrL1_pos + cdrL2_pos + cdrL3_pos + cdrH1_pos + cdrH2_pos + cdrH3_pos
-        print(df['L/H position'].tolist())
+        fwk_pos = [i for i in df['L/H position'].tolist() if i not in cdr_pos]
 
         def hydrophob_for_loop(pos_list, df):
             df_loop = df[df['L/H position'].isin(pos_list)]
-            loop_mut_count = len(df_loop[df_loop['input'] != df_loop['germline']].index)
             loop_len = len(df_loop.index)
+            df_loop = df_loop[df_loop['input'] != df_loop['germline']]
+            loop_mut_count = len(df_loop.index)
+            
             return [cal_hydrophob_change(df_loop), loop_len, loop_mut_count]
 
         dH_l1_data = hydrophob_for_loop(cdrL1_pos, df)
@@ -167,12 +168,9 @@ def extract_mut_data(fastadir):
         dH_h2_data = hydrophob_for_loop(cdrH2_pos, df)
         dH_h3_data = hydrophob_for_loop(cdrH3_pos, df)
         dH_all_loops_data = hydrophob_for_loop(cdr_pos, df)
-
-        # dH_fwk = cal_hydrophob_change(df[~df['L/H position'].isin(cdr_pos)])
-        # len_fwk = len(df[~df['L/H position'].isin(cdr_pos)].index)
-        # fwk_mut_count = len(df_loop[df_loop['input'] != df_loop['germline']].index)
+        dH_fwk_data = hydrophob_for_loop(fwk_pos, df)
         
-        return dH_l1_data, dH_l2_data, dH_l3_data, dH_h1_data, dH_h2_data, dH_h3_data, dH_all_loops_data
+        return dH_l1_data, dH_l2_data, dH_l3_data, dH_h1_data, dH_h2_data, dH_h3_data, dH_all_loops_data, dH_fwk_data
     
     files = os.listdir(fastadir)
     tot_files = len(files)
@@ -219,22 +217,23 @@ def extract_mut_data(fastadir):
         mut_df = posres_df[posres_df['input'] != posres_df['germline']]
         mut_count = mut_df.shape[0]
         dh_all = cal_hydrophob_change(mut_df)
-        dh_l1, dh_l2, dh_l3, dh_h1, dh_h2, dh_h3, dh_cdrs = calc_hydrophobicity_for_loops(mut_df)
-        # data = [file[:-4], int(mut_count), dh_all[0], dh_all[1], dh_cdrs[0], dh_cdrs[1], dh_fwk[0], dh_fwk[1],
-        #         dh_l1[0], dh_l1[1], dh_l2[0], dh_l2[1], dh_l3[0], dh_l3[1], 
-        #         dh_h1[0], dh_h1[1], dh_h2[0], dh_h2[1], dh_h3[0], dh_h3[1], loops_len, fwk_len]
+        dh_l1, dh_l2, dh_l3, dh_h1, dh_h2, dh_h3, dh_cdrs, dh_fwk = calc_hydrophobicity_for_loops(posres_df)
+        data = [file[:-4], int(mut_count), dh_all[0], dh_all[1], dh_cdrs[0][0], dh_cdrs[0][1], dh_fwk[0][0], dh_fwk[0][1],
+                dh_l1[0][0], dh_l1[0][1], dh_l2[0][0], dh_l2[0][1], dh_l3[0][0], dh_l3[0][1], 
+                dh_h1[0][0], dh_h1[0][1], dh_h2[0][0], dh_h2[0][1], dh_h3[0][0], dh_h3[0][1], dh_cdrs[2], dh_fwk[2]]
         # hydrophob_data.append(data)
         current_file += 1
         print(f'Progress: {current_file/tot_files*100:.2f}')
 
-    # df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
-    #                   'code','mut_count', 'hydrophilics_all', 'hydrophilics_CDRs', 'hydrophobics_CDRs', 
-    #                   'hydrophilics_FWk', 'hydrophobics_FWk', 'hydrophobics_all', 'hydrophilics_L1', 'hydrophobics_L1', 
-    #                   'hydrophilics_L2', 'hydrophobics_L2', 'hydrophilics_L3', 'hydrophobics_L3', 
-    #                   'hydrophilics_H1', 'hydrophobics_H1', 'hydrophilics_H2', 'hydrophobics_H2', 
-    #                   'hydrophilics_H3', 'hydrophobics_H3', 'length_CDRs', 'length_framework'])
+    df_hydroph = pd.DataFrame(data=hydrophob_data, columns=[
+                      'code','mut_count', 'hydrophilics_all', 'hydrophilics_CDRs', 'hydrophobics_CDRs', 
+                      'hydrophilics_FWk', 'hydrophobics_FWk', 'hydrophobics_all', 'hydrophilics_L1', 'hydrophobics_L1', 
+                      'hydrophilics_L2', 'hydrophobics_L2', 'hydrophilics_L3', 'hydrophobics_L3', 
+                      'hydrophilics_H1', 'hydrophobics_H1', 'hydrophilics_H2', 'hydrophobics_H2', 
+                      'hydrophilics_H3', 'hydrophobics_H3', 'mut_count_CDRs', 'mut_count_framework'])
 
-    # df_hydroph.sort_values('mut_count', inplace=True)
+    df_hydroph.sort_values('mut_count', inplace=True)
+    print(df_hydroph)
 
     # df_final_hydroph = df_hydroph[2:].groupby('mut_count').aggregate('mean').reset_index()
     # df_dist = df_hydroph[['code','length_CDRs', 'hydrophilics_CDRs', 'hydrophobics_CDRs']]
