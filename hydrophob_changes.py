@@ -221,7 +221,7 @@ def extract_mut_data(fastadir):
         data = [file[:-4], int(mut_count), dh_all[0], dh_all[1], dh_cdrs[0][0], dh_cdrs[0][1], dh_fwk[0][0], dh_fwk[0][1],
                 dh_l1[0][0], dh_l1[0][1], dh_l2[0][0], dh_l2[0][1], dh_l3[0][0], dh_l3[0][1], 
                 dh_h1[0][0], dh_h1[0][1], dh_h2[0][0], dh_h2[0][1], dh_h3[0][0], dh_h3[0][1], dh_cdrs[2], dh_fwk[2]]
-        # hydrophob_data.append(data)
+        hydrophob_data.append(data)
         current_file += 1
         print(f'Progress: {current_file/tot_files*100:.2f}')
 
