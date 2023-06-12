@@ -144,6 +144,7 @@ def extract_mut_data(fastadir):
     
 
     def calc_hydrophobicity_for_loops(df):
+        print(df)
         cdrL1_pos = [f'L{i}' for i in range(24, 35)]
         cdrL2_pos = [f'L{i}' for i in range(50, 57)]
         cdrL3_pos = [f'L{i}' for i in range(89, 98)]
