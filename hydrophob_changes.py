@@ -220,7 +220,7 @@ def extract_mut_data(fastadir):
         data = [file[:-4], int(mut_count), dh_all[0], dh_all[1]]
         dh_l1, dh_l2, dh_l3, dh_h1, dh_h2, dh_h3, dh_cdrs, dh_fwk = calc_hydrophobicity_for_loops(posres_df)
         for region in [dh_cdrs, dh_fwk, dh_l1, dh_l2, dh_l3, dh_h1, dh_h2, dh_h3]:
-            data.append(region[0][0], region[0][1], region[1], region[2])
+            data.extend(region[0][0], region[0][1], region[1], region[2])
 
         hydrophob_data.append(data)
         current_file += 1
