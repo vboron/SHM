@@ -201,11 +201,11 @@ def shm_graphing(free_df, complexed_df, f_c_df, proportion):
             if col == 'total_mut':
                 p_all, p_max = graph.mutations_vs_angrange(
                     df, col, 'VH + VL', './', graph_name, max_df)
-                pearson_list = pearson_list + [f'VH + VL ({graph_name})', p_all, p_max]
+                pearson_list.append([f'VH + VL ({graph_name})', p_all, p_max])
             else:
                 p_all, p_max = graph.mutations_vs_angrange(
                     df, col, col, './', graph_name, max_df)
-                pearson_list = pearson_list + [f'{col} ({graph_name})', p_all, p_max]
+                pearson_list.append([f'{col} ({graph_name})', p_all, p_max])
         return pearson_list
 
     def graph_topx(group_df, group):
