@@ -14,8 +14,8 @@ import seaborn as sns
 def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
     # Plot all data
     # .corr() returns the correlation between two columns
-    pearson_max = float(f'{df[mut_column].corr(max_val_df['max_angle_range']):.3f}')
-    pearson_all = float(f'{df[mut_column].corr(df['angle_range'])}')
+    pearson_max = df[mut_column].corr(max_val_df['max_angle_range'])
+    pearson_all = df[mut_column].corr(df['angle_range'])
 
     plt.figure()
 
@@ -68,7 +68,7 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
 
     print(f'Pearson_all_{x_axis}: {pearson_all} \n Pearson_max_{x_axis}: {pearson_max}')
     # return m, b
-    return pearson_all, pearson_max
+    return float(f'{pearson_all:.3f}'), float(f'{pearson_max:.3f}')
 
 
 def hydrophobicity_histagram(x_values, labels, name):
