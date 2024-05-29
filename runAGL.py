@@ -184,6 +184,8 @@ def run_for_free_complexed(fastadir, pdbdir, free_d, complexed_d, both_d):
 
 
 def shm_graphing(free_df, complexed_df, f_c_df, proportion):
+    pearson_data = []
+
     def find_topx(df):
         top_x = len(df.index) * float(proportion)
         if top_x < 1:
@@ -196,20 +198,25 @@ def shm_graphing(free_df, complexed_df, f_c_df, proportion):
         for col in cols:
             max_df = find_maxrange_per_mutation_count(df, col)
             if col == 'total_mut':
-                graph.mutations_vs_angrange(
-                    df, col, 'VH + VL', './', f'agl_{graph_name}_{col}_graph', max_df)
+                p_all, p_max = graph.mutations_vs_angrange(
+                    df, col, 'VH + VL', './', graph_name, max_df)
+                pearson_data = pearson_data + [f'VH + VL ({graph_name})', p_all, p_max]
             else:
-                graph.mutations_vs_angrange(
-                    df, col, col, './', f'agl_{graph_name}_{col}_graph', max_df)
-                
+                p_all, p_max = graph.mutations_vs_angrange(
+                    df, col, col, './', graph_name, max_df)
+                pearson_data = pearson_data + [f'{col} ({graph_name})', p_all, p_max]
+
     def graph_topx(group_df, group):
         topx_df = find_topx(group_df)
+
         make_graphs(topx_df, group)
 
     print('Graphing...')
     graph_topx(free_df, 'free')
     graph_topx(complexed_df, 'complex')
     graph_topx(f_c_df, 'complex_free')
+    pearson_df = pd.DataFrame(data=pearson_data, columns=['Data', 'Correlation all', 'Correlation max'])
+    pearson_df.to_csv('pearson_data.csv', index=False)
 
 
 # *************************************************************************

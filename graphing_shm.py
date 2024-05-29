@@ -62,13 +62,13 @@ def mutations_vs_angrange(df, mut_column, x_axis, directory, name, max_val_df):
             x=10, y=15, fontsize=8, color=color_top)
 
     # Exports the figure as a .jpg file
-    path_fig = os.path.join(directory, f'{name}.jpg')
+    path_fig = os.path.join(directory, f'agl_{name}_{x_axis}_graph.jpg')
     plt.savefig(path_fig, format='jpg')
     plt.close()
 
     print(f'Pearson_all_{x_axis}: {pearson_all} \n Pearson_max_{x_axis}: {pearson_max}')
     # return m, b
-    return
+    return pearson_all, pearson_max
 
 
 def hydrophobicity_histagram(x_values, labels, name):
