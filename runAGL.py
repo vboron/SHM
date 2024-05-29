@@ -210,7 +210,7 @@ def shm_graphing(free_df, complexed_df, f_c_df, proportion):
 
     def graph_topx(group_df, group):
         topx_df = find_topx(group_df)
-        return make_graphs(topx_df, groups)
+        return make_graphs(topx_df, group)
 
     print('Graphing...')
     pearson_data.append(graph_topx(free_df, 'free'))
