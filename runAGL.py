@@ -213,9 +213,9 @@ def shm_graphing(free_df, complexed_df, f_c_df, proportion):
         return make_graphs(topx_df, group)
 
     print('Graphing...')
-    pearson_data.append(graph_topx(free_df, 'free'))
-    pearson_data.append(graph_topx(complexed_df, 'complex'))
-    pearson_data.append(graph_topx(f_c_df, 'complex_free'))
+    pearson_data = pearson_data + graph_topx(free_df, 'free')
+    pearson_data = pearson_data + graph_topx(complexed_df, 'complex')
+    pearson_data  = pearson_data + graph_topx(f_c_df, 'complex_free')
     pearson_df = pd.DataFrame(data=pearson_data, columns=['Data', 'Correlation all', 'Correlation max'])
     pearson_df.to_csv('pearson_data.csv', index=False)
 
