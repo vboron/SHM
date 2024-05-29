@@ -193,23 +193,23 @@ def shm_graphing(free_df, complexed_df, f_c_df, proportion):
         df_topx = df.head(int(top_x))
         return df_topx
     
-    def make_graphs(df, graph_name):
+    def make_graphs(df, graph_name, pearson_list):
         cols = ['VL', 'VH', 'total_mut']
         for col in cols:
             max_df = find_maxrange_per_mutation_count(df, col)
             if col == 'total_mut':
                 p_all, p_max = graph.mutations_vs_angrange(
                     df, col, 'VH + VL', './', graph_name, max_df)
-                pearson_data = pearson_data + [f'VH + VL ({graph_name})', p_all, p_max]
+                pearson_list = pearson_list + [f'VH + VL ({graph_name})', p_all, p_max]
             else:
                 p_all, p_max = graph.mutations_vs_angrange(
                     df, col, col, './', graph_name, max_df)
-                pearson_data = pearson_data + [f'{col} ({graph_name})', p_all, p_max]
+                pearson_list = pearson_list + [f'{col} ({graph_name})', p_all, p_max]
 
     def graph_topx(group_df, group):
         topx_df = find_topx(group_df)
 
-        make_graphs(topx_df, group)
+        make_graphs(topx_df, group, pearson_data)
 
     print('Graphing...')
     graph_topx(free_df, 'free')
