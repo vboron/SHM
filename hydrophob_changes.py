@@ -59,7 +59,7 @@ def run_AGL(file, dire):
     try:
         path = os.path.join(dire, file)
         result = (subprocess.check_output(
-            ['agl', '-a', path])).decode("utf-8")
+            ['agl', '-d', '-a', path])).decode("utf-8")
         aglresult = result
     except subprocess.CalledProcessError:
         print(f'AGL failed on {file}')
